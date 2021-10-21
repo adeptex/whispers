@@ -26,10 +26,10 @@ dev_requires = [
 setup(
     name="whispers",
     version=get_version(),
-    url="https://github.com/Skyscanner/whispers",
+    url="https://github.com/whispers/whispers",
     author="Artëm Tsvetkov",
-    author_email="artem.tsvetkov@skyscanner.net",
-    description="Identify secrets and dangerous behaviours",
+    author_email="drop[to]adeptex[point]net",
+    description="Identify secrets in static structured text",
     packages=find_packages(exclude=("tests", "tests.*")),
     include_package_data=True,
     platforms="any",

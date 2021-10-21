@@ -1,10 +1,10 @@
 # Whispers <img src="whispers.png" width="40px" alt="Whispers" style=""> 
 
 [![](https://img.shields.io/pypi/v/whispers.svg)](https://pypi.python.org/pypi/whispers/)
-[![](https://github.com/Skyscanner/whispers/workflows/build/badge.svg)](https://github.com/Skyscanner/whispers/actions)
+[![](https://github.com/whispers/whispers/workflows/build/badge.svg)](https://github.com/whispers/whispers/actions)
 ![](coverage.svg)
-[![](https://img.shields.io/github/issues/Skyscanner/whispers)](https://github.com/Skyscanner/whispers/issues)
-[![](https://img.shields.io/github/issues-pr/Skyscanner/whispers)](https://github.com/Skyscanner/whispers/pulls)
+[![](https://img.shields.io/github/issues/whispers/whispers)](https://github.com/whispers/whispers/issues)
+[![](https://img.shields.io/github/issues-pr/whispers/whispers)](https://github.com/whispers/whispers/pulls)
 [![](https://img.shields.io/pypi/dm/whispers)](https://img.shields.io/pypi/dm/whispers)
 
 > "My little birds are everywhere, even in the North, they whisper to me the strangest stories." - _Varys_
@@ -52,7 +52,7 @@ pip3 install whispers
 
 ### From GitHub
 ```
-git clone https://github.com/Skyscanner/whispers
+git clone https://github.com/whispers/whispers
 cd whispers
 make install
 ```
