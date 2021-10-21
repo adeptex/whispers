@@ -1,0 +1,7 @@
+- id: github
+  description: Github token
+  message: Github token
+  severity: CRITICAL
+  value:
+    regex: ^(gh[pous]_[a-zA-Z0-9]{36}|ghr_[a-zA-Z0-9]{76})$
+    ignorecase: False

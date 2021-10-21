@@ -1,0 +1,9 @@
+- id: uri
+  description: Hardcoded credentials in a Uniform Resource Identifier (URI)
+  message: URI Credentials
+  severity: CRITICAL
+  key:
+    regex: ^uri creds$
+    ignorecase: False
+  value:
+    minlen: 1

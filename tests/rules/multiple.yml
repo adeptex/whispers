@@ -1,0 +1,19 @@
+- id: dup1
+  description: This rule is ok
+  message: Valid
+  severity: INFO
+
+- id: dup2
+  description: This rule is duplicated
+  message: Rule ID already exists
+  severity: CRITICAL
+
+- id: dup3
+  description: This rule is ok
+  message: Valid
+  severity: INFO
+
+- id: dup4
+  description: This rule is duplicated
+  message: Rule ID already exists
+  severity: CRITICAL

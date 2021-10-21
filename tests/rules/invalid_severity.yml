@@ -1,0 +1,7 @@
+- id: invalid
+  description: Invalid severity level
+  message: Invalid
+  severity: INVALID
+  value:
+    regex: .
+    ignorecase: True
