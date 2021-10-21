@@ -4,7 +4,7 @@
   message: AWS Access Key ID
   severity: BLOCKER
   value:
-    regex: ^(?=.*[A-Z])(?=.*[0-9])A(AG|CC|GP|ID|IP|KI|NP|NV|PK|RO|SC|SI)A[A-Z0-9]{16}$
+    regex: ^(?=.*[A-Z])(?=.*[0-9])A(AGA|CCA|GPA|IDA|IPA|KIA|NPA|NVA|PKA|ROA|SCA|SIA|3T[A-Z0-9])[A-Z0-9]{16}$
     ignorecase: False
 
 - id: aws-secret
