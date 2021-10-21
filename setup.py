@@ -18,6 +18,7 @@ dev_requires = [
     "isort~=5.9",
     "pytest~=6.2",
     "pytest-mock~=3.6",
+    "pytest-sugar~=0.9",
     "pip-tools~=6.2",
     "wheel~=0.37",
     "twine~=3.4",
