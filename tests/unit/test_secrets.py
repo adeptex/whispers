@@ -150,6 +150,7 @@ def test_detect_secrets_by_key(src, expected):
         ("beans.xml", 3),
         ("beans.xml.dist", 3),
         ("beans.xml.template", 3),
+        ("build.gradle", 1),
         ("creditcards.yml", 3),
         ("cloudformation.json", 1),
         ("cloudformation.json.template", 0),

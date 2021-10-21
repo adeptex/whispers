@@ -6,6 +6,7 @@ from whispers.core.utils import KeyValuePair, is_base64_bytes, is_iac, is_path, 
 from whispers.plugins.config import Config
 from whispers.plugins.dockercfg import Dockercfg
 from whispers.plugins.dockerfile import Dockerfile
+from whispers.plugins.gradle import Gradle
 from whispers.plugins.html import Html
 from whispers.plugins.htpasswd import Htpasswd
 from whispers.plugins.jproperties import Jproperties
@@ -161,6 +162,9 @@ def load_plugin(file: Path) -> Optional[object]:
 
     elif file.name == "pip.conf":
         return Pip
+
+    elif file.name == "build.gradle":
+        return Gradle
 
     elif filetype in ["conf", "cfg", "cnf", "config", "ini", "env", "credentials", "s3cfg"]:
         with file.open("r") as fh:

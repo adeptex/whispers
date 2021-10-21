@@ -1,0 +1,18 @@
+task {
+    repositories {
+        compliant {
+            repository(url: "https://localhost/content/repositories/snapshots/") {
+                authentication(userName: "root", password: mvnPassword)
+                authentication(userName: "root", password:)
+                authentication(userName: "root")
+                authentication()
+            }
+        }
+
+        noncompliant {
+            repository(url: "https://localhost/content/repositories/snapshots/") {
+                authentication(userName: "root", password: "hardcoded")
+            }
+        }
+    }
+}
