@@ -7,11 +7,27 @@ task {
                 authentication(userName: "root")
                 authentication()
             }
+
+            maven {
+                url "https://localhost"
+                credentials {
+                    username "root"
+                    password ""
+                }
+            }
         }
 
         noncompliant {
             repository(url: "https://localhost/content/repositories/snapshots/") {
-                authentication(userName: "root", password: "hardcoded")
+                authentication(userName: "root", password: "hardcoded_gradle")
+            }
+
+            maven {
+                url "https://localhost"
+                credentials {
+                    username "root"
+                    password "hardcoded_maven"
+                }
             }
         }
     }

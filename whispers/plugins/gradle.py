@@ -6,17 +6,14 @@ from whispers.core.utils import KeyValuePair
 
 class Gradle:
     def pairs(self, filepath: Path) -> Iterator[KeyValuePair]:
+        key = "password"
+
         for lineno, line in enumerate(filepath.open(), 1):
             line = line.strip()
-            if "authentication(" not in line:
+
+            if key not in line:
                 continue
 
-            key = "password"
-
-            if f"{key}:" not in line:
-                continue
-
-            value = line.split(f"{key}:")[-1].strip(") ")
-
+            value = line.split(key)[-1].strip(":) ")
             if value:
-                yield KeyValuePair(key, value, keypath=["authentication", key], line=lineno)
+                yield KeyValuePair(key, value, keypath=[key], line=lineno)
