@@ -1,1 +1,2 @@
-<invalid yaml>
+[default]
+ThisIsNot = YAML!

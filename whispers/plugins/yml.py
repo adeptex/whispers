@@ -3,8 +3,10 @@ from pathlib import Path
 from typing import Iterator
 
 import yaml
+from yaml.parser import ParserError
 from yaml.resolver import Resolver
 
+from whispers.core.log import global_exception_handler
 from whispers.core.utils import KeyValuePair
 from whispers.plugins.traverse import StructuredDocument
 
@@ -45,6 +47,10 @@ class Yml(StructuredDocument):
         document = re.sub(r"^#.*$", "", document)
 
         # Load converted YAML
-        yaml.add_multi_constructor("", _constructor, Loader=yaml.SafeLoader)
-        code = yaml.safe_load(document)
-        yield from self.traverse(code)
+        try:
+            yaml.add_multi_constructor("", _constructor, Loader=yaml.SafeLoader)
+            code = yaml.safe_load(document)
+            yield from self.traverse(code)
+
+        except ParserError:
+            global_exception_handler(filepath.as_posix(), document)

@@ -169,6 +169,7 @@ def test_detect_secrets_by_key(src, expected):
         ("integration.yml", 5),
         ("invalid.yml", 0),
         ("invalid.json", 0),
+        ("invalid.ini", 0),
         ("java.properties", 3),
         ("jdbc.xml", 3),
         ("language.html", 3),
@@ -186,7 +187,8 @@ def test_detect_secrets_by_key(src, expected):
         ("settings.cfg", 1),
         ("settings.conf", 1),
         ("settings.env", 1),
-        ("settings.ini", 1),
+        ("settings01.ini", 1),
+        ("settings02.ini", 1),
         ("uri.yml", 2),
         ("webhooks.yml", 3),
     ],
@@ -218,7 +220,7 @@ def test_detect_secrets_by_value(src, expected):
         ("settings.cfg"),
         ("settings.conf"),
         ("settings.env"),
-        ("settings.ini"),
+        ("settings01.ini"),
     ],
 )
 def test_detect_secrets_by_filename(expected):

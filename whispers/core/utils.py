@@ -8,6 +8,8 @@ from Levenshtein import ratio
 from luhn import verify as luhn_verify
 from yaml import safe_load
 
+from whispers.core.log import global_exception_handler
+
 DEFAULT_PATH = Path(__file__).parents[1]
 DEFAULT_SEVERITY = ["BLOCKER", "CRITICAL", "MAJOR", "MINOR", "INFO"]
 
@@ -196,19 +198,24 @@ def find_line_number(pair: KeyValuePair) -> int:
     findpath = [*pair.keypath, valuepath]
     foundline = 0
 
-    for lineno, line in enumerate(Path(pair.file).open(), 1):
-        founditems = 0
+    try:
+        with Path(pair.file).open() as fh:
+            for lineno, line in enumerate(fh, 1):
+                founditems = 0
 
-        for item in findpath:
-            if item not in line:
-                break
+                for item in findpath:
+                    if item not in line:
+                        break
 
-            founditems += 1
-            foundline = lineno
+                    founditems += 1
+                    foundline = lineno
 
-        findpath = findpath[founditems:]
+                findpath = findpath[founditems:]
 
-        if not findpath:
-            return foundline
+                if not findpath:
+                    return foundline
+
+    except Exception:
+        global_exception_handler(pair.file, "Failed parsing file")
 
     return 0

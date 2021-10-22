@@ -2,6 +2,7 @@ import logging
 from pathlib import Path
 from typing import Iterator, Optional
 
+from whispers.core.log import global_exception_handler
 from whispers.core.utils import KeyValuePair, is_base64_bytes, is_iac, is_path, simple_string, strip_string
 from whispers.plugins.config import Config
 from whispers.plugins.dockercfg import Dockercfg
@@ -58,7 +59,7 @@ def tag_file(file: Path, pair: KeyValuePair) -> KeyValuePair:
 def filter_included(config: dict, pair: KeyValuePair) -> Optional[KeyValuePair]:
     """Check if pair should be included based on config"""
     for key in pair.keypath:
-        if config["exclude"]["keys"].match(key):
+        if config["exclude"]["keys"].match(str(key)):
             logging.debug(f"Excluded key {pair}")
             return None  # Excluded key
 
@@ -140,62 +141,66 @@ def load_plugin(file: Path) -> Optional[object]:
     Loads the correct plugin for given file.
     Returns None if no plugin found.
     """
-    if file.suffix in [".dist", ".template"]:
-        filetype = file.stem.split(".")[-1]
-    else:
-        filetype = file.name.split(".")[-1]
+    try:
+        if file.suffix in [".dist", ".template"]:
+            filetype = file.stem.split(".")[-1]
+        else:
+            filetype = file.name.split(".")[-1]
 
-    if filetype in ["yaml", "yml"]:
-        return Yml
+        if filetype in ["yaml", "yml"]:
+            return Yml
 
-    elif filetype == "json":
-        return Json
+        elif filetype == "json":
+            return Json
 
-    elif filetype == "xml":
-        return Xml
+        elif filetype == "xml":
+            return Xml
 
-    elif filetype.startswith("npmrc"):
-        return Npmrc
+        elif filetype.startswith("npmrc"):
+            return Npmrc
 
-    elif filetype.startswith("pypirc"):
-        return Pypirc
+        elif filetype.startswith("pypirc"):
+            return Pypirc
 
-    elif file.name == "pip.conf":
-        return Pip
+        elif file.name == "pip.conf":
+            return Pip
 
-    elif file.name == "build.gradle":
-        return Gradle
+        elif file.name == "build.gradle":
+            return Gradle
 
-    elif filetype in ["conf", "cfg", "cnf", "config", "ini", "env", "credentials", "s3cfg"]:
-        with file.open("r") as fh:
-            if fh.readline().startswith("<?xml "):
-                return Xml
+        elif filetype in ["conf", "cfg", "cnf", "config", "ini", "env", "credentials", "s3cfg"]:
+            with file.open("r") as fh:
+                if fh.readline().startswith("<?xml "):
+                    return Xml
 
-            else:
-                return Config
+                else:
+                    return Config
 
-    elif filetype == "properties":
-        return Jproperties
+        elif filetype == "properties":
+            return Jproperties
 
-    elif filetype.startswith(("sh", "bash", "zsh", "env")):
-        return Shell
+        elif filetype.startswith(("sh", "bash", "zsh", "env")):
+            return Shell
 
-    elif "dockerfile" in file.name.lower():
-        return Dockerfile
+        elif "dockerfile" in file.name.lower():
+            return Dockerfile
 
-    elif filetype == "dockercfg":
-        return Dockercfg
+        elif filetype == "dockercfg":
+            return Dockercfg
 
-    elif filetype.startswith("htpasswd"):
-        return Htpasswd
+        elif filetype.startswith("htpasswd"):
+            return Htpasswd
 
-    elif filetype == "txt":
-        return Plaintext
+        elif filetype == "txt":
+            return Plaintext
 
-    elif filetype.startswith("htm"):
-        return Html
+        elif filetype.startswith("htm"):
+            return Html
 
-    elif filetype in ["py", "py3", "py35", "py36", "py37", "py38", "py39"]:
-        return Python
+        elif filetype in ["py", "py3", "py35", "py36", "py37", "py38", "py39"]:
+            return Python
+
+    except Exception:
+        global_exception_handler(file.as_posix(), "Failed loading plugin")
 
     return None
