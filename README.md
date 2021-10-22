@@ -32,6 +32,7 @@ Whispers is a **static structured text** parser, not dynamic code parser.
 * SpringFramework Beans config files
 * Java Properties files
 * Dockercfg private registry auth files
+* ActiveDirectory SYSVOL Groups.xml
 
 ## Detects
 * Passwords
