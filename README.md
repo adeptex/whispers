@@ -13,6 +13,22 @@ Whispers is a static text analysis tool designed for parsing various common soft
 
 Whispers is a **static structured text** parser, not dynamic code parser.
 
+
+## Installation
+
+### From PyPI
+```
+pip3 install whispers
+```
+
+### From GitHub
+```
+git clone https://github.com/whispers/whispers
+cd whispers
+make install
+```
+
+
 ## Supported Formats
 * YAML
 * JSON
@@ -33,6 +49,10 @@ Whispers is a **static structured text** parser, not dynamic code parser.
 * Java Properties files
 * Dockercfg private registry auth files
 * ActiveDirectory SYSVOL Groups.xml
+* ...
+
+:hammer_and_wrench: [Contribute](https://github.com/adeptex/whispers/issues/new) by submitting additional format samples!
+
 
 ## Detects
 * Passwords
@@ -44,19 +64,6 @@ Whispers is a **static structured text** parser, not dynamic code parser.
 * Dangerous functions
 * Sensitive files
 
-## Installation
-
-### From PyPI
-```
-pip3 install whispers
-```
-
-### From GitHub
-```
-git clone https://github.com/whispers/whispers
-cd whispers
-make install
-```
 
 ## Usage
 ### CLI
@@ -129,8 +136,8 @@ For example: `whispers -c config.yml -r starks target`
 ## Custom Rules
 Rules specify the actual things that should be pulled out from key-value pairs. There are several common ones that come built-in, such as AWS keys and passwords, but the tool is made to be easily expandable with new rules.
 
-- Custom rules can be defined in the main config file under `rules:`
-- Custom rules can be added to [whispers/rules](whispers/rules/)
+- Custom rules can be defined in the main config file under `rules:` key
+- Custom rules can be added to [whispers/rules](whispers/rules/) directory
 
 ```yaml
 - id: rule-id                 # unique rule name
@@ -156,7 +163,7 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
 
 
 ## Plugins
-All parsing functionality is implemented via plugins. Each plugin implements a class with the `pairs()` method that runs through files and returns a `KeyValuePair` object to be checked with rules.
+All parsing functionality is implemented via [plugins](whispers/plugins/). Each plugin implements a class with the `pairs()` method that runs through files and yields `KeyValuePair` objects to be checked with [rules](whispers/rules/).
 
 ```py
 from whispers.core.utils import KeyValuePair
