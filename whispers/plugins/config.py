@@ -1,11 +1,34 @@
+from configparser import ConfigParser, MissingSectionHeaderError
+from itertools import chain
 from pathlib import Path
-from typing import Iterator
+from typing import Iterator, Optional
 
 from whispers.core.utils import KeyValuePair, strip_string
 
 
 class Config:
     def pairs(self, filepath: Path) -> Iterator[KeyValuePair]:
+        try:
+            # Attempt to parse as Windows INI
+            yield from self.parse_as_ini(filepath)
+
+        except MissingSectionHeaderError:
+            # Otherwise, parse as text line by line
+            yield from self.parse_as_text(filepath)
+
+    @staticmethod
+    def parse_as_ini(filepath: Path) -> Optional[KeyValuePair]:
+        parser = ConfigParser()
+        parser.read(filepath.as_posix())
+        sections = map(lambda section: section.items(), parser.values())
+        items = chain.from_iterable(sections)
+
+        for item in items:
+            key, value = item
+            yield KeyValuePair(key, value, keypath=[key])
+
+    @staticmethod
+    def parse_as_text(filepath: Path) -> Optional[KeyValuePair]:
         for lineno, line in enumerate(filepath.open(), 1):
             line = line.strip()
             if "=" not in line:
