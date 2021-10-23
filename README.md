@@ -1,7 +1,7 @@
 # Whispers <img src="whispers.png" width="40px" alt="Whispers" style=""> 
 
 [![](https://img.shields.io/pypi/v/whispers.svg)](https://pypi.python.org/pypi/whispers/)
-[![](https://github.com/whispers/whispers/workflows/build/badge.svg)](https://github.com/whispers/whispers/actions)
+[![](https://github.com/adeptex/whispers/workflows/build/badge.svg)](https://github.com/whispers/whispers/actions)
 ![](coverage.svg)
 [![](https://img.shields.io/github/issues/whispers/whispers)](https://github.com/whispers/whispers/issues)
 [![](https://img.shields.io/github/issues-pr/whispers/whispers)](https://github.com/whispers/whispers/pulls)
