@@ -1,7 +1,7 @@
 - id: sensitive-files
   description: Known files with potentially sensitive information
   message: Sensitive file
-  severity: MAJOR
+  severity: MINOR
   key:
     regex: ^file$
     ignorecase: False
