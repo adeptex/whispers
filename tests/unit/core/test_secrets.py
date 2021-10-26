@@ -147,6 +147,7 @@ def test_detect_secrets_by_key(src, expected):
         ("apikeys.json", 10),
         ("apikeys.xml", 10),
         ("apikeys.yml", 10),
+        ("apikeys-known.yml", 51),
         ("beans.xml", 3),
         ("beans.xml.dist", 3),
         ("beans.xml.template", 3),
@@ -159,7 +160,6 @@ def test_detect_secrets_by_key(src, expected):
         ("custom.yml", 0),
         ("empty.dockercfg", 0),
         ("falsepositive.yml", 4),
-        ("gitkeys.yml", 5),
         ("hardcoded.json", 5),
         ("hardcoded.xml", 5),
         ("hardcoded.yml", 5),
@@ -189,8 +189,8 @@ def test_detect_secrets_by_key(src, expected):
         ("settings.env", 1),
         ("settings01.ini", 1),
         ("settings02.ini", 1),
-        ("uri.yml", 2),
-        ("webhooks.yml", 3),
+        ("uri.yml", 3),
+        ("webhooks.yml", 6),
     ],
 )
 def test_detect_secrets_by_value(src, expected):
@@ -198,13 +198,21 @@ def test_detect_secrets_by_value(src, expected):
     config = load_config(args)
     rules = load_rules(args, config)
     pairs = make_pairs(config, FIXTURE_PATH.joinpath(src))
-    result = list(map(lambda x: x.value, detect_secrets(rules, pairs)))
-    assert len(result) == expected
-    for value in result:
-        if value.isnumeric() or is_base64(value):
+    result = detect_secrets(rules, pairs)
+    count = 0
+
+    for secret in result:
+        count += 1
+
+        if secret.value.isnumeric():
             continue
 
-        assert "hardcoded" in value.lower()
+        if is_base64(secret.value):
+            continue
+
+        assert "hardcoded" in secret.value.lower()
+
+    assert count == expected
 
 
 @pytest.mark.parametrize(
