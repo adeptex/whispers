@@ -147,7 +147,7 @@ def test_detect_secrets_by_key(src, expected):
         ("apikeys.json", 10),
         ("apikeys.xml", 10),
         ("apikeys.yml", 10),
-        ("apikeys-known.yml", 51),
+        ("apikeys-known.yml", 54),
         ("beans.xml", 3),
         ("beans.xml.dist", 3),
         ("beans.xml.template", 3),
