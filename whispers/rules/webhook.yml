@@ -4,9 +4,12 @@
   severity: MINOR
   value:
     regex: "https?://(\
-      hooks\\.slack\\.com/services/[A-Z0-9]{9}/[A-Z0-9]{9}/[a-zA-Z0-9]+|\
-      api\\.hubapi\\.com/webhooks/v1/[A-Z0-9]+/|\
-      chat\\.twilio\\.com/v2/Services/[A-Z0-9]{32}\
+      hooks\\.slack\\.com/services/[\\w\\d]{9}/[\\w\\d]{9}/[\\w\\d]+|\
+      api\\.hubapi\\.com/webhooks/v1/[\\w\\d]+/|\
+      chat\\.twilio\\.com/v2/Services/[\\w\\d]{32}|\
+      outlook\\.office\\.com/webhook/[\\w\\d\\-@/]{73,}|\
+      hooks\\.zapier\\.com/hooks/catch/[\\d]+/[\\w\\d]+|\
+      discord\\.com/api/webhooks/[\\d]+/[\\w\\d]+\
       )"
     ignorecase: True
     isUri: True

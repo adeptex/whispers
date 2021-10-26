@@ -1,13 +1,29 @@
 - id: apikey
-  description: Variable names refering to API keys
+  description: Values resembling known API key formats
   message: API key
   severity: MAJOR
   key:
-    regex: ^(?!(npm authToken)).*[A-Za-z0-9\-\_]+(key|token)$
+    regex: "^(?!.*[ ])[\\w\\d\\.\\-_]+(key|token)$"
     ignorecase: True
   value:
-    regex: ^(?!.*[ ])
+    regex: "^[\\S]{12,}$"
     ignorecase: True
-    minlen: 16
     isUri: False
   similar: 0.35
+
+- id: apikey-known
+  description: Known API key formats
+  message: API key
+  severity: CRITICAL
+  value:
+    regex: "^(?!.*[ ])(\
+      akab|aio|amzn\\.mws\\.|\
+      (0|1)/[\\d]{16}:|CLOJARS|CFPAT|dp\\.(pt|ct|scim|st)\\.|dt0c01\\.|\
+      EAACEdEose0cBA|[\\w\\d]+:APA91b|FLWSECK-|fio-u-|\
+      eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOi|\
+      gh[pousr]_|AIza|eyJrIjoi|skapi_cert_|dG9rO|ion_|lin_(api|oauth)_|\
+      sk\\.eyj1ijoi|NR(AA|RA|AK|II|IQ|SP)-|PMAK-|pypi-|SG\\.|\
+      x(app|ox[spb])-[0-9]+-|sq0(atp|csp|idp)|[sr]k_live_|whsec_|\
+      \\d{9}:AA|[\\w\\d]+\\.atlasv1\\.\
+    )[\\w\\d\\.\\-_=]{12,}$"
+    ignorecase: False
