@@ -30,6 +30,7 @@ from whispers.plugins.yml import Yml
     [
         ("File.404", 0),
         ("/tmp", 0),
+        ("/root/403", 0),
         (fixture_path("language.py2"), 1),
         (fixture_path(".npmrc"), 4),
         (fixture_path("placeholders.xml"), 1),

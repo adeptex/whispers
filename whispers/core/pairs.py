@@ -24,10 +24,15 @@ from whispers.plugins.yml import Yml
 
 def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
     """Generates KeyValuePair objects by parsing given file"""
-    if not file.exists():
-        return None
+    try:
+        if not file.exists():
+            return None
 
-    if not file.is_file():
+        if not file.is_file():
+            return None
+
+    except PermissionError:
+        global_exception_handler(file.as_posix(), "Failed to make pairs")
         return None
 
     # First, return file name to check if it is a sensitive file
