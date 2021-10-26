@@ -7,3 +7,6 @@ noncompliant:
     slack-webhook: https://hooks.slack.com/services/HARDC0D3D/HARDC0D3D/hardcodedWebhook01
     hubspot-webhook: https://api.hubapi.com/webhooks/v1/HARDC0D3D/hardcodedWebhook02
     twilio-webhook: https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXHARDCODED/hardcodedWebhook03
+    outlook-webhook: https://outlook.office.com/webhook/h4rd-c0ded/a/b/B8vIR9UxX3XU2wTbt6BpFxxriKq5Z1g0QO7O5n4n5EgeRxwfWuxxND8NmB3rOk9Bhk6oAKPkihardcodedWebhook04
+    zapier-webhook: https://hooks.zapier.com/hooks/catch/1234567/hardcodedWebhook05/
+    discord-webhook: https://discord.com/api/webhooks/123456789123456789/hardcodedWebhook06
