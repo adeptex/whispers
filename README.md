@@ -39,10 +39,11 @@ make install
 ## Detects
 * Passwords
 * API tokens
-* AWS keys
+* Cloud keys
 * Private keys
 * Hashed credentials
 * Authentication tokens
+* Webhooks
 * Sensitive files
 * Dangerous functions (Python)
 
