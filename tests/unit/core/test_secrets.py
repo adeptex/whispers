@@ -244,7 +244,7 @@ def test_detect_secrets_by_filename(expected):
 
 
 @pytest.mark.parametrize(
-    ("src", "count", "rule_id"), [("language.html", 3, "comments"), ("passwords.json", 6, "password"),],
+    ("src", "count", "rule_id"), [("language.html", 3, "comment"), ("passwords.json", 6, "password"),],
 )
 def test_detect_secrets_by_rule(src, count, rule_id):
     args = parse_args(["-r", rule_id, "-c", config_path("detection_by_value.yml"), fixture_path(src)])
