@@ -1,7 +1,7 @@
 # Whispers <img src="whispers.png" width="40px" alt="Whispers" style=""> 
 
 [![](https://img.shields.io/pypi/v/whispers.svg)](https://pypi.python.org/pypi/whispers/)
-[![](https://github.com/adeptex/whispers/workflows/build/badge.svg)](https://github.com/whispers/whispers/actions)
+[![](https://github.comworkflows/build/badge.svg)](https://github.com/whispers/whispers/actions)
 ![](coverage.svg)
 [![](https://img.shields.io/github/issues/whispers/whispers)](https://github.com/whispers/whispers/issues)
 [![](https://img.shields.io/github/issues-pr/whispers/whispers)](https://github.com/whispers/whispers/pulls)
@@ -31,9 +31,9 @@ make install
 
 ## Supported Formats
 
-:clipboard: Complete coverage for JSON, YAML, XML, and [many other formats](/adeptex/whispers/tests/fixtures).
+:clipboard: Complete coverage for JSON, YAML, XML, and [many other formats](tests/fixtures).
 
-:hammer_and_wrench: [Contribute](/adeptex/whispers/issues/new) by submitting format samples!
+:hammer_and_wrench: [Contribute](issues/new) by submitting format samples!
 
 
 ## Detects
@@ -110,7 +110,7 @@ severity:
   - MAJOR
 ```
 
-The fastest way to tweak detection (ie: remove false positives and unwanted results) is to copy the default [config.yml](/adeptex/whispers/whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers.
+The fastest way to tweak detection (ie: remove false positives and unwanted results) is to copy the default [config.yml](whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers.
 
 For example: `whispers -c config.yml -r starks target`
 
@@ -119,7 +119,7 @@ For example: `whispers -c config.yml -r starks target`
 Rules specify the actual things that should be pulled out from key-value pairs. There are several common ones that come built-in, such as AWS keys and passwords, but the tool is made to be easily expandable with new rules.
 
 - Custom rules can be defined in the main config file under `rules:` key
-- Custom rules can be added to [whispers/rules](/adeptex/whispers/whispers/rules/) directory
+- Custom rules can be added to [whispers/rules](whispers/rules/) directory
 
 ```yaml
 - id: rule-id                 # unique rule name
@@ -145,7 +145,7 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
 
 
 ## Plugins
-All parsing functionality is implemented via [plugins](/adeptex/whispers/whispers/plugins/). Each plugin implements a class with the `pairs()` method that runs through files and yields `KeyValuePair` objects to be checked with [rules](/adeptex/whispers/whispers/rules/).
+All parsing functionality is implemented via [plugins](whispers/plugins/). Each plugin implements a class with the `pairs()` method that runs through files and yields `KeyValuePair` objects to be checked with [rules](whispers/rules/).
 
 ```py
 from whispers.core.utils import KeyValuePair
