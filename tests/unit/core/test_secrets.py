@@ -170,6 +170,8 @@ def test_detect_secrets_by_key(src, expected):
         ("invalid.yml", 0),
         ("invalid.json", 0),
         ("invalid.ini", 0),
+        ("invalid.py", 0),
+        ("invalid.sh", 0),
         ("java.properties", 3),
         ("jdbc.xml", 3),
         ("language.html", 3),

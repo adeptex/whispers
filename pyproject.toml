@@ -1,10 +1,11 @@
 [tool.black]
 line-length = 120
 exclude = '''
-/(
+(
     \.eggs
   | \.venv
   | venv
   | dev
-)/
+  | tests/fixtures/invalid.py
+)
 '''

@@ -52,7 +52,12 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
     included = filter(None, map(lambda pair: filter_included(config, pair), static))
     tagged = map(lambda pair: tag_file(file, pair), included)
 
-    yield from tagged
+    try:
+        yield from tagged
+
+    except Exception:
+        global_exception_handler(file.as_posix(), "Failed to make pairs")
+        return None
 
 
 def tag_file(file: Path, pair: KeyValuePair) -> KeyValuePair:
