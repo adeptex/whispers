@@ -4,14 +4,14 @@
 #
 #    make freeze-upgrade
 #
-astroid==2.8.3
+astroid==2.8.4
 beautifulsoup4==4.10.0
 dataclasses==0.6
+jellyfish==0.8.9
 jproperties==2.1.1
 lazy-object-proxy==1.6.0
 luhn==0.2.0
 lxml==4.6.3
-python-levenshtein==0.12.2
 pyyaml==6.0
 six==1.16.0
 soupsieve==2.2.1

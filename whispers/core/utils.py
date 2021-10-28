@@ -4,7 +4,7 @@ from base64 import b64decode
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from Levenshtein import ratio
+from jellyfish import jaro_winkler_similarity
 from luhn import verify as luhn_verify
 from yaml import safe_load
 
@@ -82,7 +82,7 @@ def similar_strings(a: str, b: str) -> float:
     a = simple_string(a).replace("_", "")
     b = simple_string(b).replace("_", "")
 
-    return ratio(a, b)
+    return jaro_winkler_similarity(a, b)
 
 
 def is_ascii(data: str) -> bool:

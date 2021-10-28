@@ -73,15 +73,11 @@ def test_simple_string(rawstr, expected):
 
 
 @pytest.mark.parametrize(
-    ("str1", "str2"),
-    [
-        ("whispers", "WHISPERS!!!"),
-        ("W h  I S P e r s", "WHISPERS!!!"),
-        pytest.param("AAAAAAA", "WHISPERS!!!", marks=pytest.mark.xfail),
-    ],
+    ("str1", "str2", "expected"),
+    [("whispers", "WHISPERS!!!", True), ("W h  I S P e r s", "WHISPERS!!!", True), ("AAAAAAA", "WHISPERS!!!", False),],
 )
-def test_similar_strings(str1, str2):
-    assert similar_strings(str1, str2)
+def test_similar_strings(str1, str2, expected):
+    assert bool(similar_strings(str1, str2)) is expected
 
 
 @pytest.mark.parametrize(
