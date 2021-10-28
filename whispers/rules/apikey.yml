@@ -9,7 +9,7 @@
     regex: "^[\\S]{12,}$"
     ignorecase: True
     isUri: False
-  similar: 0.35
+  similar: 0.7
 
 - id: apikey-known
   description: Known API key formats

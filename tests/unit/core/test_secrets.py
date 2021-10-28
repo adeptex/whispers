@@ -6,7 +6,9 @@ from whispers.core.config import load_config
 from whispers.core.pairs import make_pairs
 from whispers.core.rules import default_rule_structure, load_rules
 from whispers.core.secrets import detect_secrets, filter_param, filter_rule, tag_lineno
-from whispers.core.utils import KeyValuePair, is_base64
+from whispers.core.utils import DEFAULT_SEVERITY, KeyValuePair, is_base64
+
+DEFAULT_SEVERITY = ",".join(DEFAULT_SEVERITY)
 
 
 @pytest.fixture
@@ -136,67 +138,86 @@ def test_detect_secrets_by_key(src, expected):
 
 
 @pytest.mark.parametrize(
-    ("src", "expected"),
+    ("src", "severity", "expected"),
     [
-        (".aws/credentials", 5),
-        (".dockercfg", 1),
-        (".htpasswd", 2),
-        (".npmrc", 3),
-        (".pypirc", 1),
-        ("Dockerfile", 3),
-        ("apikeys.json", 10),
-        ("apikeys.xml", 10),
-        ("apikeys.yml", 10),
-        ("apikeys-known.yml", 54),
-        ("beans.xml", 3),
-        ("beans.xml.dist", 3),
-        ("beans.xml.template", 3),
-        ("build.gradle", 2),
-        ("creditcards.yml", 3),
-        ("cloudformation.json", 1),
-        ("cloudformation.json.template", 0),
-        ("custom.json", 0),
-        ("custom.xml", 0),
-        ("custom.yml", 0),
-        ("empty.dockercfg", 0),
-        ("falsepositive.yml", 4),
-        ("hardcoded.json", 5),
-        ("hardcoded.xml", 5),
-        ("hardcoded.yml", 5),
-        ("integration.conf", 5),
-        ("integration.json", 5),
-        ("integration.xml", 5),
-        ("integration.yml", 5),
-        ("invalid.yml", 0),
-        ("invalid.json", 0),
-        ("invalid.ini", 0),
-        ("invalid.py", 0),
-        ("invalid.sh", 0),
-        ("java.properties", 3),
-        ("jdbc.xml", 3),
-        ("language.html", 3),
-        ("language.py", 11),
-        ("language.py2", 0),
-        ("language.sh", 14),
-        ("passwords.json", 6),
-        ("passwords.xml", 6),
-        ("passwords.yml", 6),
-        ("pip.conf", 2),
-        ("placeholders.json", 0),
-        ("placeholders.xml", 0),
-        ("placeholders.yml", 0),
-        ("plaintext.txt", 2),
-        ("settings.cfg", 1),
-        ("settings.conf", 1),
-        ("settings.env", 1),
-        ("settings01.ini", 1),
-        ("settings02.ini", 1),
-        ("uri.yml", 3),
-        ("webhooks.yml", 6),
+        (".aws/credentials", "BLOCKER", 3),
+        (".dockercfg", "CRITICAL", 1),
+        (".htpasswd", "MAJOR", 2),
+        (".npmrc", "CRITICAL", 3),
+        (".pypirc", "CRITICAL", 1),
+        ("apikeys-known.yml", "CRITICAL", 54),
+        ("apikeys.json", "MAJOR", 9),
+        ("apikeys.xml", "MAJOR", 9),
+        ("apikeys.yml", "MAJOR", 9),
+        ("aws.yml", "BLOCKER", 3),
+        ("aws.json", "BLOCKER", 3),
+        ("aws.xml", "BLOCKER", 3),
+        ("beans.xml", "CRITICAL", 1),
+        ("beans.xml.dist", "CRITICAL", 1),
+        ("beans.xml.template", "CRITICAL", 1),
+        ("build.gradle", "CRITICAL", 2),
+        ("cloudformation.json", "CRITICAL", 1),
+        ("cloudformation.json.template", DEFAULT_SEVERITY, 0),
+        ("cloudformation.yml", "CRITICAL", 1),
+        # ("connection.config", "CRITICAL", 1),
+        ("cors.py", "MINOR", 1),
+        ("creditcards.yml", "MINOR", 3),
+        ("custom.json", DEFAULT_SEVERITY, 0),
+        ("custom.xml", DEFAULT_SEVERITY, 0),
+        ("custom.yml", DEFAULT_SEVERITY, 0),
+        ("Dockerfile", "MAJOR", 3),
+        ("empty.dockercfg", "BLOCKER,CRITICAL,MAJOR,INFO", 0),
+        ("excluded.json", "BLOCKER", 0),
+        ("excluded.xml", "BLOCKER", 0),
+        ("excluded.yml", "BLOCKER", 0),
+        ("falsepositive.yml", DEFAULT_SEVERITY, 5),
+        ("Groups.xml", "CRITICAL", 2),
+        ("hardcoded.json", "CRITICAL", 5),
+        ("hardcoded.xml", "CRITICAL", 5),
+        ("hardcoded.yml", "CRITICAL", 5),
+        ("integration.conf", "CRITICAL", 5),
+        ("integration.json", "CRITICAL", 5),
+        ("integration.xml", "CRITICAL", 5),
+        ("integration.yml", "CRITICAL", 5),
+        ("invalid.yml", DEFAULT_SEVERITY, 0),
+        ("invalid.json", DEFAULT_SEVERITY, 0),
+        ("invalid.ini", "BLOCKER,CRITICAL,MAJOR,INFO", 0),
+        ("invalid.py", DEFAULT_SEVERITY, 0),
+        ("invalid.sh", DEFAULT_SEVERITY, 0),
+        ("java.properties", "CRITICAL,MAJOR", 3),
+        ("jdbc.xml", "CRITICAL", 3),
+        ("jenkins.xml", "CRITICAL,MAJOR", 2),
+        ("language.html", "INFO", 3),
+        ("language.py", "CRITICAL", 11),
+        ("language.py2", DEFAULT_SEVERITY, 0),
+        ("language.sh", "CRITICAL,MAJOR", 14),
+        ("passwords.json", "CRITICAL", 6),
+        ("passwords.xml", "CRITICAL", 6),
+        ("passwords.yml", "CRITICAL", 6),
+        ("paths.yml", DEFAULT_SEVERITY, 0),
+        ("pip.conf", "CRITICAL", 2),
+        ("placeholders.json", DEFAULT_SEVERITY, 0),
+        ("placeholders.xml", DEFAULT_SEVERITY, 0),
+        ("placeholders.yml", DEFAULT_SEVERITY, 0),
+        ("plaintext.txt", "CRITICAL", 2),
+        ("private-pgp-block.txt", "CRITICAL", 1),
+        ("privatekeys.json", "CRITICAL", 6),
+        ("privatekeys.xml", "CRITICAL", 6),
+        ("privatekeys.yml", "CRITICAL", 6),
+        ("putty.ppk", DEFAULT_SEVERITY, 0),
+        ("ruleslist.yml", "CRITICAL", 3),
+        ("settings.cfg", "CRITICAL", 1),
+        ("settings.conf", "CRITICAL", 1),
+        ("settings.env", "CRITICAL", 1),
+        ("settings01.ini", "CRITICAL", 1),
+        ("settings02.ini", "CRITICAL", 1),
+        ("severity.yml", "BLOCKER", 1),
+        ("uri.yml", "CRITICAL", 3),
+        ("webhooks.yml", "MINOR", 6),
     ],
 )
-def test_detect_secrets_by_value(src, expected):
-    args = parse_args(["-c", config_path("detection_by_value.yml"), fixture_path(src)])
+def test_detect_secrets_by_value(src, severity, expected):
+    args = parse_args(["--config", config_path("detection_by_value.yml"), "--severity", severity, fixture_path(src)])
     config = load_config(args)
     rules = load_rules(args, config)
     pairs = make_pairs(config, FIXTURE_PATH.joinpath(src))
@@ -212,7 +233,9 @@ def test_detect_secrets_by_value(src, expected):
         if is_base64(secret.value):
             continue
 
-        assert "hardcoded" in secret.value.lower()
+        result = secret.value.lower()
+
+        assert result.find("hardcoded") >= 0 or result.find("private key")
 
     assert count == expected
 
@@ -247,7 +270,7 @@ def test_detect_secrets_by_filename(expected):
     ("src", "count", "rule_id"), [("language.html", 3, "comment"), ("passwords.json", 6, "password"),],
 )
 def test_detect_secrets_by_rule(src, count, rule_id):
-    args = parse_args(["-r", rule_id, "-c", config_path("detection_by_value.yml"), fixture_path(src)])
+    args = parse_args(["--rules", rule_id, fixture_path(src)])
     config = load_config(args)
     rules = load_rules(args, config)
     pairs = make_pairs(config, FIXTURE_PATH.joinpath(src))

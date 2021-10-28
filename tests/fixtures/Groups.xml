@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Groups clsid="{id}">
-    <User clsid="{id}" name="Administrator" image="0" changed="2019-05-20 06:34:56" uid="{id}">
-        <Properties action="C" fullName="" description="" cpassword="FAKEWzC8r0KH+edYsh04vjo1wcNxtSvX1efu9MU+z5e37E" changeLogon="0" noChange="0" neverExpires="1" acctDisabled="0" userName="Administrator"/>
+<User clsid="{compliant-01}" name="Administrator" image="0" changed="2019-05-20 06:34:56" uid="{id}">
+        <Properties action="C" fullName="" description="" cpassword="" changeLogon="0" noChange="0" neverExpires="1" acctDisabled="0" userName="Administrator"/>
     </User>
-    <User clsid="{id}" name="User" image="0" changed="2019-05-20 06:35:29" uid="{id}">
-        <Properties action="C" fullName="" description="" cpassword="FAKEtlKQrm9Iw344asf5tWY+KZ1iBu7tbjQ/2vCOFU3Kkiw" changeLogon="0" noChange="0" neverExpires="1" acctDisabled="0" userName="User"/>
+    <User clsid="{noncompliant-01}" name="Administrator" image="0" changed="2019-05-20 06:34:56" uid="{id}">
+        <Properties action="C" fullName="" description="" cpassword="HARDcodedWzC8r0KH+edYsh04vjo1wcNxtSvX1efu9MU+z5e37E" changeLogon="0" noChange="0" neverExpires="1" acctDisabled="0" userName="Administrator"/>
+    </User>
+    <User clsid="{noncompliant-02}" name="User" image="0" changed="2019-05-20 06:35:29" uid="{id}">
+        <Properties action="C" fullName="" description="" cpassword="HARDcodedtlKQrm9Iw344asf5tWY+KZ1iBu7tbjQ/2vCOFU3Kkiw" changeLogon="0" noChange="0" neverExpires="1" acctDisabled="0" userName="User"/>
     </User>
 </Groups>
