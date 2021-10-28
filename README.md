@@ -11,7 +11,7 @@
 
 Whispers is a static text analysis tool designed for parsing various common software config formats in search of hardcoded secrets. Whispers can run in the CLI or be integrated in a CI/CD pipeline.
 
-Whispers is a **static structured text** parser, not dynamic code parser.
+Whispers is a **static structured text** parser, not a dynamic code parser.
 
 :exclamation: [Report an issue](issues/new) 
 
