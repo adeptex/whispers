@@ -13,6 +13,8 @@ Whispers is a static text analysis tool designed for parsing various common soft
 
 Whispers is a **static structured text** parser, not dynamic code parser.
 
+:exclamation: [Report an issue](issues/new) 
+
 
 ## Installation
 
