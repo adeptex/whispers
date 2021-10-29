@@ -33,7 +33,7 @@ def test_cleanup_log(data, expected):
         try:
             remove(logfile)
 
-        except PermissionError:
+        except (PermissionError, OSError):
             pass
 
 

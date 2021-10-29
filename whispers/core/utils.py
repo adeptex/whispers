@@ -45,7 +45,12 @@ def ensure_file_exists(file: Path):
     try:
         file_exists = file.exists()
 
-    except (PermissionError, OSError):
+    except (PermissionError, OSError):  # pragma: no cover
+        """
+        This is a patch for Windows system compatibility.
+        The TypeError exception is consistent for indicating
+        that the file should be excluded from the scan.
+        """
         raise TypeError(f"{file.as_posix()} is not accessible")
 
     if not file_exists:

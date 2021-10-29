@@ -26,10 +26,12 @@ def rule_path(filename: str = "") -> str:
 
 
 def forbidden_path() -> str:
+    # Linux & MacOS
     if os.name == "posix":
-        return "/root/403"  # Linux & MacOS
+        return "/root/403"
 
-    return Path("%windir%\\system32\\config\\SAM").resolve().as_posix()  # Windows
+    # Windows
+    return Path("%windir%\\system32\\config\\SAM").resolve().as_posix()
 
 
 def tmp_path(filename: str = "") -> str:

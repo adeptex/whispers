@@ -43,8 +43,16 @@ def configure_log(args: Namespace) -> Path:
 def cleanup_log():
     """Delete the log file if it's empty"""
     logpath = Path("whispers.log")
-    if not logpath.stat().st_size:
-        remove(logpath.as_posix())
+    try:
+        if not logpath.stat().st_size:
+            remove(logpath.as_posix())
+
+    except (PermissionError, OSError):  # pragma: no cover
+        """
+        This is a patch for Windows system compatibility.
+        This handles cases when it is not possible to delete
+        the log file due to permissions or WinError.
+        """
 
 
 def global_exception_handler(file: str, data: str):
