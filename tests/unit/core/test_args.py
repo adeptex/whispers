@@ -1,11 +1,12 @@
 from argparse import ArgumentParser
 from io import StringIO, TextIOWrapper
+from os import remove, urandom
 from sys import stdout
 from unittest.mock import patch
 
 import pytest
 
-from tests.unit.conftest import config_path, does_not_raise
+from tests.unit.conftest import config_path, does_not_raise, tmp_path
 from whispers.__version__ import __version__, __whispers__
 from whispers.core.args import argument_parser, parse_args, show_info, show_splash
 
@@ -39,8 +40,10 @@ def test_parse_args(arguments, key, expected, exception):
 
 
 def test_parse_args_output():
-    args = parse_args(["-o", "/tmp/out", "src"])
+    outfile = tmp_path(f"out-{urandom(30).hex()}")
+    args = parse_args(["--output", outfile, "src"])
     assert isinstance(args.output, TextIOWrapper)
+    remove(outfile)
 
 
 def test_show_info():

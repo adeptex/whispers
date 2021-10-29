@@ -4,7 +4,7 @@ from os import urandom
 import pytest
 from yaml.parser import ParserError
 
-from tests.unit.conftest import config_path, does_not_raise
+from tests.unit.conftest import config_path, devnull_path, does_not_raise, tmp_path
 from whispers.core.args import parse_args
 from whispers.core.config import default_config_structure, load_config
 from whispers.core.rules import default_rules, list_rule_ids
@@ -13,8 +13,8 @@ from whispers.core.rules import default_rules, list_rule_ids
 @pytest.mark.parametrize(
     ("filename", "expected"),
     [
-        (f"/tmp/File404-{urandom(30).hex()}", pytest.raises(FileNotFoundError)),
-        ("/dev/null", pytest.raises(TypeError)),
+        (tmp_path(f"file-404-{urandom(30).hex()}"), pytest.raises(FileNotFoundError)),
+        (devnull_path(), pytest.raises(TypeError)),
         (config_path("invalid.yml"), pytest.raises(ParserError)),
         (config_path("empty.yml"), pytest.raises(NameError)),
         (config_path("example.yml"), does_not_raise()),

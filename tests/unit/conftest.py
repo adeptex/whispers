@@ -1,5 +1,7 @@
+import os
 from contextlib import contextmanager
 from pathlib import Path
+from tempfile import gettempdir
 
 FIXTURE_PATH = Path("tests/fixtures")
 CONFIG_PATH = Path("tests/configs")
@@ -21,3 +23,21 @@ def config_path(filename: str = "") -> str:
 
 def rule_path(filename: str = "") -> str:
     return RULE_PATH.joinpath(filename).as_posix()
+
+
+def forbidden_path() -> str:
+    if os.name == "posix":
+        return "/root/403"  # Linux & MacOS
+
+    return Path("%windir%\\system32\\config\\SAM").resolve().as_posix()  # Windows
+
+
+def devnull_path() -> str:
+    if os.name == "posix":
+        return "/dev/null"  # Linux & MacOS
+
+    return "nul"  # Windows
+
+
+def tmp_path(filename: str = "") -> str:
+    return Path(gettempdir()).resolve().joinpath(filename).as_posix()

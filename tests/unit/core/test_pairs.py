@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.unit.conftest import FIXTURE_PATH, fixture_path
+from tests.unit.conftest import FIXTURE_PATH, fixture_path, forbidden_path, tmp_path
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
 from whispers.core.pairs import filter_included, filter_static, is_static, load_plugin, make_pairs, tag_file
@@ -28,9 +28,8 @@ from whispers.plugins.yml import Yml
 @pytest.mark.parametrize(
     ("filename", "expected"),
     [
-        ("File.404", 0),
-        ("/tmp", 0),
-        ("/root/403", 0),
+        (tmp_path("File.404"), 0),
+        (forbidden_path(), 0),
         (fixture_path("language.py2"), 1),
         (fixture_path(".npmrc"), 4),
         (fixture_path("placeholders.xml"), 1),
