@@ -27,13 +27,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: setup pip
+        run: python -m pip install --upgrade pip
+
       - name: install
-        run: |
-          python -m pip install --upgrade pip
-          make install-dev
+        run: make install-dev
 
       - name: lint
         run: make lint
 
-      - name: coverage
-        run: make coverage
+      - name: unit
+        run: make unit
