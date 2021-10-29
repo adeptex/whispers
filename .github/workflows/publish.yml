@@ -32,8 +32,8 @@ jobs:
       - name: lint
         run: make lint
 
-      - name: unit
-        run: make unit
+      - name: coverage
+        run: make coverage
 
       - name: publish
         run: make publish
