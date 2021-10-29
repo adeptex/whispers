@@ -15,7 +15,7 @@ def test_configure_log():
     try:
         remove(expected_file.as_posix())
 
-    except PermissionError:
+    except (PermissionError, OSError):
         pass
 
 
@@ -26,15 +26,11 @@ def test_cleanup_log(data, expected):
     args = parse_args([fixture_path()])
     logfile = configure_log(args)
     logfile.write_text(data)
-    cleanup_log()
-    assert logfile.exists() == expected
-
-    if logfile.exists():
-        try:
-            remove(logfile)
-
-        except (PermissionError, OSError):
-            pass
+    result = cleanup_log()
+    if result:
+        assert logfile.exists() == expected
+        if logfile.exists():
+            cleanup_log()
 
 
 def test_global_exception_handler():
