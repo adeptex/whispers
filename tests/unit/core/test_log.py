@@ -11,7 +11,12 @@ def test_configure_log():
     args = parse_args([fixture_path()])
     expected_file = configure_log(args)
     assert expected_file.exists()
-    remove(expected_file.as_posix())
+
+    try:
+        remove(expected_file.as_posix())
+
+    except PermissionError:
+        pass
 
 
 @pytest.mark.parametrize(
@@ -26,7 +31,7 @@ def test_cleanup_log(data, expected):
 
     if logfile.exists():
         try:
-            cleanup_log()
+            remove(logfile)
 
         except PermissionError:
             pass

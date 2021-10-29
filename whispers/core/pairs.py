@@ -31,8 +31,8 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
         if not file.is_file():
             return None
 
-    except PermissionError:
-        global_exception_handler(file.as_posix(), "Failed to make pairs")
+    except (PermissionError, OSError):
+        global_exception_handler(file.as_posix(), "Failed making pairs")
         return None
 
     # First, return file name to check if it is a sensitive file
@@ -151,66 +151,57 @@ def load_plugin(file: Path) -> Optional[object]:
     Loads the correct plugin for given file.
     Returns None if no plugin found.
     """
-    try:
-        if file.suffix in [".dist", ".template"]:
-            filetype = file.stem.split(".")[-1]
-        else:
-            filetype = file.name.split(".")[-1]
+    if file.suffix in [".dist", ".template"]:
+        filetype = file.stem.split(".")[-1]
+    else:
+        filetype = file.name.split(".")[-1]
 
-        if filetype in ["yaml", "yml"]:
-            return Yml
+    if filetype in ["yaml", "yml"]:
+        return Yml
 
-        elif filetype == "json":
-            return Json
+    elif filetype == "json":
+        return Json
 
-        elif filetype == "xml":
-            return Xml
+    elif filetype == "xml":
+        return Xml
 
-        elif filetype.startswith("npmrc"):
-            return Npmrc
+    elif filetype.startswith("npmrc"):
+        return Npmrc
 
-        elif filetype.startswith("pypirc"):
-            return Pypirc
+    elif filetype.startswith("pypirc"):
+        return Pypirc
 
-        elif file.name == "pip.conf":
-            return Pip
+    elif file.name == "pip.conf":
+        return Pip
 
-        elif file.name == "build.gradle":
-            return Gradle
+    elif file.name == "build.gradle":
+        return Gradle
 
-        elif filetype in ["conf", "cfg", "cnf", "config", "ini", "env", "credentials", "s3cfg"]:
-            with file.open("r") as fh:
-                if fh.readline().startswith("<?xml "):
-                    return Xml
+    elif filetype in ["conf", "cfg", "cnf", "config", "ini", "env", "credentials", "s3cfg"]:
+        return Config
 
-                else:
-                    return Config
+    elif filetype == "properties":
+        return Jproperties
 
-        elif filetype == "properties":
-            return Jproperties
+    elif filetype.startswith(("sh", "bash", "zsh", "env")):
+        return Shell
 
-        elif filetype.startswith(("sh", "bash", "zsh", "env")):
-            return Shell
+    elif "dockerfile" in file.name.lower():
+        return Dockerfile
 
-        elif "dockerfile" in file.name.lower():
-            return Dockerfile
+    elif filetype == "dockercfg":
+        return Dockercfg
 
-        elif filetype == "dockercfg":
-            return Dockercfg
+    elif filetype.startswith("htpasswd"):
+        return Htpasswd
 
-        elif filetype.startswith("htpasswd"):
-            return Htpasswd
+    elif filetype == "txt":
+        return Plaintext
 
-        elif filetype == "txt":
-            return Plaintext
+    elif filetype.startswith("htm"):
+        return Html
 
-        elif filetype.startswith("htm"):
-            return Html
-
-        elif filetype in ["py", "py3", "py35", "py36", "py37", "py38", "py39"]:
-            return Python
-
-    except Exception:
-        global_exception_handler(file.as_posix(), "Failed loading plugin")
+    elif filetype in ["py", "py3", "py35", "py36", "py37", "py38", "py39"]:
+        return Python
 
     return None

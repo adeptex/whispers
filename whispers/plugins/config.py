@@ -4,17 +4,22 @@ from pathlib import Path
 from typing import Iterator, Optional
 
 from whispers.core.utils import KeyValuePair, strip_string
+from whispers.plugins.xml import Xml
 
 
 class Config:
     def pairs(self, filepath: Path) -> Iterator[KeyValuePair]:
-        try:
-            # Attempt to parse as Windows INI
-            yield from self.parse_as_ini(filepath)
+        if "<?xml " in filepath.open("r").readline():
+            yield from Xml().pairs(filepath)
 
-        except MissingSectionHeaderError:
-            # Otherwise, parse as text line by line
-            yield from self.parse_as_text(filepath)
+        else:
+            try:
+                # Attempt to parse as Windows INI
+                yield from self.parse_as_ini(filepath)
+
+            except MissingSectionHeaderError:
+                # Otherwise, parse as text line by line
+                yield from self.parse_as_text(filepath)
 
     @staticmethod
     def parse_as_ini(filepath: Path) -> Optional[KeyValuePair]:

@@ -32,13 +32,5 @@ def forbidden_path() -> str:
     return Path("%windir%\\system32\\config\\SAM").resolve().as_posix()  # Windows
 
 
-def devnull_path() -> str:
-    return os.devnull
-    # if os.name == "posix":
-    #     return "/dev/null"  # Linux & MacOS
-
-    # return "nul"  # Windows
-
-
 def tmp_path(filename: str = "") -> str:
     return Path(gettempdir()).resolve().joinpath(filename).as_posix()
