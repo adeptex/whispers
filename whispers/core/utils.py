@@ -41,7 +41,14 @@ def load_yaml_from_file(filepath: Path) -> dict:
 
 def ensure_file_exists(file: Path):
     """Raise exception if file path does not exist"""
-    if not file.exists():
+    file_exists = False
+    try:
+        file_exists = file.exists()
+
+    except (PermissionError, OSError):
+        raise TypeError(f"{file.as_posix()} is not accessible")
+
+    if not file_exists:
         raise FileNotFoundError(f"{file.as_posix()} does not exist")
 
     if not file.is_file():
