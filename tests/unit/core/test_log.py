@@ -23,8 +23,13 @@ def test_cleanup_log(data, expected):
     logfile.write_text(data)
     cleanup_log()
     assert logfile.exists() == expected
+
     if logfile.exists():
-        remove(logfile.as_posix())
+        try:
+            cleanup_log()
+
+        except PermissionError:
+            pass
 
 
 def test_global_exception_handler():
@@ -33,8 +38,11 @@ def test_global_exception_handler():
     message = urandom(30).hex()
     try:
         1 / 0
+
     except Exception:
         global_exception_handler(logfile.as_posix(), message)
+
     logtext = logfile.read_text()
+
     assert "ZeroDivisionError: division by zero" in logtext
     assert message in logtext

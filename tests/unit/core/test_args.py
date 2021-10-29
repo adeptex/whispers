@@ -43,6 +43,7 @@ def test_parse_args_output():
     outfile = tmp_path(f"out-{urandom(30).hex()}")
     args = parse_args(["--output", outfile, "src"])
     assert isinstance(args.output, TextIOWrapper)
+    args.output.close()
     remove(outfile)
 
 

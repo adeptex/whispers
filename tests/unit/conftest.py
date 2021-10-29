@@ -33,10 +33,11 @@ def forbidden_path() -> str:
 
 
 def devnull_path() -> str:
-    if os.name == "posix":
-        return "/dev/null"  # Linux & MacOS
+    return os.devnull
+    # if os.name == "posix":
+    #     return "/dev/null"  # Linux & MacOS
 
-    return "nul"  # Windows
+    # return "nul"  # Windows
 
 
 def tmp_path(filename: str = "") -> str:
