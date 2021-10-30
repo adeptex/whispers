@@ -1,13 +1,13 @@
 import pytest
 
 from tests.unit.conftest import FIXTURE_PATH, config_path, fixture_path
+from whispers import secrets as whispers_secrets
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
 from whispers.core.pairs import make_pairs
 from whispers.core.rules import default_rule_structure, load_rules
 from whispers.core.secrets import detect_secrets, filter_param, filter_rule, tag_lineno
 from whispers.core.utils import DEFAULT_SEVERITY, KeyValuePair, is_base64
-from whispers.main import run
 
 DEFAULT_SEVERITY = ",".join(DEFAULT_SEVERITY)
 
@@ -282,6 +282,6 @@ def test_detect_secrets_by_rule(src, count, rule_id):
 
 
 def test_sensitive_files():
-    args = parse_args(["--rules", "sensitive-files", fixture_path("files")])
-    result = list(run(args))
+    args = f"--rules sensitive-files {fixture_path('files')}"
+    result = list(whispers_secrets(args))
     assert len(result) == 3

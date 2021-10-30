@@ -67,17 +67,16 @@ whispers target/file/or/dir
 
 ### Python
 ```python
-from whispers.core.args import parse_args
-from whispers.main import run
+import whispers
 
-args = parse_args([
-  "-c", "whispers/config.yml",
-  "-r", "apikey,aws-secret,password",
-  "-s", "BLOCKER,CRITICAL,MAJOR",
+args = (
+  "-c whispers/config.yml "
+  "-r apikey,aws-secret,password "
+  "-s BLOCKER,CRITICAL,MAJOR "
   "tests/fixtures"
-])
+)
 
-for secret in run(args):
+for secret in whispers.secrets(args):
   print(f"[{secret.file}:{secret.line}] {secret.key} = {secret.value}")
 ```
 
