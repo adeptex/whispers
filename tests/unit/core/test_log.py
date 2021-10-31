@@ -1,13 +1,15 @@
 from os import remove, urandom
+from pathlib import Path
+from tempfile import gettempdir
 
 import pytest
 
-from tests.unit.conftest import fixture_path, tmp_path
+from tests.unit.conftest import fixture_path
 from whispers.core.args import parse_args
 from whispers.core.log import configure_log, global_exception_handler
 
 
-@pytest.mark.parametrize(("create", "expected"), [(False, None), (True, tmp_path("whispers.log"))])
+@pytest.mark.parametrize(("create", "expected"), [(False, None), (True, Path(gettempdir()).joinpath("whispers.log"))])
 def test_configure_log(create, expected):
     args = []
     if create:
@@ -17,7 +19,6 @@ def test_configure_log(create, expected):
     result = configure_log(parse_args(args))
     if result:
         assert result.exists()
-        result = result.as_posix()
         remove(result)
 
     assert result == expected
