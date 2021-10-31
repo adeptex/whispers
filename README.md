@@ -92,7 +92,7 @@ for secret in whispers.secrets(args):
 
 There are several configuration options available in Whispers. It’s possible to include/exclude results based on file path, key, or value. File path specifications are interpreted as globs. Keys and values accept regular expressions and several other parameters. There is a default configuration file built-in that will be used if you don't provide a custom one.
 
-Minimal `config.yml` example:
+### Minimal
 
 ```yaml
 exclude:
@@ -100,7 +100,7 @@ exclude:
     - .*\.log
 ```
 
-General `config.yml` structure:
+### General
 
 ```yaml
 include:
