@@ -6,7 +6,7 @@
 [![](https://img.shields.io/github/issues/whispers/whispers)](https://github.com/whispers/whispers/issues)
 [![](https://img.shields.io/github/issues-pr/whispers/whispers)](https://github.com/whispers/whispers/pulls)
 [![](https://img.shields.io/pypi/dm/whispers)](https://img.shields.io/pypi/dm/whispers)
-[![](https://img.shields.io/badge/system-linux%20|%20macos%20|%20windows-blue)]()
+[![](https://img.shields.io/badge/system-linux%20|%20osx%20|%20windows-blue)]()
 
 > "My little birds are everywhere, even in the North, they whisper to me the strangest stories." - _Varys_
 
@@ -20,15 +20,17 @@ Whispers is a **static structured text** parser, not a dynamic code parser.
 ## Installation
 
 ### From PyPI
+
 ```
 pip3 install whispers
 ```
 
 ### From GitHub
+
 ```
 git clone https://github.com/whispers/whispers
 cd whispers
-make install
+python3 setup.py install
 ```
 
 
@@ -40,6 +42,7 @@ make install
 
 
 ## Detects
+
 * Passwords
 * API tokens
 * Cloud keys
@@ -49,11 +52,15 @@ make install
 * Webhooks
 * Sensitive files
 * Dangerous functions (Python)
+* [See all rules](whispers/rules)
 
 
 ## Usage
+
 ### CLI
+
 ```
+whispers
 whispers --help
 whispers --version
 whispers --info
@@ -66,7 +73,8 @@ whispers target/file/or/dir
 ```
 
 ### Python
-```python
+
+```py
 import whispers
 
 args = (
@@ -81,9 +89,19 @@ for secret in whispers.secrets(args):
 ```
 
 ## Config
+
 There are several configuration options available in Whispers. It’s possible to include/exclude results based on file path, key, or value. File path specifications are interpreted as globs. Keys and values accept regular expressions and several other parameters. There is a default configuration file built-in that will be used if you don't provide a custom one.
 
-`config.yml` should have the following structure:
+Minimal `config.yml` example:
+
+```yaml
+exclude:
+  files:
+    - .*\.log
+```
+
+General `config.yml` structure:
+
 ```yaml
 include:
   files:
@@ -119,6 +137,7 @@ For example: `whispers -c config.yml -r starks target`
 
 
 ## Custom Rules
+
 Rules specify the actual things that should be pulled out from key-value pairs. There are several common ones that come built-in, such as AWS keys and passwords, but the tool is made to be easily expandable with new rules.
 
 - Custom rules can be defined in the main config file under `rules:` key
