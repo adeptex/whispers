@@ -68,14 +68,17 @@ def tag_file(file: Path, pair: KeyValuePair) -> KeyValuePair:
 
 def filter_included(config: dict, pair: KeyValuePair) -> Optional[KeyValuePair]:
     """Check if pair should be included based on config"""
-    if config["exclude"]["keys"]:
+    xkeys = config["exclude"]["keys"]
+    xvalues = config["exclude"]["values"]
+
+    if xkeys:
         for key in pair.keypath:
-            if config["exclude"]["keys"].match(str(key)):
+            if xkeys.match(str(key)):
                 logging.debug(f"Excluded key {pair}")
                 return None  # Excluded key
 
-    if config["exclude"]["values"]:
-        if config["exclude"]["values"].match(pair.value):
+    if xvalues:
+        if xvalues.match(pair.value):
             logging.debug(f"Excluded value {pair}")
             return None  # Excluded value
 

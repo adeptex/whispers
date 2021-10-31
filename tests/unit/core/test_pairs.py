@@ -65,6 +65,25 @@ def test_filter_included(key, value, expected):
 
 
 @pytest.mark.parametrize(
+    ("xkeys", "xvalues", "expected"),
+    [
+        (re.compile(r"is_not"), re.compile(r"excluded"), type(None)),
+        (None, re.compile(r"excluded"), type(None)),
+        (re.compile(r"is_not"), None, type(None)),
+        (None, None, KeyValuePair),
+    ],
+)
+def test_filter_included_config(xkeys, xvalues, expected):
+    args = parse_args([fixture_path()])
+    config = load_config(args)
+    config["exclude"]["keys"] = xkeys
+    config["exclude"]["values"] = xvalues
+    pair = KeyValuePair("is_not", "excluded", ["is_not"])
+    result = filter_included(config, pair)
+    assert isinstance(result, expected)
+
+
+@pytest.mark.parametrize(
     ("key", "value", "expected"),
     [
         ("aws_secret", "${aws_secret}", None),
