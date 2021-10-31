@@ -22,6 +22,9 @@
   description: Values formatted like AWS Session Token
   message: AWS Session Token
   severity: BLOCKER
+  key:
+      regex: .*aws.*
+      ignorecase: True
   value:
     regex: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9\+\/]{270,450}$
     ignorecase: False
