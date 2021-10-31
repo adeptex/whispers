@@ -36,7 +36,7 @@ def load_rules(args: Namespace, config: dict) -> List[dict]:
         default_rule_structure(rule)
         applicable_rules.append(rule)
 
-    logging.debug(f"Loaded {len(applicable_rules)} rules '{applicable_rules}'")
+    logging.debug(f"load_rules loaded {len(applicable_rules)} rules '{applicable_rules}'")
     return applicable_rules
 
 

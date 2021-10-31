@@ -32,15 +32,15 @@ def tag_lineno(pair: KeyValuePair) -> KeyValuePair:
 def filter_rule(rule: dict, pair: KeyValuePair) -> Optional[KeyValuePair]:
     """Filters based on rule"""
     if not filter_param("key", rule, pair):
-        logging.debug(f"Rule '{rule['id']}' key '{pair.key}' failed")
+        logging.debug(f"filter_rule '{rule['id']}' excluded key '{pair.key}'")
         return None
 
     if not filter_param("value", rule, pair):
-        logging.debug(f"Rule '{rule['id']}' value '{pair.value}' failed")
+        logging.debug(f"filter_rule '{rule['id']}' excluded value '{pair.value}'")
         return None
 
     if is_similar(pair.key, pair.value, rule["similar"]):
-        logging.debug(f"Rule '{rule['id']}' pair '{pair.key}'/'{pair.value}' similar={rule['similar']} failed")
+        logging.debug(f"filter_rule '{rule['id']}' excluded similar '{pair.key}'/'{pair.value}'")
         return None
 
     pair.rule = {
@@ -49,6 +49,7 @@ def filter_rule(rule: dict, pair: KeyValuePair) -> Optional[KeyValuePair]:
         "message": rule["message"],
     }
 
+    logging.debug(f"filter_rule included pair '{pair}'")
     return pair
 
 
@@ -72,29 +73,30 @@ def filter_param(idx: str, rule: dict, pair: KeyValuePair) -> Optional[KeyValueP
         elif is_base64_bytes(target) and not isAscii:
             target = b64decode(target)
         else:
-            logging.debug(f"Target '{target}' isBase64={isBase64} failed")
+            logging.debug(f"filter_param isBase64={isBase64} excluded '{target}'")
             return None
 
     if isAscii != is_ascii(target):
-        logging.debug(f"Target '{target}' isAscii={isAscii} failed")
+        logging.debug(f"filter_param isAscii={isAscii} excluded '{target}'")
         return None
 
     if isUri != is_uri(target):
-        logging.debug(f"Target '{target}' isUri={isUri} failed")
+        logging.debug(f"filter_param isUri={isUri} excluded '{target}'")
         return None
 
     if isLuhn != is_luhn(target):
-        logging.debug(f"Target '{target}' isLuhn={isLuhn} failed")
+        logging.debug(f"filter_param isLuhn={isLuhn} excluded '{target}'")
         return None
 
     target = pair.__dict__[idx]
 
     if minlen > len(target):
-        logging.debug(f"Target '{target}' minlen={minlen} failed")
+        logging.debug(f"filter_param minlen={minlen} excluded '{target}'")
         return None
 
     if regex and not regex.match(target):
-        logging.debug(f"Target '{target}' regex={regex} failed")
+        logging.debug(f"filter_param regex={regex} excluded '{target}'")
         return None
 
+    logging.debug(f"filter_param included '{pair}'")
     return pair

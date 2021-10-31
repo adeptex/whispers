@@ -18,7 +18,7 @@ def load_config(args: Namespace) -> dict:
     config = load_yaml_from_file(configfile)
     default_config_structure(config)
 
-    logging.debug(f"Loaded config '{config}'")
+    logging.debug(f"load_config '{config}'")
     return config
 
 

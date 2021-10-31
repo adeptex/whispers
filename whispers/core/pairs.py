@@ -42,10 +42,11 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
 
     # Second, attempt to parse the file with a plugin
     plugin = load_plugin(file)
+
+    logging.debug(f"make_pairs '{plugin}' for '{file}'")
+
     if not plugin:
         return None
-
-    logging.debug(f"Loaded plugin '{plugin}' for file '{file}'")
 
     pairs = plugin().pairs(file)
     static = filter(None, map(filter_static, pairs))
@@ -74,15 +75,15 @@ def filter_included(config: dict, pair: KeyValuePair) -> Optional[KeyValuePair]:
     if xkeys:
         for key in pair.keypath:
             if xkeys.match(str(key)):
-                logging.debug(f"Excluded key {pair}")
+                logging.debug(f"filter_included excluded key '{key}'")
                 return None  # Excluded key
 
     if xvalues:
         if xvalues.match(pair.value):
-            logging.debug(f"Excluded value {pair}")
+            logging.debug(f"filter_included excluded value '{pair.value}'")
             return None  # Excluded value
 
-    logging.debug(f"Included value {pair}")
+    logging.debug(f"filter_included included pair '{pair}'")
     return pair  # Included value
 
 
@@ -92,10 +93,10 @@ def filter_static(pair: KeyValuePair) -> Optional[KeyValuePair]:
     pair.value = strip_string(pair.value)
 
     if not is_static(pair.key, pair.value):
-        logging.debug(f"Dynamic value {pair}")
+        logging.debug(f"filter_static excluded value '{pair.value}'")
         return None  # Dynamic value
 
-    logging.debug(f"Static value {pair}")
+    logging.debug(f"filter_static included value '{pair.value}'")
     return pair  # Static value
 
 
