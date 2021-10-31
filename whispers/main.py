@@ -6,7 +6,7 @@ from typing import Iterator
 
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
-from whispers.core.log import cleanup_log, configure_log
+from whispers.core.log import configure_log
 from whispers.core.pairs import make_pairs
 from whispers.core.printer import printer
 from whispers.core.rules import load_rules
@@ -22,7 +22,6 @@ def cli():  # pragma: no cover
     args = parse_args()
     secrets = run(args)
     list(map(lambda secret: printer(args, secret), secrets))
-    cleanup_log()
     sys.exit(args.exitcode)
 
 

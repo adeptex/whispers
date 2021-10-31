@@ -18,6 +18,7 @@ def argument_parser() -> ArgumentParser:
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
     args_parser.add_argument("-r", "--rules", help="comma-separated list of rule IDs (see --info)")
     args_parser.add_argument("-s", "--severity", help="comma-separated list of severity levels to report (see --info)")
+    args_parser.add_argument("-l", "--log", default=False, action="store_true", help="generate whispers.log")
     args_parser.add_argument(
         "-d",
         "--debug",
@@ -55,6 +56,8 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
 
     if args.severity:
         args.severity = args.severity.split(",")
+
+    args.log |= args.debug == logging.DEBUG
 
     return args
 

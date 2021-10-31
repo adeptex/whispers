@@ -2,39 +2,29 @@ from os import remove, urandom
 
 import pytest
 
-from tests.unit.conftest import fixture_path
+from tests.unit.conftest import fixture_path, tmp_path
 from whispers.core.args import parse_args
-from whispers.core.log import cleanup_log, configure_log, global_exception_handler
+from whispers.core.log import configure_log, global_exception_handler
 
 
-def test_configure_log():
-    args = parse_args([fixture_path()])
-    expected_file = configure_log(args)
-    assert expected_file.exists()
+@pytest.mark.parametrize(("create", "expected"), [(False, None), (True, tmp_path("whispers.log"))])
+def test_configure_log(create, expected):
+    args = []
+    if create:
+        args = ["--log"]
 
-    try:
-        remove(expected_file.as_posix())
-
-    except (PermissionError, OSError):
-        pass
-
-
-@pytest.mark.parametrize(
-    ("data", "expected"), [("", False), ("a", True),],
-)
-def test_cleanup_log(data, expected):
-    args = parse_args([fixture_path()])
-    logfile = configure_log(args)
-    logfile.write_text(data)
-    result = cleanup_log()
+    args.append(fixture_path())
+    result = configure_log(parse_args(args))
     if result:
-        assert logfile.exists() == expected
-        if logfile.exists():
-            cleanup_log()
+        assert result.exists()
+        result = result.as_posix()
+        remove(result)
+
+    assert result == expected
 
 
 def test_global_exception_handler():
-    args = parse_args([fixture_path()])
+    args = parse_args(["-l", fixture_path()])
     logfile = configure_log(args)
     message = urandom(30).hex()
     try:

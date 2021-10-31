@@ -1,13 +1,17 @@
 import logging
 import logging.config
 from argparse import Namespace
-from os import remove
 from pathlib import Path
+from tempfile import gettempdir
+from typing import Optional
 
 
-def configure_log(args: Namespace) -> Path:
+def configure_log(args: Namespace) -> Optional[Path]:
     """Configure logging"""
-    logpath = Path("whispers.log")
+    if not args.log:
+        return None
+
+    logpath = Path(gettempdir()).joinpath("whispers.log")
     logpath.write_text("")
 
     logging.config.dictConfig(
@@ -38,24 +42,6 @@ def configure_log(args: Namespace) -> Path:
     )
 
     return logpath
-
-
-def cleanup_log() -> bool:
-    """Delete the log file if it's empty"""
-    logpath = Path("whispers.log")
-    try:
-        if not logpath.stat().st_size:
-            remove(logpath.as_posix())
-            return True
-
-    except (PermissionError, OSError):  # pragma: no cover
-        """
-        This is a patch for Windows system compatibility.
-        This handles cases when it is not possible to delete
-        the log file due to permissions or WinError.
-        """
-
-    return False
 
 
 def global_exception_handler(file: str, data: str):
