@@ -22,10 +22,10 @@ format:
 	black whispers/ tests/
 
 unit:
-	pytest --show-capture=all -v tests/unit
+	pytest --show-capture=all -v tests/
 
 coverage:
-	coverage run --source=whispers/ --branch -m pytest tests/unit --junitxml=build/test.xml -v
+	coverage run --source=whispers/ --branch -m pytest tests/ --junitxml=build/test.xml -v
 	coverage xml -i -o build/coverage.xml
 	coverage report
 	coverage-badge -f -o coverage.svg

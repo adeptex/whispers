@@ -1,7 +1,6 @@
 import pytest
 
 from tests.unit.conftest import FIXTURE_PATH, config_path, fixture_path
-from whispers import secrets as whispers_secrets
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
 from whispers.core.pairs import make_pairs
@@ -279,9 +278,3 @@ def test_detect_secrets_by_rule(src, count, rule_id):
     assert len(result) == count
     for item in result:
         assert item == rule_id
-
-
-def test_sensitive_files():
-    args = f"--rules sensitive-files {fixture_path('files')}"
-    result = list(whispers_secrets(args))
-    assert len(result) == 3
