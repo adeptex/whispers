@@ -1,18 +1,18 @@
-import shlex
 from typing import Iterator
 
-from whispers.core.args import parse_args
-from whispers.core.utils import KeyValuePair
-from whispers.main import run
 
-
-def secrets(arguments: str) -> Iterator[KeyValuePair]:
+def secrets(arguments: str) -> Iterator:
     """
     Boilerplate for simplifying usage and integration.
 
     import whispers
-    for secret in whispers.secrets("-r apikey path/to/source"):
+    for secret in whispers.secrets("-r apikey tests/fixtures"):
         print(secret)
     """
+    import shlex
+
+    from whispers.core.args import parse_args
+    from whispers.main import run
+
     argv = shlex.split(arguments)
     return run(parse_args(argv))
