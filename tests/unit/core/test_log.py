@@ -19,7 +19,11 @@ def test_configure_log(create, expected):
     result = configure_log(parse_args(args))
     if result:
         assert result.exists()
-        remove(result)
+        try:
+            remove(result)
+        
+        except PermissionError:
+            """Patch for Github Actions windows-latest permissions"""
 
     assert result == expected
 
