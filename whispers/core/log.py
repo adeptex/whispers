@@ -45,4 +45,4 @@ def configure_log(args: Namespace) -> Optional[Path]:
 
 
 def global_exception_handler(file: str, data: str):
-    logging.exception(f"{file}\n{data}")
+    logging.exception(f"File: {file}\n{data}")

@@ -21,7 +21,7 @@ def test_configure_log(create, expected):
         assert result.exists()
         try:
             remove(result)
-        
+
         except PermissionError:
             """Patch for Github Actions windows-latest permissions"""
 
