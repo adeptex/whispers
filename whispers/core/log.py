@@ -9,6 +9,7 @@ from typing import Optional
 def configure_log(args: Namespace) -> Optional[Path]:
     """Configure logging"""
     if not args.log:
+        logging.getLogger().setLevel(logging.CRITICAL)
         return None
 
     logpath = Path(gettempdir()).joinpath("whispers.log")
