@@ -78,3 +78,4 @@ def show_info():
     list(map(lambda x: print(f"  - {x}"), list_rule_ids(default_rules())))
     print("\ndefault severity levels:")
     list(map(lambda x: print(f"  - {x}"), DEFAULT_SEVERITY))
+    print("\nsource: https://github.com/adeptex/whispers")
