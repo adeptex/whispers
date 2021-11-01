@@ -180,10 +180,11 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
 All parsing functionality is implemented via [plugins](whispers/plugins/). Each plugin implements a class with the `pairs()` method that runs through files and yields `KeyValuePair` objects to be checked with [rules](whispers/rules/).
 
 ```py
-from whispers.core.utils import KeyValuePair
+from pathlib import Path
+from whispers.models.pair import KeyValuePair
 
 class PluginName:
-  def pairs(self, filepath: Path):
+  def pairs(self, filepath: Path) -> Iterator[KeyValuePair]:
     yield KeyValuePair(
       "key",
       "value",

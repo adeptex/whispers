@@ -3,7 +3,8 @@ from typing import Iterator
 
 from bs4 import BeautifulSoup, Comment
 
-from whispers.core.utils import KeyValuePair, truncate_all_space
+from whispers.core.utils import truncate_all_space
+from whispers.models.pair import KeyValuePair
 
 
 class Html:

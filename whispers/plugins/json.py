@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Iterator
 
 from whispers.core.log import global_exception_handler
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 from whispers.plugins.traverse import StructuredDocument
 
 

@@ -1,7 +1,8 @@
 from pathlib import Path
 from typing import Iterator, Optional
 
-from whispers.core.utils import KeyValuePair, is_uri, strip_string
+from whispers.core.utils import is_uri, strip_string
+from whispers.models.pair import KeyValuePair
 from whispers.plugins.uri import Uri
 
 

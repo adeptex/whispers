@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import Iterator
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Dockercfg:

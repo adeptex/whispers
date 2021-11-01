@@ -24,7 +24,7 @@ class Shell:
             for item in cmd:
                 if "=" in item and len(item.split("=")) == 2:
                     key, value = item.split("=")
-                    yield KeyValuePair(key, value, keypath=[key], line=lineno)
+                    yield KeyValuePair(key, value, line=lineno)
 
     def read_commands(self, filepath: Path) -> Tuple[str, int]:
         ret = []

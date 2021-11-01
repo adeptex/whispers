@@ -3,15 +3,14 @@ import re
 from argparse import Namespace
 from typing import List
 
-from yaml import safe_load_all
+from whispers.core.utils import default_rules
+from whispers.models.appconfig import AppConfig
 
-from whispers.core.utils import DEFAULT_PATH
 
-
-def load_rules(args: Namespace, config: dict) -> List[dict]:
+def load_rules(args: Namespace, config: AppConfig) -> List[dict]:
     """Loads applicable rules based on args and config"""
-    rule_ids = args.rules or config["rules"]
-    severities = args.severity or config["severity"]
+    rule_ids = args.rules or config.rules
+    severities = args.severity or config.severity
     applicable_rules = []
 
     # Load from default rules based on rules/severity config
@@ -67,20 +66,3 @@ def _ensure_exists(key: str, rule: dict):
     """Ensure both rule key and its value are defined"""
     if key not in rule or not rule[key]:
         raise IndexError(f"Rule '{rule}' is missing '{key}' specification")
-
-
-def default_rules() -> List[dict]:
-    """Read and parse builtin rules"""
-    rules = []
-    files = DEFAULT_PATH.joinpath("rules").glob("*.yml")
-    for file in files:
-        list(map(rules.extend, safe_load_all(file.read_text())))
-
-    return rules
-
-
-def list_rule_ids(rules: List[dict]) -> List[str]:
-    """List rule IDs given a list of rules"""
-    ids = sorted(map(lambda rule: rule["id"], rules))
-
-    return ids

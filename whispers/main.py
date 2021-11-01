@@ -12,7 +12,7 @@ from whispers.core.printer import printer
 from whispers.core.rules import load_rules
 from whispers.core.scope import load_scope
 from whispers.core.secrets import detect_secrets
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 environ["PYTHONIOENCODING"] = "UTF-8"
 

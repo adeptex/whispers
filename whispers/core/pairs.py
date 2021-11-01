@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import Iterator, Optional
 
 from whispers.core.log import global_exception_handler
-from whispers.core.utils import KeyValuePair, is_base64_bytes, is_iac, is_path, simple_string, strip_string
+from whispers.core.utils import is_base64_bytes, is_iac, is_path, simple_string, strip_string
+from whispers.models.appconfig import AppConfig
+from whispers.models.pair import KeyValuePair
 from whispers.plugins.config import Config
 from whispers.plugins.dockercfg import Dockercfg
 from whispers.plugins.dockerfile import Dockerfile
@@ -36,7 +38,7 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
         return None
 
     # First, return file name to check if it is a sensitive file
-    pair = KeyValuePair("file", file.as_posix(), keypath=["file"])
+    pair = KeyValuePair("file", file.as_posix())
     if filter_included(config, pair):
         yield tag_file(file, pair)
 
@@ -67,19 +69,16 @@ def tag_file(file: Path, pair: KeyValuePair) -> KeyValuePair:
     return pair
 
 
-def filter_included(config: dict, pair: KeyValuePair) -> Optional[KeyValuePair]:
+def filter_included(config: AppConfig, pair: KeyValuePair) -> Optional[KeyValuePair]:
     """Check if pair should be included based on config"""
-    xkeys = config["exclude"]["keys"]
-    xvalues = config["exclude"]["values"]
-
-    if xkeys:
+    if config.exclude.keys:
         for key in pair.keypath:
-            if xkeys.match(str(key)):
+            if config.exclude.keys.match(str(key)):
                 logging.debug(f"filter_included excluded key '{key}'")
                 return None  # Excluded key
 
-    if xvalues:
-        if xvalues.match(pair.value):
+    if config.exclude.values:
+        if config.exclude.values.match(pair.value):
             logging.debug(f"filter_included excluded value '{pair.value}'")
             return None  # Excluded value
 

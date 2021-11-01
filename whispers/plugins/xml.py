@@ -4,7 +4,8 @@ from typing import Iterator
 from lxml import etree as ElementTree
 
 from whispers.core.log import global_exception_handler
-from whispers.core.utils import KeyValuePair, is_uri
+from whispers.core.utils import is_uri
+from whispers.models.pair import KeyValuePair
 from whispers.plugins.uri import Uri
 
 

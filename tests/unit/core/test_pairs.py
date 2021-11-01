@@ -7,7 +7,7 @@ from tests.unit.conftest import FIXTURE_PATH, fixture_path, forbidden_path, tmp_
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
 from whispers.core.pairs import filter_included, filter_static, is_static, load_plugin, make_pairs, tag_file
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 from whispers.plugins.config import Config
 from whispers.plugins.dockercfg import Dockercfg
 from whispers.plugins.dockerfile import Dockerfile
@@ -58,8 +58,8 @@ def test_tag_file():
 def test_filter_included(key, value, expected):
     args = parse_args([fixture_path()])
     config = load_config(args)
-    config["exclude"]["keys"] = re.compile(r"is_not")
-    config["exclude"]["values"] = re.compile(r"excluded")
+    config.exclude.keys = re.compile(r"is_not")
+    config.exclude.values = re.compile(r"excluded")
     pair = KeyValuePair(key, value, [key])
     assert filter_included(config, pair) == expected
 
@@ -76,8 +76,8 @@ def test_filter_included(key, value, expected):
 def test_filter_included_config(xkeys, xvalues, expected):
     args = parse_args([fixture_path()])
     config = load_config(args)
-    config["exclude"]["keys"] = xkeys
-    config["exclude"]["values"] = xvalues
+    config.exclude.keys = xkeys
+    config.exclude.values = xvalues
     pair = KeyValuePair("is_not", "excluded", ["is_not"])
     result = filter_included(config, pair)
     assert isinstance(result, expected)

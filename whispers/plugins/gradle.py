@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Iterator
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Gradle:
@@ -16,4 +16,4 @@ class Gradle:
 
             value = line.split(key)[-1].strip(":) ")
             if value:
-                yield KeyValuePair(key, value, keypath=[key], line=lineno)
+                yield KeyValuePair(key, value, line=lineno)

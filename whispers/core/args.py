@@ -4,8 +4,7 @@ from functools import wraps
 from sys import argv, stdout
 
 from whispers.__version__ import __version__, __whispers__
-from whispers.core.rules import default_rules, list_rule_ids
-from whispers.core.utils import DEFAULT_SEVERITY
+from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_ids
 
 
 def argument_parser() -> ArgumentParser:

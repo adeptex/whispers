@@ -1,7 +1,7 @@
 import json
 from argparse import Namespace
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 def printer(args: Namespace, pair: KeyValuePair) -> str:

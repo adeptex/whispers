@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Iterator
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Pypirc:
@@ -13,4 +13,4 @@ class Pypirc:
             value = line.split("password:")[-1].strip()
             if value:
                 key = "pypi password"
-                yield KeyValuePair(key, value, keypath=[key], line=lineno)
+                yield KeyValuePair(key, value, line=lineno)

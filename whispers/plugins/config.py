@@ -3,7 +3,8 @@ from itertools import chain
 from pathlib import Path
 from typing import Iterator, Optional
 
-from whispers.core.utils import KeyValuePair, strip_string
+from whispers.core.utils import strip_string
+from whispers.models.pair import KeyValuePair
 from whispers.plugins.xml import Xml
 
 
@@ -30,7 +31,7 @@ class Config:
 
         for item in items:
             key, value = item
-            yield KeyValuePair(key, value, keypath=[key])
+            yield KeyValuePair(key, value)
 
     @staticmethod
     def parse_as_text(filepath: Path) -> Optional[KeyValuePair]:
@@ -44,4 +45,4 @@ class Config:
             value = strip_string(value)
 
             if value:
-                yield KeyValuePair(key, value, keypath=[key], line=lineno)
+                yield KeyValuePair(key, value, line=lineno)

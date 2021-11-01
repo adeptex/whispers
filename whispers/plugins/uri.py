@@ -1,7 +1,7 @@
 from typing import Iterator
 from urllib.parse import parse_qsl, urlparse
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Uri:

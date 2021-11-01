@@ -3,7 +3,7 @@ from typing import Iterator
 
 from jproperties import Properties
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Jproperties:

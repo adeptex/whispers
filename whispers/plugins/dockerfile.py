@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Iterator
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Dockerfile:
@@ -13,4 +13,4 @@ class Dockerfile:
                 for op in ["=", " "]:
                     if op in item and len(item.split(op)) == 2:
                         key, value = item.split(op)
-                        yield KeyValuePair(key, value, keypath=[key], line=lineno)
+                        yield KeyValuePair(key, value, line=lineno)

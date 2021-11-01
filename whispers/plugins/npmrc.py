@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Iterator
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Npmrc:
@@ -13,4 +13,4 @@ class Npmrc:
             value = line.split(":_authToken=")[-1].strip()
             if value:
                 key = "npm authToken"
-                yield KeyValuePair(key, value, keypath=[key], line=lineno)
+                yield KeyValuePair(key, value, line=lineno)

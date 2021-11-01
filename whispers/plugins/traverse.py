@@ -1,6 +1,7 @@
 from typing import Iterator
 
-from whispers.core.utils import KeyValuePair, is_uri
+from whispers.core.utils import is_uri
+from whispers.models.pair import KeyValuePair
 from whispers.plugins.uri import Uri
 
 

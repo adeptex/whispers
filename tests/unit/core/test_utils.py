@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 from yaml import safe_load
 from yaml.parser import ParserError
@@ -5,7 +7,7 @@ from yaml.parser import ParserError
 from tests.unit.conftest import CONFIG_PATH, does_not_raise, fixture_path
 from whispers.core.args import parse_args
 from whispers.core.utils import (
-    KeyValuePair,
+    default_rules,
     find_line_number,
     is_ascii,
     is_base64,
@@ -14,6 +16,7 @@ from whispers.core.utils import (
     is_luhn,
     is_path,
     is_uri,
+    list_rule_ids,
     load_yaml_from_file,
     similar_strings,
     simple_string,
@@ -21,18 +24,7 @@ from whispers.core.utils import (
     truncate_all_space,
 )
 from whispers.main import run
-
-
-def test_KeyValuePair():
-    pair = KeyValuePair("key", "value", ["key", "path"], "file", 123, {"rule_id": "test"})
-    assert pair.__dict__ == {
-        "key": "key",
-        "value": "value",
-        "keypath": ["key", "path"],
-        "file": "file",
-        "line": 123,
-        "rule": {"rule_id": "test"},
-    }
+from whispers.models.pair import KeyValuePair
 
 
 @pytest.mark.parametrize(
@@ -244,3 +236,18 @@ def test_is_iac(data, expected):
 )
 def test_is_luhn(data, expected):
     assert is_luhn(data) == expected
+
+
+def test_default_rules():
+    rules = default_rules()
+    rule_files = Path("whispers/rules").glob("*.yml")
+    rule_yaml = map(load_yaml_from_file, rule_files)
+    rule_items = (rule for rules in rule_yaml for rule in rules)
+
+    for rule in rule_items:
+        assert rule["id"] in rules
+
+
+def test_list_rule_ids():
+    rule = {"id": "rule-id"}
+    assert list_rule_ids([rule]) == ["rule-id"]

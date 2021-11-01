@@ -4,7 +4,7 @@ from typing import Iterator, Tuple
 import astroid
 
 from whispers.core.log import global_exception_handler
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Python:
@@ -89,7 +89,7 @@ class Python:
                 for key in node.targets:
                     key = self.node_to_str(key)
                     if key and value and isinstance(value, (str, int)):
-                        yield KeyValuePair(key, value, keypath=[key], line=node.lineno)
+                        yield KeyValuePair(key, value, line=node.lineno)
 
             # Comparison
             elif isinstance(node, astroid.nodes.Compare):
@@ -105,7 +105,7 @@ class Python:
                     value = self.node_to_str(left)
 
                 if key and value and isinstance(value, (str, int)):
-                    yield KeyValuePair(key, value, keypath=[key], line=node.lineno)
+                    yield KeyValuePair(key, value, line=node.lineno)
 
             # Dictionary values
             elif isinstance(node, astroid.nodes.Dict):
@@ -116,20 +116,20 @@ class Python:
                     key = self.node_to_str(key)
                     value = self.node_to_str(value)
                     if key and value and isinstance(value, (str, int)):
-                        yield KeyValuePair(key, value, keypath=[key], line=node.lineno)
+                        yield KeyValuePair(key, value, line=node.lineno)
 
             # Keywords
             elif isinstance(node, astroid.nodes.Keyword):
                 key = self.node_to_str(node)
                 value = self.node_to_str(node.value)
                 if key and value and isinstance(value, (str, int)):
-                    yield KeyValuePair(key, value, keypath=[key], line=node.lineno)
+                    yield KeyValuePair(key, value, line=node.lineno)
 
             # Function call
             elif isinstance(node, astroid.nodes.Call):
                 key = "function"
                 value = node.as_string()  # Entire function call
-                yield KeyValuePair(key, value, keypath=[key], line=node.lineno)
+                yield KeyValuePair(key, value, line=node.lineno)
                 yield from self.parse_env_functions(node)
 
     def parse_env_functions(self, node: astroid.nodes.Call):
@@ -147,4 +147,4 @@ class Python:
                 key = self.node_to_str(key)
                 value = self.node_to_str(value)
                 if key and value:
-                    yield KeyValuePair(key, value, keypath=[key], line=node.lineno)
+                    yield KeyValuePair(key, value, line=node.lineno)

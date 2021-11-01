@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Iterator
 from urllib.parse import urlparse
 
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 class Pip:
@@ -14,4 +14,4 @@ class Pip:
             value = urlparse(line.split("=")[-1].strip()).password
             if value:
                 key = "pip password"
-                yield KeyValuePair(key, value, keypath=[key], line=lineno)
+                yield KeyValuePair(key, value, line=lineno)

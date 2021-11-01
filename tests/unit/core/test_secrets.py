@@ -6,7 +6,8 @@ from whispers.core.config import load_config
 from whispers.core.pairs import make_pairs
 from whispers.core.rules import default_rule_structure, load_rules
 from whispers.core.secrets import detect_secrets, filter_param, filter_rule, tag_lineno
-from whispers.core.utils import DEFAULT_SEVERITY, KeyValuePair, is_base64
+from whispers.core.utils import DEFAULT_SEVERITY, is_base64
+from whispers.models.pair import KeyValuePair
 
 DEFAULT_SEVERITY = ",".join(DEFAULT_SEVERITY)
 

@@ -1,14 +1,15 @@
 import re
 import string
 from base64 import b64decode
-from dataclasses import dataclass, field
 from pathlib import Path
+from typing import List
 
 from jellyfish import jaro_winkler_similarity
 from luhn import verify as luhn_verify
-from yaml import safe_load
+from yaml import safe_load, safe_load_all
 
 from whispers.core.log import global_exception_handler
+from whispers.models.pair import KeyValuePair
 
 DEFAULT_PATH = Path(__file__).parents[1]
 DEFAULT_SEVERITY = ["BLOCKER", "CRITICAL", "MAJOR", "MINOR", "INFO"]
@@ -20,16 +21,6 @@ REGEX_PATH = re.compile(r"^((([A-Z]|file|root):)?(\.+)?[/\\]+).*$", flags=re.IGN
 REGEX_IAC = re.compile(r"\![A-Za-z]+ .+", flags=re.IGNORECASE)
 
 
-@dataclass
-class KeyValuePair:
-    key: str
-    value: str
-    keypath: list = field(default_factory=list)
-    file: str = ""
-    line: int = 0
-    rule: dict = field(default_factory=dict)
-
-
 def load_yaml_from_file(filepath: Path) -> dict:
     """Safe load yaml from given file path"""
     ret = safe_load(filepath.read_text())
@@ -37,26 +28,6 @@ def load_yaml_from_file(filepath: Path) -> dict:
         return {}
 
     return ret
-
-
-def ensure_file_exists(file: Path):
-    """Raise exception if file path does not exist"""
-    file_exists = False
-    try:
-        file_exists = file.exists()
-
-    except OSError:  # pragma: no cover
-        """
-        Patch for unpredictable file types.
-        Example: Windows NUL is different than Posix /dev/null
-        """
-        raise TypeError(f"{file.as_posix()} is not accessible")
-
-    if not file_exists:
-        raise FileNotFoundError(f"{file.as_posix()} does not exist")
-
-    if not file.is_file():
-        raise TypeError(f"{file.as_posix()} is not a file")
 
 
 def truncate_all_space(value: str) -> str:
@@ -230,3 +201,20 @@ def find_line_number(pair: KeyValuePair) -> int:
         global_exception_handler(pair.file, "Failed parsing file")
 
     return 0
+
+
+def default_rules() -> List[dict]:
+    """Read and parse builtin rules"""
+    rules = []
+    files = DEFAULT_PATH.joinpath("rules").glob("*.yml")
+    for file in files:
+        list(map(rules.extend, safe_load_all(file.read_text())))
+
+    return rules
+
+
+def list_rule_ids(rules: List[dict]) -> List[str]:
+    """List rule IDs given a list of rules"""
+    ids = sorted(map(lambda rule: rule["id"], rules))
+
+    return ids

@@ -3,7 +3,7 @@ import json
 from tests.unit.conftest import fixture_path
 from whispers.core.args import parse_args
 from whispers.core.printer import printer
-from whispers.core.utils import KeyValuePair
+from whispers.models.pair import KeyValuePair
 
 
 def test_printer(tmp_path):

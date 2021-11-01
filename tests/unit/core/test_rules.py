@@ -1,12 +1,10 @@
-from pathlib import Path
-
 import pytest
 
 from tests.unit.conftest import config_path, does_not_raise
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
-from whispers.core.rules import _ensure_exists, default_rule_structure, default_rules, list_rule_ids, load_rules
-from whispers.core.utils import load_yaml_from_file
+from whispers.core.rules import _ensure_exists, default_rule_structure, load_rules
+from whispers.core.utils import default_rules
 
 
 @pytest.mark.parametrize(
@@ -56,18 +54,3 @@ def test_default_rule_structure(rule, expected):
 def test_ensure_exists(key, rule, expected):
     with expected:
         _ensure_exists(key, rule)
-
-
-def test_default_rules():
-    rules = default_rules()
-    rule_files = Path("whispers/rules").glob("*.yml")
-    rule_yaml = map(load_yaml_from_file, rule_files)
-    rule_items = (rule for rules in rule_yaml for rule in rules)
-
-    for rule in rule_items:
-        assert rule["id"] in rules
-
-
-def test_list_rule_ids():
-    rule = {"id": "rule-id"}
-    assert list_rule_ids([rule]) == ["rule-id"]
