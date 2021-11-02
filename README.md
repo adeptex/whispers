@@ -61,17 +61,19 @@ python3 setup.py install
 
 ```
 whispers
+whispers target/file/or/dir
+
 whispers --help
-whispers --version
 whispers --info
 whispers --config config.yml target/file/or/dir
 whispers --output /tmp/secrets.out target/file/or/dir
+whispers --exitcode 7 target/file/or/dir
+
 whispers --rules aws-id,aws-secret target/file/or/dir
 whispers --xrules sensitive-files target/file/or/dir
+
 whispers --severity BLOCKER,CRITICAL target/file/or/dir
 whispers --xseverity MINOR target/file/or/dir
-whispers --exitcode 7 target/file/or/dir
-whispers target/file/or/dir
 ```
 
 ### Python
