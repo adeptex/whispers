@@ -171,8 +171,8 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
     isAscii: False            # value is binary data when decoded
     isUri: False              # value is not formatted like a URI
 
-  similar: 0.35               # maximum allowed similarity between key and value 
-                              # (1.0 being exactly the same)
+  similar: 0.35               # maximum allowed Jaro-Winkler similarity
+                              # between key and value (1.0 being exactly the same)
 ```
 
 

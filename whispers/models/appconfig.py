@@ -7,20 +7,20 @@ from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_ids
 
 @dataclass
 class Include:
-    """Targets to include during execution"""
+    """AppConfig include configuration class"""
 
     files: List = field(default_factory=lambda: ["**/*"])  # globs
 
 
 @dataclass
 class Exclude:
-    """Targets to exclude during execution"""
+    """AppConfig exclude configuration class"""
 
     files: Optional[List] = None  # regex
     keys: Optional[List] = None  # regex
     values: Optional[List] = None  # regex
 
-    def __post_init__(self, **kwargs) -> None:
+    def __post_init__(self) -> None:
         """
         Create a single regex statement from each list,
         and compile it for efficient matching.
@@ -35,9 +35,9 @@ class Exclude:
 
 @dataclass
 class AppConfig:
-    """Main execution configuration class"""
+    """Main application configuration class"""
 
-    config: InitVar[Dict]
+    _config: InitVar[Dict]
     include: Include = field(default_factory=Include)
     exclude: Exclude = field(default_factory=Exclude)
     rules: List = field(default_factory=list)

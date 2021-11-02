@@ -6,4 +6,4 @@
     regex: ^uri creds$
     ignorecase: False
   value:
-    minlen: 1
+    minlen: 3

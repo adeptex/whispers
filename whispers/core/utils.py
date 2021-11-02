@@ -16,7 +16,7 @@ DEFAULT_SEVERITY = ["BLOCKER", "CRITICAL", "MAJOR", "MINOR", "INFO"]
 
 ESCAPED_CHARS = str.maketrans({"'": r"\'", '"': r"\""})
 
-REGEX_URI = re.compile(r"(?!\s)[:\w\d]+://.+", flags=re.IGNORECASE)
+REGEX_URI = re.compile(r"[:\w\d]+://.+", flags=re.IGNORECASE)
 REGEX_PATH = re.compile(r"^((([A-Z]|file|root):)?(\.+)?[/\\]+).*$", flags=re.IGNORECASE)
 REGEX_IAC = re.compile(r"\![A-Za-z]+ .+", flags=re.IGNORECASE)
 

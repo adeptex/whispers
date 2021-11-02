@@ -1,9 +1,9 @@
 import pytest
 
-from tests.unit.conftest import config_path, does_not_raise
+from tests.unit.conftest import config_path
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
-from whispers.core.rules import _ensure_exists, default_rule_structure, load_rules
+from whispers.core.rules import load_rules
 from whispers.core.utils import default_rules
 
 
@@ -30,27 +30,3 @@ def test_load_rules_severity():
     config = load_config(args)
     rules = load_rules(args, config)
     assert len(rules) == 11
-
-
-@pytest.mark.parametrize(
-    ("rule", "expected"),
-    [
-        ({}, pytest.raises(IndexError)),
-        ({"id": "i"}, pytest.raises(IndexError)),
-        ({"id": "i", "key": "k"}, pytest.raises(IndexError)),
-        ({"id": "i", "key": "k", "value": "v"}, pytest.raises(IndexError)),
-        ({"id": "i", "key": "k", "value": "v", "message": "m"}, pytest.raises(IndexError)),
-        ({"id": "i", "key": "k", "value": "v", "message": "m", "severity": "s"}, does_not_raise()),
-    ],
-)
-def test_default_rule_structure(rule, expected):
-    with expected:
-        default_rule_structure(rule)
-
-
-@pytest.mark.parametrize(
-    ("key", "rule", "expected"), [("id", {}, pytest.raises(IndexError)), ("id", {"id": "i"}, does_not_raise()),],
-)
-def test_ensure_exists(key, rule, expected):
-    with expected:
-        _ensure_exists(key, rule)

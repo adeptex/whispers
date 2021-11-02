@@ -4,115 +4,19 @@ from tests.unit.conftest import FIXTURE_PATH, config_path, fixture_path
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
 from whispers.core.pairs import make_pairs
-from whispers.core.rules import default_rule_structure, load_rules
-from whispers.core.secrets import detect_secrets, filter_param, filter_rule, tag_lineno
+from whispers.core.rules import load_rules
+from whispers.core.secrets import detect_secrets, filter_rule
 from whispers.core.utils import DEFAULT_SEVERITY, is_base64
 from whispers.models.pair import KeyValuePair
+from whispers.models.rule import Specification
 
 DEFAULT_SEVERITY = ",".join(DEFAULT_SEVERITY)
 
 
-@pytest.fixture
-def rule_fixture():
-    return {"id": "fixture", "message": "test", "severity": "INFO", "key": {}, "value": {}}
-
-
-@pytest.mark.parametrize(("idx", "expected"), [("key", KeyValuePair), ("value", type(None)),])
-def test_filter_param_by_idx(idx, expected, rule_fixture):
-    pair = KeyValuePair("sonar.jdbc.password", "a")
-    rule_fixture["key"] = {"regex": r"sonar.jdbc.password", "ignorecase": False}
-    rule_fixture["value"] = {"minlen": 2}
-    default_rule_structure(rule_fixture)
-
-    result = filter_param(idx, rule_fixture, pair)
-
-    assert isinstance(result, expected)
-
-
-@pytest.mark.parametrize(
-    ("value", "isBase64", "isAscii", "isUri", "isLuhn", "expected"),
-    [
-        ("test", True, True, True, True, type(None)),
-        ("test", True, True, True, False, type(None)),
-        ("test", True, True, False, True, type(None)),
-        ("dGVzdAo=", True, True, False, False, KeyValuePair),
-        ("test", True, False, True, True, type(None)),
-        ("test", True, False, True, False, type(None)),
-        ("test", True, False, False, True, type(None)),
-        (b"test", True, False, False, False, KeyValuePair),
-        ("test", False, True, True, True, type(None)),
-        ("http://localhost.localdomain", False, True, True, False, KeyValuePair),
-        ("4111111111111111", False, True, False, True, KeyValuePair),
-        ("test", False, True, False, False, KeyValuePair),
-        ("test", False, False, True, True, type(None)),
-        ("http://localhost.localdomain", False, False, True, False, type(None)),
-        (b"4111111111111111", False, False, False, True, type(None)),
-        (b"test", False, False, False, False, type(None)),
-    ],
-)
-def test_filter_param_by_rule_flags(value, isBase64, isAscii, isUri, isLuhn, expected, rule_fixture):
-    pair = KeyValuePair("key", value)
-    rule_fixture["value"] = {
-        "isBase64": isBase64,
-        "isAscii": isAscii,
-        "isUri": isUri,
-        "isLuhn": isLuhn,
-    }
-    default_rule_structure(rule_fixture)
-
-    result = filter_param("value", rule_fixture, pair)
-
-    assert isinstance(result, expected)
-
-
-@pytest.mark.parametrize(("minlen", "expected"), [(0, KeyValuePair), (4, KeyValuePair), (5, type(None)),])
-def test_filter_param_by_rule_minlen(minlen, expected, rule_fixture):
-    pair = KeyValuePair("key", "test")
-    rule_fixture["value"] = {"minlen": minlen}
-    default_rule_structure(rule_fixture)
-
-    result = filter_param("value", rule_fixture, pair)
-
-    assert isinstance(result, expected)
-
-
-@pytest.mark.parametrize(
-    ("key", "value", "similar", "expected"),
-    [
-        ("key", "KEY", 1, type(None)),
-        ("key", "KEY", 0, type(None)),
-        ("key", "value", 0.3, KeyValuePair),
-        ("key", "value", 0, type(None)),
-    ],
-)
-def test_filter_rule_similar(key, value, similar, expected, rule_fixture):
-    pair = KeyValuePair(key, value)
-    rule_fixture["similar"] = similar
-    default_rule_structure(rule_fixture)
-
-    result = filter_rule(rule_fixture, pair)
-
-    assert isinstance(result, expected)
-
-
-@pytest.mark.parametrize(
-    ("regex", "ignorecase", "expected"),
-    [(r"tes.*", True, KeyValuePair), (r"Tes.*", False, type(None)), (r"a.*", True, type(None)),],
-)
-def test_filter_param_by_rule_regex(regex, ignorecase, expected, rule_fixture):
-    pair = KeyValuePair("key", "test")
-    rule_fixture["value"] = {"regex": regex, "ignorecase": ignorecase}
-    default_rule_structure(rule_fixture)
-
-    result = filter_param("value", rule_fixture, pair)
-
-    assert isinstance(result, expected)
-
-
-def test_tag_lineno():
+def test_filter_rule_lineno(rule_fixture):
     pair = KeyValuePair("sonar.jdbc.password", "hardcoded02", file=FIXTURE_PATH.joinpath("java.properties"))
-
-    assert tag_lineno(pair).line == 10
+    rule_fixture.key = Specification(**{"regex": "sonar.*"})
+    assert filter_rule(rule_fixture, pair).line == 10
 
 
 @pytest.mark.parametrize(
@@ -275,7 +179,7 @@ def test_detect_secrets_by_rule(src, count, rule_id):
     config = load_config(args)
     rules = load_rules(args, config)
     pairs = make_pairs(config, FIXTURE_PATH.joinpath(src))
-    result = list(map(lambda x: x.rule["id"], detect_secrets(rules, pairs)))
+    result = list(map(lambda x: x.rule.id, detect_secrets(rules, pairs)))
     assert len(result) == count
     for item in result:
         assert item == rule_id

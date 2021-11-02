@@ -1,10 +1,10 @@
 import logging
-import re
 from argparse import Namespace
 from typing import List
 
 from whispers.core.utils import default_rules
 from whispers.models.appconfig import AppConfig
+from whispers.models.rule import Rule
 
 
 def load_rules(args: Namespace, config: AppConfig) -> List[dict]:
@@ -24,45 +24,14 @@ def load_rules(args: Namespace, config: AppConfig) -> List[dict]:
         if rule_severity not in severities:
             continue
 
-        default_rule_structure(rule)
-        applicable_rules.append(rule)
+        applicable_rules.append(Rule(rule))
 
     # Load inline rules from config file (if any)
     for rule in rule_ids:
         if isinstance(rule, str):
             continue
 
-        default_rule_structure(rule)
-        applicable_rules.append(rule)
+        applicable_rules.append(Rule(rule))
 
-    logging.debug(f"load_rules loaded {len(applicable_rules)} rules '{applicable_rules}'")
+    logging.debug(f"load_rules loaded {len(applicable_rules)} rules")
     return applicable_rules
-
-
-def default_rule_structure(rule: dict):
-    """Ensure minimal expected rule structure"""
-    required = ["id", "message", "severity"]
-    list(map(lambda key: _ensure_exists(key, rule), required))
-
-    for param in ["key", "value"]:
-        if param not in rule:
-            continue
-
-        if "regex" not in rule[param]:
-            continue
-
-        ignorecase = rule[param].get("ignorecase", False)
-        flags = re.IGNORECASE if ignorecase else 0
-        rule[param]["regex"] = re.compile(rule[param]["regex"], flags=flags)
-
-    if "similar" not in rule:
-        rule["similar"] = 1
-
-    if "description" in rule:
-        del rule["description"]
-
-
-def _ensure_exists(key: str, rule: dict):
-    """Ensure both rule key and its value are defined"""
-    if key not in rule or not rule[key]:
-        raise IndexError(f"Rule '{rule}' is missing '{key}' specification")

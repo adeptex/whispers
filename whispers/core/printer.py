@@ -12,9 +12,9 @@ def printer(args: Namespace, pair: KeyValuePair) -> str:
             "value": pair.value,
             "file": pair.file,
             "line": pair.line,
-            "rule_id": pair.rule["id"],
-            "message": pair.rule["message"],
-            "severity": pair.rule["severity"],
+            "rule_id": pair.rule.id,
+            "message": pair.rule.message,
+            "severity": pair.rule.severity,
         }
     )
 
