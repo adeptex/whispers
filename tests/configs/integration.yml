@@ -2,5 +2,6 @@ include:
   files:
     - "**/*.npmrc"
 
-rules:
-  - npmrc
+include:
+  rules:
+    - npmrc

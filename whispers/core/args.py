@@ -15,16 +15,20 @@ def argument_parser() -> ArgumentParser:
     args_parser.add_argument("-c", "--config", help="config file")
     args_parser.add_argument("-o", "--output", help="output file")
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
-    args_parser.add_argument("-r", "--rules", help="comma-separated list of rule IDs (see --info)")
+    args_parser.add_argument("-r", "--rules", help="comma-separated list of rule IDs to report (see --info)")
+    args_parser.add_argument("-R", "--xrules", help="comma-separated list of rule IDs to exclude (see --info)")
     args_parser.add_argument("-s", "--severity", help="comma-separated list of severity levels to report (see --info)")
-    args_parser.add_argument("-l", "--log", default=False, action="store_true", help="generate whispers.log")
+    args_parser.add_argument(
+        "-S", "--xseverity", help="comma-separated list of severity levels to exclude (see --info)"
+    )
+    args_parser.add_argument("-l", "--log", default=False, action="store_true", help="write /tmp/whispers.log")
     args_parser.add_argument(
         "-d",
         "--debug",
         action="store_const",
         const=logging.DEBUG,
         default=logging.INFO,
-        help="show debugging information",
+        help="log debugging information",
     )
     args_parser.add_argument("src", nargs="?", help="target file or directory")
 
@@ -53,8 +57,14 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
     if args.rules:
         args.rules = args.rules.split(",")
 
+    if args.xrules:
+        args.xrules = args.xrules.split(",")
+
     if args.severity:
         args.severity = args.severity.split(",")
+
+    if args.xseverity:
+        args.xseverity = args.xseverity.split(",")
 
     args.log |= args.debug == logging.DEBUG
 

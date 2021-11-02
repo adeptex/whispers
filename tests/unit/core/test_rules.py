@@ -19,14 +19,14 @@ def test_load_rules(configfile, expected):
 
 
 def test_load_rules_ids():
-    args = parse_args(["-r", "npmrc,pypirc,pip", "tests/fixtures"])
+    args = parse_args(["-r", "npmrc,pypirc,pip,apikey", "-R", "apikey", "tests/fixtures"])
     config = load_config(args)
     rules = load_rules(args, config)
     assert len(rules) == 3
 
 
 def test_load_rules_severity():
-    args = parse_args(["-s", "BLOCKER,CRITICAL", "tests/fixtures"])
+    args = parse_args(["-s", "BLOCKER,CRITICAL,MINOR", "-S", "MINOR", "tests/fixtures"])
     config = load_config(args)
     rules = load_rules(args, config)
     assert len(rules) == 11

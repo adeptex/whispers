@@ -32,7 +32,6 @@ coverage:
 
 test: 
 	make lint coverage
-	rm -rf whispers.log
 
 docker:
 	docker build -t=whispers --rm=true . 

@@ -67,7 +67,9 @@ whispers --info
 whispers --config config.yml target/file/or/dir
 whispers --output /tmp/secrets.out target/file/or/dir
 whispers --rules aws-id,aws-secret target/file/or/dir
+whispers --xrules sensitive-files target/file/or/dir
 whispers --severity BLOCKER,CRITICAL target/file/or/dir
+whispers --xseverity MINOR target/file/or/dir
 whispers --exitcode 7 target/file/or/dir
 whispers target/file/or/dir
 ```
@@ -94,7 +96,7 @@ There are several configuration options available in Whispers. It’s possible t
 
 ### Simple examples
 
-Exclude all log files
+Exclude all log files:
 
 ```yaml
 exclude:
@@ -102,12 +104,18 @@ exclude:
     - .*\.log
 ```
 
-Only scan .npmrc files
+Only scan for CRITICAL level findings in .npmrc files, excluding a known testing value:
 
 ```yaml
 include:
   files:
     - "**/*.npmrc"
+  severity:
+    - CRITICAL
+
+exclude:
+  values: 
+    - ^token_for_testing$
 ```
 
 ### General structure
@@ -116,6 +124,19 @@ include:
 include:
   files:
     - "**/*.yml"  # glob
+  rules:
+    - password
+    - privatekey
+    - id: starks
+      message: Whispers from the North
+      severity: CRITICAL
+      value:
+        regex: (Aria|Ned) Stark
+        ignorecase: True
+  severity:
+    - CRITICAL
+    - BLOCKER
+    - MAJOR
 
 exclude:
   files:
@@ -125,20 +146,7 @@ exclude:
   values:
     - bar$        # regex
 
-rules:
-  - password
-  - privatekey
-  - id: starks
-    message: Whispers from the North
-    severity: CRITICAL
-    value:
-      regex: (Aria|Ned) Stark
-      ignorecase: True
 
-severity:
-  - CRITICAL
-  - BLOCKER
-  - MAJOR
 ```
 
 The fastest way to tweak detection (ie: remove false positives and unwanted results) is to copy the default [config.yml](whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers.

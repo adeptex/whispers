@@ -9,8 +9,10 @@ from whispers.models.rule import Rule
 
 def load_rules(args: Namespace, config: AppConfig) -> List[dict]:
     """Loads applicable rules based on args and config"""
-    rule_ids = args.rules or config.rules
-    severities = args.severity or config.severity
+    include_rule_ids = args.rules or config.include.rules
+    include_severity = args.severity or config.include.severity
+    exclude_rule_ids = args.xrules or config.exclude.rules
+    exclude_severity = args.xseverity or config.exclude.severity
     applicable_rules = []
 
     # Load from default rules based on rules/severity config
@@ -18,18 +20,24 @@ def load_rules(args: Namespace, config: AppConfig) -> List[dict]:
         rule_id = rule["id"].strip()
         rule_severity = rule["severity"].strip()
 
-        if rule_id not in rule_ids:
-            continue
+        if rule_id in exclude_rule_ids:
+            continue  # Rule excluded
 
-        if rule_severity not in severities:
-            continue
+        if rule_id not in include_rule_ids:
+            continue  # Rule not included
+
+        if rule_severity in exclude_severity:
+            continue  # Severity excluded
+
+        if rule_severity not in include_severity:
+            continue  # Severity not included
 
         applicable_rules.append(Rule(rule))
 
     # Load inline rules from config file (if any)
-    for rule in rule_ids:
+    for rule in include_rule_ids:
         if isinstance(rule, str):
-            continue
+            continue  # Not an inline rule
 
         applicable_rules.append(Rule(rule))
 

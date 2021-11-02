@@ -8,6 +8,7 @@ exclude:
   values:
     - SECRET_VALUE_PLACEHOLDER
 
-rules:
-  - password
-  - apikey
+include:
+  rules:
+    - password
+    - apikey
