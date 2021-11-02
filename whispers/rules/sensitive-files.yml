@@ -7,7 +7,7 @@
     ignorecase: False
   value:
     regex: ".*(\
-      rsa|dsa|ed25519|ecdsa|pem|crt|cer|ca-bundle|p7b|p7c|p7s|ppk|jks|pkcs12|pfx|p12|asc|\
+      rsa|dsa|ed25519|ecdsa|pem|crt|cer|ca-bundle|p7b|p7c|p7s|ppk|jks|pkcs12|pfx|p12|\
       id_rsa|kdbx?|(private|agile)?(-|_)?key(store|ring|chain|pair)|\
       dockercfg|npmrc|pypirc|pip\\.conf|terraform\\.tfvars|env|cfg|conf|cnf|config|ini|s3cfg|\
       (aws/|gem/|git-)?credentials\\.?(xml|json|ya?ml)?|\

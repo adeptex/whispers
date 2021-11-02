@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Iterator, Optional
 
 from whispers.core.log import global_exception_handler
-from whispers.core.utils import is_base64_bytes, is_iac, is_path, simple_string, strip_string
+from whispers.core.utils import REGEX_PRIVKEY_FILE, is_base64_bytes, is_iac, is_path, simple_string, strip_string
 from whispers.models.appconfig import AppConfig
 from whispers.models.pair import KeyValuePair
 from whispers.plugins.config import Config
@@ -33,7 +33,7 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
         if not file.is_file():
             return None
 
-    except (PermissionError, OSError):
+    except Exception:
         global_exception_handler(file.as_posix(), "Failed making pairs")
         return None
 
@@ -207,5 +207,8 @@ def load_plugin(file: Path) -> Optional[object]:
 
     elif filetype in ["py", "py3", "py35", "py36", "py37", "py38", "py39"]:
         return Python
+
+    elif REGEX_PRIVKEY_FILE.match(filetype):
+        return Plaintext
 
     return None

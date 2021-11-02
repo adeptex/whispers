@@ -106,6 +106,7 @@ def test_detect_secrets_by_key(src, expected):
         ("placeholders.yml", DEFAULT_SEVERITY, 0),
         ("plaintext.txt", "CRITICAL", 2),
         ("private-pgp-block.txt", "CRITICAL", 1),
+        ("privatekey.pem", "CRITICAL", 1),
         ("privatekeys.json", "CRITICAL", 6),
         ("privatekeys.xml", "CRITICAL", 6),
         ("privatekeys.yml", "CRITICAL", 6),

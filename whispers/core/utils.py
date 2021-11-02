@@ -19,6 +19,7 @@ ESCAPED_CHARS = str.maketrans({"'": r"\'", '"': r"\""})
 REGEX_URI = re.compile(r"[:\w\d]+://.+", flags=re.IGNORECASE)
 REGEX_PATH = re.compile(r"^((([A-Z]|file|root):)?(\.+)?[/\\]+).*$", flags=re.IGNORECASE)
 REGEX_IAC = re.compile(r"\![A-Za-z]+ .+", flags=re.IGNORECASE)
+REGEX_PRIVKEY_FILE = re.compile(r"(rsa|dsa|ed25519|ecdsa|pem|crt|cer|ca-bundle|p7b|p7c|p7s|ppk|pkcs12|pfx|p12)")
 
 
 def load_yaml_from_file(filepath: Path) -> dict:
