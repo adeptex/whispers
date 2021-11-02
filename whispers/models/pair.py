@@ -15,3 +15,6 @@ class KeyValuePair:
     def __post_init__(self) -> None:
         if self.keypath == []:
             self.keypath = [self.key]
+
+    def __repr__(self) -> str:
+        return f"{self.key} = {self.value}"
