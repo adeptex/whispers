@@ -58,8 +58,8 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
     try:
         yield from tagged
 
-    except Exception:
-        global_exception_handler(file.as_posix(), "Failed to make pairs")
+    except Exception:  # pragma: no cover
+        global_exception_handler(file.as_posix(), "Failed making pairs")
         return None
 
 
