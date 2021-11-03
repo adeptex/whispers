@@ -31,7 +31,7 @@
     ignorecase: True
   value:
     minlen: 1
-  similar: 0.7
+  similar: 0.4
 
 
 - id: uri

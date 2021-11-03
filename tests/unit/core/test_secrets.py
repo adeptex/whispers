@@ -75,7 +75,7 @@ def test_detect_secrets_by_key(src, expected):
         ("excluded.json", "BLOCKER", 0),
         ("excluded.xml", "BLOCKER", 0),
         ("excluded.yml", "BLOCKER", 0),
-        ("falsepositive.yml", DEFAULT_SEVERITY, 5),
+        ("falsepositive.yml", DEFAULT_SEVERITY, 4),
         ("Groups.xml", "CRITICAL", 2),
         ("hardcoded.json", "CRITICAL", 5),
         ("hardcoded.xml", "CRITICAL", 5),
