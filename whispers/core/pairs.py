@@ -33,7 +33,7 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
         if not file.is_file():
             return None
 
-    except Exception:
+    except Exception:  # pragma: no cover
         global_exception_handler(file.as_posix(), "Failed making pairs")
         return None
 

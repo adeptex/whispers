@@ -198,7 +198,7 @@ def find_line_number(pair: KeyValuePair) -> int:
                 if not findpath:
                     return foundline
 
-    except Exception:
+    except Exception:  # pragma: no cover
         global_exception_handler(pair.file, "Failed parsing file")
 
     return 0
