@@ -52,8 +52,9 @@ def test_show_info():
     with patch("sys.stdout", mock_print):
         show_info()
         result = mock_print.getvalue()
-        assert "default rule IDs:" in result
-        assert "default severity levels:" in result
+        assert "rule groups:" in result
+        assert "rule IDs:" in result
+        assert "severity levels:" in result
 
 
 def test_show_splash():
