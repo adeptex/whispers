@@ -1,5 +1,6 @@
 - id: privatekey
-  description: Text resembling a private key format
+  group: privatekeys
+  description: Text resembling a private key signature
   message: Private key
   severity: CRITICAL
   value:

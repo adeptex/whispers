@@ -9,7 +9,7 @@ from tests.unit.conftest import config_path, fixture_path
     [
         (f"-c {config_path('integration.yml')} {fixture_path()}", 3),
         (f"-r apikey-known {fixture_path('apikeys-known.yml')}", 54),
-        (f"--rules sensitive-files {fixture_path('files')}", 3),
+        (f"--rules sensitive {fixture_path('files')}", 3),
         (f"-s BLOCKER {fixture_path('aws.yml')}", 3),
     ],
 )

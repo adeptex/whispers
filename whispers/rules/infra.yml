@@ -1,0 +1,59 @@
+- id: dockercfg
+  group: infra
+  description: Hardcoded .dockercfg auth
+  message: Dockercfg auth
+  severity: CRITICAL
+  key:
+    regex: ^dockercfg auth$
+    ignorecase: False
+  value:
+    isBase64: True
+    isAscii: True
+    minlen: 1
+
+
+- id: htpasswd
+  description: Hardcoded .htpasswd credentials
+  message: .htpasswd Hash
+  severity: MAJOR
+  key:
+    regex: ^htpasswd hash$
+    ignorecase: False
+  value:
+    minlen: 1
+
+
+- id: npmrc
+  group: infra
+  description: Hardcoded .npmrc authToken
+  message: .npmrc authToken
+  severity: CRITICAL
+  key:
+    regex: ^npm authToken$
+    ignorecase: False
+  value:
+    minlen: 1
+
+
+- id: pip
+  group: infra
+  description: Hardcoded pip.conf password
+  message: pip.conf Password
+  severity: CRITICAL
+  key:
+    regex: ^pip password$
+    ignorecase: False
+  value:
+    minlen: 1
+
+
+- id: pypirc
+  group: infra
+  description: Hardcoded .pypirc Password
+  message: .pypirc Password
+  severity: CRITICAL
+  key:
+    regex: ^pypi password$
+    ignorecase: False
+  value:
+    minlen: 1

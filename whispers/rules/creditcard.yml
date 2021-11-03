@@ -1,8 +1,0 @@
-- id: creditcard
-  description: Potential credit card number
-  message: Credit Card
-  severity: MINOR
-  value:
-    regex: ^[0-9]{14,}$
-    ignorecase: False
-    isLuhn: True

@@ -1,0 +1,70 @@
+- id: apikey
+  group: apikeys
+  description: Values resembling known API key formats
+  message: API key
+  severity: MAJOR
+  key:
+    regex: "^(?!.*\\s)[\\w\\d\\.\\-_]+(key|token)$"
+    ignorecase: True
+  value:
+    regex: "^(?!.*[\\s])[\\S]{12,}$"
+    ignorecase: True
+    isUri: False
+  similar: 0.7
+
+
+- id: apikey-known
+  group: apikeys
+  description: Known API key formats
+  message: API key
+  severity: CRITICAL
+  value:
+    regex: "^(?!.*\\s)(\
+      akab|aio|amzn\\.mws\\.|\
+      (0|1)/[\\d]{16}:|CLOJARS|CFPAT|dp\\.(pt|ct|scim|st)\\.|dt0c01\\.|\
+      EAACEdEose0cBA|[\\w\\d]+:APA91b|FLWSECK-|fio-u-|\
+      eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOi|\
+      gh[pousr]_|AIza|eyJrIjoi|skapi_cert_|dG9rO|ion_|lin_(api|oauth)_|\
+      sk\\.eyj1ijoi|NR(AA|RA|AK|II|IQ|SP)-|PMAK-|pypi-|SG\\.|\
+      x(app|ox[spbora])-[0-9]+-|sq0(atp|csp|idp)|[sr]k_live_|whsec_|\
+      \\d{9}:AA|[\\w\\d]+\\.atlasv1\\.\
+    )[\\w\\d\\.\\-_=]{12,}$"
+    ignorecase: False
+
+
+- id: aws-id
+  group: apikeys
+  description: Values formatted like AWS Access Key ID
+  message: AWS Access Key ID
+  severity: BLOCKER
+  value:
+    regex: ^(?=.*[A-Z])(?=.*[0-9])A(AGA|CCA|GPA|IDA|IPA|KIA|NPA|NVA|PKA|ROA|SCA|SIA|3T[A-Z0-9])[A-Z0-9]{16}$
+    ignorecase: False
+
+
+- id: aws-secret
+  group: apikeys
+  description: Values formatted like AWS Secret Access Key
+  message: AWS Secret Access Key
+  severity: BLOCKER
+  key:
+    regex: ^(?!.*name)
+    ignorecase: True
+  value:
+    regex: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9\+\/]{40}$
+    ignorecase: False
+
+
+- id: aws-token
+  group: apikeys
+  description: Values formatted like AWS Session Token
+  message: AWS Session Token
+  severity: BLOCKER
+  key:
+      regex: .*aws.*
+      ignorecase: True
+  value:
+    regex: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9\+\/]{270,450}$
+    ignorecase: False
+    isBase64: True  # base64-encoded
+    isAscii: False

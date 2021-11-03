@@ -1,9 +1,0 @@
-- id: comment
-  description: Potential information leak through comments
-  message: Comment
-  severity: INFO
-  key:
-    regex: "^comment$"
-    ignorecase: False
-  value:
-    minlen: 1

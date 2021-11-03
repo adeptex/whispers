@@ -1,0 +1,24 @@
+- id: cors
+  group: functions
+  description: Insecure Cross-Origin Resource Sharing (CORS) configuration
+  message: Insecure CORS
+  severity: MINOR
+  key:
+    regex: ^function$
+    ignorecase: False
+  value:
+    regex: ^(aiohttp_cors.)?ResourceOptions.*(allow_credentials|expose_headers|allow_headers)=(True|'?"?\*'?"?)
+    ignorecase: False
+
+
+- id: dangerous
+  group: functions
+  description: Dangerous function calls that could lead to RCE
+  message: Dangerous Function
+  severity: MINOR
+  key:
+    regex: ^function$
+    ignorecase: False
+  value:
+    regex: ^(eval|exec|(os.)?system|popen|call|subprocess\.(check_output|call))\(
+    ignorecase: True

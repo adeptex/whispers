@@ -1,0 +1,64 @@
+- id: comment
+  group: misc
+  description: Potential information leak through comments
+  message: Comment
+  severity: INFO
+  key:
+    regex: "^comment$"
+    ignorecase: False
+  value:
+    minlen: 1
+
+
+- id: creditcard
+  group: misc
+  description: Potential credit card number
+  message: Credit Card
+  severity: MINOR
+  value:
+    regex: ^[0-9]{14,}$
+    ignorecase: False
+    isLuhn: True
+
+
+- id: secret
+  group: misc
+  description: Variable names refering to secrets
+  message: Secret
+  severity: MINOR
+  key:
+    regex: .*(se[ck]ret[sz]?)[\-_\.]?(key|hash)?$
+    ignorecase: True
+  value:
+    minlen: 1
+  similar: 0.7
+
+
+- id: uri
+  group: misc
+  description: Hardcoded credentials in a Uniform Resource Identifier (URI)
+  message: URI Credentials
+  severity: CRITICAL
+  key:
+    regex: ^uri creds$
+    ignorecase: False
+  value:
+    minlen: 3
+
+
+- id: webhook
+  group: misc
+  description: Various known webhook formats
+  message: Webhook
+  severity: MINOR
+  value:
+    regex: "https?://(\
+      hooks\\.slack\\.com/services/[\\w\\d]{9}/[\\w\\d]{9}/[\\w\\d]+|\
+      api\\.hubapi\\.com/webhooks/v1/[\\w\\d]+/|\
+      chat\\.twilio\\.com/v2/Services/[\\w\\d]{32}|\
+      outlook\\.office\\.com/webhook/[\\w\\d\\-@/]{73,}|\
+      hooks\\.zapier\\.com/hooks/catch/[\\d]+/[\\w\\d]+|\
+      discord\\.com/api/webhooks/[\\d]+/[\\w\\d]+\
+      )"
+    ignorecase: True
+    isUri: True
