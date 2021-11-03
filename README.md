@@ -25,7 +25,7 @@ Whispers is a **static structured text** parser, not a dynamic code parser.
 pip3 install whispers
 ```
 
-### From GitHub
+### From Github
 
 ```
 git clone https://github.com/whispers/whispers
@@ -34,7 +34,7 @@ python3 setup.py install
 ```
 
 
-## Supported Formats
+## Supported formats
 
 :clipboard: Complete coverage for JSON, YAML, XML, and [many other formats](tests/fixtures).
 

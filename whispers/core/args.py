@@ -10,7 +10,6 @@ from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop
 def argument_parser() -> ArgumentParser:
     """CLI argument parser"""
     args_parser = ArgumentParser("whispers", description=("Identify secrets in static structured text."))
-    args_parser.add_argument("-v", "--version", action="version", version=__version__)
     args_parser.add_argument("-i", "--info", action="store_true", help="show extended help and exit")
     args_parser.add_argument("-c", "--config", help="config file")
     args_parser.add_argument("-o", "--output", help="output file")
@@ -32,6 +31,7 @@ def argument_parser() -> ArgumentParser:
         default=logging.INFO,
         help="log debugging information",
     )
+    args_parser.add_argument("-v", "--version", action="version", version=__version__)
     args_parser.add_argument("src", nargs="?", help="target file or directory")
 
     args_parser.print_help = show_splash(args_parser.print_help)
