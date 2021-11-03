@@ -70,7 +70,10 @@ whispers --output /tmp/secrets.out target/file/or/dir
 whispers --exitcode 7 target/file/or/dir
 
 whispers --rules aws-id,aws-secret target/file/or/dir
-whispers --xrules sensitive-files target/file/or/dir
+whispers --xrules sensitive target/file/or/dir
+
+whispers --groups apikeys,misc target/file/or/dir
+whispers --xgroups files target/file/or/dir
 
 whispers --severity BLOCKER,CRITICAL target/file/or/dir
 whispers --xseverity MINOR target/file/or/dir
@@ -135,6 +138,8 @@ include:
       value:
         regex: (Aria|Ned) Stark
         ignorecase: True
+  groups:
+    - apikeys
   severity:
     - CRITICAL
     - BLOCKER
@@ -147,6 +152,8 @@ exclude:
     - ^foo        # regex
   values:
     - bar$        # regex
+  rules:
+    - apikey-known
 
 
 ```
