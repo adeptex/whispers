@@ -4,7 +4,7 @@ from functools import wraps
 from sys import argv, stdout
 
 from whispers.__version__ import __version__, __whispers__
-from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_ids
+from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop
 
 
 def argument_parser() -> ArgumentParser:
@@ -17,6 +17,8 @@ def argument_parser() -> ArgumentParser:
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
     args_parser.add_argument("-r", "--rules", help="comma-separated list of rule IDs to report (see --info)")
     args_parser.add_argument("-R", "--xrules", help="comma-separated list of rule IDs to exclude (see --info)")
+    args_parser.add_argument("-g", "--groups", help="comma-separated list of rule groups to report (see --info)")
+    args_parser.add_argument("-G", "--xgroups", help="comma-separated list of rule groups to exclude (see --info)")
     args_parser.add_argument("-s", "--severity", help="comma-separated list of severity levels to report (see --info)")
     args_parser.add_argument(
         "-S", "--xseverity", help="comma-separated list of severity levels to exclude (see --info)"
@@ -60,6 +62,12 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
     if args.xrules:
         args.xrules = args.xrules.split(",")
 
+    if args.groups:
+        args.groups = args.groups.split(",")
+
+    if args.xgroups:
+        args.xgroups = args.xgroups.split(",")
+
     if args.severity:
         args.severity = args.severity.split(",")
 
@@ -82,9 +90,12 @@ def show_splash(func, **kwargs):
 
 
 def show_info():
+    rules = default_rules()
     argument_parser().print_help()
+    print("\ndefault rule groups:")
+    list(map(lambda x: print(f"  - {x}"), list_rule_prop("group", rules)))
     print("\ndefault rule IDs:")
-    list(map(lambda x: print(f"  - {x}"), list_rule_ids(default_rules())))
+    list(map(lambda x: print(f"  - {x}"), list_rule_prop("id", rules)))
     print("\ndefault severity levels:")
     list(map(lambda x: print(f"  - {x}"), DEFAULT_SEVERITY))
     print("\nsource: https://github.com/adeptex/whispers")

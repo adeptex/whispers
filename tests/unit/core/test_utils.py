@@ -16,7 +16,7 @@ from whispers.core.utils import (
     is_luhn,
     is_path,
     is_uri,
-    list_rule_ids,
+    list_rule_prop,
     load_yaml_from_file,
     similar_strings,
     simple_string,
@@ -248,6 +248,6 @@ def test_default_rules():
         assert rule["id"] in rules
 
 
-def test_list_rule_ids():
+def test_list_rule_prop():
     rule = {"id": "rule-id"}
-    assert list_rule_ids([rule]) == ["rule-id"]
+    assert list_rule_prop("id", [rule]) == ["rule-id"]

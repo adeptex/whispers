@@ -2,7 +2,9 @@ from dataclasses import dataclass, field
 from re import compile
 from typing import Dict, List, Optional, Pattern
 
-from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_ids
+from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop
+
+DEFAULT_RULES = default_rules()
 
 
 @dataclass
@@ -10,7 +12,8 @@ class Include:
     """AppConfig include configuration class"""
 
     files: Optional[List] = field(default_factory=lambda: ["**/*"])  # globs
-    rules: Optional[List] = field(default_factory=lambda: list_rule_ids(default_rules()))
+    rules: Optional[List] = field(default_factory=lambda: list_rule_prop("id", DEFAULT_RULES))
+    groups: Optional[List] = field(default_factory=lambda: list_rule_prop("group", DEFAULT_RULES))
     severity: Optional[List] = field(default_factory=lambda: DEFAULT_SEVERITY)
 
 
@@ -22,6 +25,7 @@ class Exclude:
     keys: Optional[Pattern] = field(default_factory=lambda: None)  # regex
     values: Optional[Pattern] = field(default_factory=lambda: None)  # regex
     rules: Optional[List] = field(default_factory=list)
+    groups: Optional[List] = field(default_factory=list)
     severity: Optional[List] = field(default_factory=list)
 
     def __post_init__(self) -> None:

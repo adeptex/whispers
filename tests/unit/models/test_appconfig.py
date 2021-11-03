@@ -2,14 +2,14 @@ import re
 
 import pytest
 
-from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_ids
+from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop
 from whispers.models.appconfig import AppConfig
 
 
 def test_appconfig():
     config = AppConfig({})
     assert config.include.files == ["**/*"]
-    assert config.include.rules == list_rule_ids(default_rules())
+    assert config.include.rules == list_rule_prop("id", default_rules())
     assert config.include.severity == DEFAULT_SEVERITY
     assert config.exclude.files is None
     assert config.exclude.keys is None
@@ -37,8 +37,21 @@ def test_appconfig_severity(config, expected):
 )
 def test_appconfig_rules(config, expected):
     config = AppConfig(config)
-    assert config.include.rules == list_rule_ids(default_rules())
+    assert config.include.rules == list_rule_prop("id", default_rules())
     assert config.exclude.rules == expected
+
+
+@pytest.mark.parametrize(
+    ("config", "expected"),
+    [
+        ({"include": {"groups": ["group1"]}, "exclude": {}}, ["group1"]),
+        ({"include": {}, "exclude": {}}, list_rule_prop("group", default_rules())),
+    ],
+)
+def test_appconfig_groups(config, expected):
+    config = AppConfig(config)
+    assert config.include.groups == expected
+    assert config.exclude.groups == []
 
 
 def test_appconfig_compile():

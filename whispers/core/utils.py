@@ -214,8 +214,6 @@ def default_rules() -> List[dict]:
     return rules
 
 
-def list_rule_ids(rules: List[dict]) -> List[str]:
-    """List rule IDs given a list of rules"""
-    ids = sorted(map(lambda rule: rule["id"], rules))
-
-    return ids
+def list_rule_prop(prop: str, rules: List[dict]) -> List[str]:
+    """List rule property given a list of rules"""
+    return sorted(set(map(lambda rule: rule[prop], rules)))

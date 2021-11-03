@@ -25,6 +25,13 @@ def test_load_rules_ids():
     assert len(rules) == 3
 
 
+def test_load_rules_groups():
+    args = parse_args(["-g", "functions,files", "-G", "files", "tests/fixtures"])
+    config = load_config(args)
+    rules = load_rules(args, config)
+    assert len(rules) == 2
+
+
 def test_load_rules_severity():
     args = parse_args(["-s", "BLOCKER,CRITICAL,MINOR", "-S", "MINOR", "tests/fixtures"])
     config = load_config(args)
