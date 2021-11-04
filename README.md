@@ -101,8 +101,10 @@ There are several configuration options available in Whispers. It’s possible t
 
 Note: all keys and static values are always included, and then filtered out based on config and [rules](whispers/rules).
 
-* File path specifications are interpreted as globs.
-* Keys and values accept regular expressions and [several other parameters](whispers/models/appconfig.py).
+* File path specifications are lists of globs
+* Key and value specifications are lists of regular expressions 
+* Rule specifications are lists of Rule IDs or inline rule definitions
+* Everything else is a list of strings
 
 
 ### Simple examples
