@@ -217,3 +217,8 @@ class PluginName:
       file=filepath.as_posix()
     )
 ```
+
+
+## License
+
+[GNU General Public License v3.0](LICENSE)
