@@ -97,7 +97,13 @@ for secret in whispers.secrets(args):
 
 ## Config
 
-There are several configuration options available in Whispers. It’s possible to include/exclude results based on file path, key, or value. File path specifications are interpreted as globs. Keys and values accept regular expressions and several other parameters. There is a default configuration file built-in that will be used if you don't provide a custom one.
+There are several configuration options available in Whispers. It’s possible to include and exclude results based on file path, keys, values, individual or grouped rules, and severity levels. There is a [default configuration file](whispers/config.yml) that will be used if you don't specify a custom one.
+
+Note: all keys and static values are always included, and then filtered out based on config and [rules](whispers/rules).
+
+* File path specifications are interpreted as globs.
+* Keys and values accept regular expressions and [several other parameters](whispers/models/appconfig.py).
+
 
 ### Simple examples
 
@@ -163,7 +169,7 @@ The fastest way to tweak detection (ie: remove false positives and unwanted resu
 For example: `whispers -c config.yml -r starks target`
 
 
-## Custom Rules
+## Custom rules
 
 Rules specify the actual things that should be pulled out from key-value pairs. There are several common ones that come built-in, such as AWS keys and passwords, but the tool is made to be easily expandable with new rules.
 
