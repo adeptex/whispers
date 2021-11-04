@@ -56,6 +56,6 @@ def test_appconfig_groups(config, expected):
 
 def test_appconfig_compile():
     config = AppConfig({"exclude": {"files": ["test"]}})
-    assert config.exclude.files == re.compile(r"test")
+    assert config.exclude.files == re.compile(r"test", flags=re.IGNORECASE)
     assert config.exclude.keys is None
     assert config.exclude.values is None

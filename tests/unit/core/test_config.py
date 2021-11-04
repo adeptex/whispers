@@ -27,6 +27,6 @@ def test_load_config_exception(filename, expected):
 def test_load_config():
     args = parse_args(["-c", config_path("example.yml"), "src"])
     config = load_config(args)
-    assert config.exclude.files == re.compile(r"\.npmrc|.*coded.*|\.git/.*")
-    assert config.exclude.keys == re.compile("SECRET_VALUE_KEY")
-    assert config.exclude.values == re.compile("SECRET_VALUE_PLACEHOLDER")
+    assert config.exclude.files == re.compile(r"\.npmrc|.*coded.*|\.git/.*", flags=re.IGNORECASE)
+    assert config.exclude.keys == re.compile("SECRET_VALUE_KEY", flags=re.IGNORECASE)
+    assert config.exclude.values == re.compile("SECRET_VALUE_PLACEHOLDER", flags=re.IGNORECASE)

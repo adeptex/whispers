@@ -14,6 +14,7 @@ compliant:
   UserData: 
     - "gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch\n"
   PolicyName: SandboxConfigurationS3BucketAccessPolicy
+  ikey: Ctrl+Shift+I
 
 noncompliant:
   secretarySecret: "hardcoded1"

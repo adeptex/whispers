@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.unit.conftest import FIXTURE_PATH, fixture_path, forbidden_path, tmp_path
+from tests.unit.conftest import FIXTURE_PATH, config_path, fixture_path, forbidden_path, tmp_path
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
 from whispers.core.pairs import filter_included, filter_static, is_static, load_plugin, make_pairs, tag_file
@@ -30,13 +30,15 @@ from whispers.plugins.yml import Yml
     [
         (tmp_path("File.404"), 0),
         (forbidden_path(), 0),
-        (fixture_path("language.py2"), 1),
-        (fixture_path(".npmrc"), 4),
-        (fixture_path("placeholders.xml"), 1),
+        (fixture_path("language.py2"), 0),
+        (fixture_path(".npmrc"), 3),
+        (fixture_path("placeholders.xml"), 0),
+        (fixture_path("privatekey.pem"), 1),
+        (fixture_path("putty.ppk"), 0),
     ],
 )
 def test_make_pairs(filename, expected):
-    args = parse_args([filename])
+    args = parse_args(["-c", config_path("exclude_values.yml"), filename])
     config = load_config(args)
     pairs = list(make_pairs(config, Path(filename)))
     assert len(pairs) == expected

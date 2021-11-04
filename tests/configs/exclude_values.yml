@@ -1,6 +1,7 @@
 exclude:
   keys:
-    - integration-tests
+    - file
   values:
     - API_KEY
     - AUTH_TOKEN
+    - \-+END.*

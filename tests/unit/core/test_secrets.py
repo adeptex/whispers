@@ -96,9 +96,9 @@ def test_detect_secrets_by_key(src, expected):
         ("language.py", "CRITICAL", 11),
         ("language.py2", DEFAULT_SEVERITY, 0),
         ("language.sh", "CRITICAL,MAJOR", 14),
-        ("passwords.json", "CRITICAL", 6),
-        ("passwords.xml", "CRITICAL", 6),
-        ("passwords.yml", "CRITICAL", 6),
+        ("passwords.json", "CRITICAL", 5),
+        ("passwords.xml", "CRITICAL", 5),
+        ("passwords.yml", "CRITICAL", 5),
         ("paths.yml", DEFAULT_SEVERITY, 0),
         ("pip.conf", "CRITICAL", 2),
         ("placeholders.json", DEFAULT_SEVERITY, 0),
@@ -110,7 +110,7 @@ def test_detect_secrets_by_key(src, expected):
         ("privatekeys.json", "CRITICAL", 6),
         ("privatekeys.xml", "CRITICAL", 6),
         ("privatekeys.yml", "CRITICAL", 6),
-        ("putty.ppk", DEFAULT_SEVERITY, 0),
+        ("putty.ppk", DEFAULT_SEVERITY, 1),
         ("ruleslist.yml", "CRITICAL", 3),
         ("settings.cfg", "CRITICAL", 1),
         ("settings.conf", "CRITICAL", 1),
@@ -123,7 +123,7 @@ def test_detect_secrets_by_key(src, expected):
     ],
 )
 def test_detect_secrets_by_value(src, severity, expected):
-    args = parse_args(["--config", config_path("detection_by_value.yml"), "--severity", severity, fixture_path(src)])
+    args = parse_args(["--severity", severity, fixture_path(src)])
     config = load_config(args)
     rules = load_rules(args, config)
     pairs = make_pairs(config, FIXTURE_PATH.joinpath(src))
@@ -173,7 +173,7 @@ def test_detect_secrets_by_filename(expected):
 
 
 @pytest.mark.parametrize(
-    ("src", "count", "rule_id"), [("language.html", 3, "comment"), ("passwords.json", 6, "password"),],
+    ("src", "count", "rule_id"), [("language.html", 3, "comment"), ("passwords.json", 5, "password"),],
 )
 def test_detect_secrets_by_rule(src, count, rule_id):
     args = parse_args(["--rules", rule_id, fixture_path(src)])
