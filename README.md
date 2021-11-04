@@ -37,9 +37,8 @@ python3 setup.py install
 
 ## Supported formats
 
-:clipboard: Complete coverage for JSON, YAML, XML, and [many other formats](tests/fixtures).
-
-:hammer_and_wrench: [Contribute](issues/new) by submitting format samples!
+* :clipboard: Complete coverage for JSON, YAML, XML, and [many other formats](tests/fixtures).
+* :hammer_and_wrench: [Contribute](issues/new) by submitting format samples!
 
 
 ## Detects
