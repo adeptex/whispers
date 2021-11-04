@@ -14,7 +14,8 @@ Whispers is a static text analysis tool designed for parsing various common soft
 
 Whispers is a **static structured text** parser, not a dynamic code parser.
 
-:lady_beetle: [Report a bug](issues/new) 
+* :clipboard: [Release notes](RELEASE_NOTES.md)
+* :lady_beetle: [Report a bug](issues/new) 
 
 
 ## Installation
@@ -103,7 +104,7 @@ Note: all keys and static values are always included, and then filtered out base
 
 * File path specifications are lists of globs
 * Key and value specifications are lists of regular expressions 
-* Rule specifications are lists of Rule IDs or inline rule definitions
+* Rule specifications are lists of rule IDs or inline rule definitions
 * Everything else is a list of strings
 
 
