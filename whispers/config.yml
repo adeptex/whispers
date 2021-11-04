@@ -17,4 +17,4 @@ exclude:
     - .*_(user|password|token|key|placeholder|name)$
     - ^aws_(access_key_id|secret_access_key|session_token)$
     - ^arn:aws:.*
-    - ((ctrl|alt|shift|delete|insert|f[\d]+) ?. ?)+[\w]+
+    - ^((cn?trl|alt|shift|del|ins|esc|tab|f[\d]+) ?[\+_\-\\/] ?)+[\w]+$
