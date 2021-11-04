@@ -6,10 +6,9 @@ from whispers.models.pair import KeyValuePair
 
 class Uri:
     def pairs(self, code: str) -> Iterator[KeyValuePair]:
-        key = "uri creds"
         uri = urlparse(code)
         if uri.password:
-            yield KeyValuePair(key, f"{uri.username}:{uri.password}", [code])
+            yield KeyValuePair("uri creds", f"{uri.username}:{uri.password}", [code])
 
         if uri.query:
             for key, value in parse_qsl(uri.query):

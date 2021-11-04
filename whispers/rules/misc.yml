@@ -43,6 +43,7 @@
     regex: ^uri creds$
     ignorecase: False
   value:
+    regex: "^\\w+:\\w+$"
     minlen: 3
 
 
