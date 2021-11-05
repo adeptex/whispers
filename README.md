@@ -10,9 +10,7 @@
 
 > "My little birds are everywhere, even in the North, they whisper to me the strangest stories." - _Varys_
 
-Whispers is a static text analysis tool designed for parsing various common software config formats in search of hardcoded secrets. Whispers can run in the CLI or be integrated in a CI/CD pipeline.
-
-Whispers is a **static structured text** parser, not a dynamic code parser.
+Whispers is a **static structured text** analysis tool designed for parsing various common software config formats in search of hardcoded secrets. Whispers can be used as a CLI executable, as well as a Python library, which is meant to facilitate its integration into automated processes and pipelines.
 
 * :clipboard: [Release notes](RELEASE_NOTES.md)
 * :lady_beetle: [Report a bug](issues/new) 
@@ -84,12 +82,7 @@ whispers --xseverity MINOR target/file/or/dir
 ```py
 import whispers
 
-args = (
-  "-c whispers/config.yml "
-  "-r apikey,aws-secret,password "
-  "-s BLOCKER,CRITICAL,MAJOR "
-  "tests/fixtures"
-)
+args = "-c whispers/config.yml -R sensitive -S INFO tests/fixtures"
 
 for secret in whispers.secrets(args):
   print(f"[{secret.file}:{secret.line}] {secret.key} = {secret.value}")
@@ -140,7 +133,7 @@ include:
   rules:
     - password
     - privatekey
-    - id: starks
+    - id: starks  # inline rule
       message: Whispers from the North
       severity: CRITICAL
       value:
@@ -166,9 +159,9 @@ exclude:
 
 ```
 
-The fastest way to tweak detection (ie: remove false positives and unwanted results) is to copy the default [config.yml](whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers.
+The fastest way to tweak detection in a repeatable way (ie: remove false positives and unwanted results) is to copy the default [config.yml](whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers, for example: `whispers -c config.yml -r starks target`.
 
-For example: `whispers -c config.yml -r starks target`
+Simple filtering based on rules and severity can also be done with CLI arguments directly, without having to provide a config file. See `whispers --info` for details.
 
 
 ## Custom rules
