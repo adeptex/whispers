@@ -4,7 +4,7 @@
 
 Version 1 was released under [Apache License 2.0](https://github.com/Skyscanner/whispers/blob/master/LICENSE), which states that `Licensed works, modifications, and larger works may be distributed under different terms and without source code.`
 
-Version 2 is released under [GNU General Public License v3.0](https://github.com/adeptex/whispers/blob/master/LICENSE), which is `intended to guarantee your freedom to share and change all versions of a program--to make sure it remains free software for all its users.` :muscle::brain:
+Version 2 is released under [GNU General Public License v3.0](https://github.com/adeptex/whispers/blob/master/LICENSE), which is `intended to guarantee your freedom to share and change all versions of a program--to make sure it remains free software for all its users.`
 
 
 ## :x: Breaking changes :x:
@@ -51,6 +51,7 @@ npmrc:
 In version 2 the rules are defined as a list of dictionaries. The rule ID now has its own `id` key inside the rule config definition. For example:
 ```yaml
 - id: npmrc
+  group: infra
   description: Hardcoded .npmrc authToken
   message: .npmrc authToken
   severity: CRITICAL
@@ -59,11 +60,18 @@ In version 2 the rules are defined as a list of dictionaries. The rule ID now ha
     ignorecase: False
 ```
 
-If you have any custom rule definitions, you will have to adjust them for migrating to version 2.
+If you have any custom rule definitions, you will have to adjust them for migrating to version 2. 
+
+There is an additional new `groups` parameter that can be used to group rules. 
+
+
+### :x: Rule naming :x:
+
+Some rules IDs were changed to gain a consitent naming format, please [refer to rules](whispers/rules).
 
 
 ### :x: Output file format :x:
-In version 1 the output file was written in YAML with awkward indexing, which made results not very usable.
+In version 1 the output file was written in YAML with awkward indexing, which made results unusable.
 
 In version 2 the same JSON output as `stdout` is written to the output file, making it easier to parse.
 
@@ -73,7 +81,7 @@ In version 1, `whispers.log` is always created in the same directory from which 
 
 In version 2, the log file will not be created by default, unless explicitly enabled with an argument: `whispers --log src`. The log is only useful for reviewing exceptions and bugs, not for common usage. In addition, the log will now be written to `/tmp/whispers.log` (Posix) or `%TEMP%\whispers.log` (Windows) so that it does not interfere with analysis or permissions.
 
-Together, `--log` and `--debug` arguments can now be used to investigate exceptions and bugs. Please [submit a bug report](issues/new) if you find something unexpected!
+Together, `--log` and `--debug` can be used to investigate exceptions and bugs. Please [submit a bug report](issues/new) if you find something unexpected!
 
 
 ### :x: Removed support for dynamic languages :x:
@@ -113,10 +121,10 @@ Whispers now runs on Linux, MacOS, and Windows. Install it from PyPI like so: `p
 
 
 ### :hammer_and_wrench: Include and Exclude by Rule and Severity :hammer_and_wrench:
+Individual and grouped rules and severity levels to be included or excluded can now be directly specified with CLI args:
 
-You can now specify rules and severity levels that you want to include or exclude directly with CLI args:
-
-Exclude sensitive files from results: `whispers --xrules sensitive-files`
+Exclude sensitive files from results: `whispers --xrules sensitive-file`
+Exclude miscellaneous rules results: `whispers --xgroups misc`
 Exclude MINOR level severity from results: `whispers --xseverity MINOR`
 
 It is also possible to specify included and excluded rules and severity levels via config.yml. Custom rules can be added directly to the list using the following format:
@@ -139,6 +147,8 @@ exclude:
       value:
         regex: (Aria|Ned) Stark
         ignorecase: True
+  groups:
+    - misc
 
 exclude:
   severity:
@@ -155,7 +165,7 @@ If you do, only those that you specify will be applicable.
 ### :hammer_and_wrench: Rule severity changes :hammer_and_wrench:
 
 The following rule severity levels were adjusted for better filtering and alerting on relevant results:
-- sensitive-files (MINOR)
+- sensitive-file (MINOR)
 - dangerous-functions (MINOR)
 - cors (MINOR)
 - creditcard (MINOR)
