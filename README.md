@@ -18,18 +18,8 @@ Whispers is a **static structured text** analysis tool designed for parsing vari
 
 ## Installation
 
-### From PyPI
-
 ```
 pip3 install whispers
-```
-
-### From Github
-
-```
-git clone https://github.com/whispers/whispers
-cd whispers
-python3 setup.py install
 ```
 
 
@@ -195,6 +185,7 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
 
 
 ## Plugins
+
 All parsing functionality is implemented via [plugins](whispers/plugins/). Each plugin implements a class with the `pairs()` method that runs through files and yields `KeyValuePair` objects to be checked with [rules](whispers/rules/).
 
 ```py
@@ -209,6 +200,16 @@ class PluginName:
       keypath=["node", "path", "to", "key"],
       file=filepath.as_posix()
     )
+```
+
+
+## Development
+
+```
+git clone https://github.com/whispers/whispers
+cd whispers
+make install-dev
+make test
 ```
 
 
