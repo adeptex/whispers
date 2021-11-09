@@ -11,12 +11,12 @@ jellyfish==0.8.9
 jproperties==2.1.1
 lazy-object-proxy==1.6.0
 luhn==0.2.0
-lxml==4.6.3
+lxml==4.6.4
 pyyaml==6.0
 six==1.16.0
-soupsieve==2.2.1
+soupsieve==2.3
 typing-extensions==3.10.0.2
-wrapt==1.13.2
+wrapt==1.13.3
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
