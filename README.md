@@ -5,7 +5,7 @@
 ![](coverage.svg)
 [![](https://img.shields.io/github/issues/whispers/whispers)](https://github.com/whispers/whispers/issues)
 [![](https://img.shields.io/github/issues-pr/whispers/whispers)](https://github.com/whispers/whispers/pulls)
-[![](https://img.shields.io/pypi/dm/whispers)](https://img.shields.io/pypi/dm/whispers)
+[![](https://img.shields.io/pypi/dm/whispers)](https://snyk.io/advisor/python/whispers)
 [![](https://img.shields.io/badge/system-linux%20|%20osx%20|%20windows-blue)]()
 
 > "My little birds are everywhere, even in the North, they whisper to me the strangest stories." - _Varys_
