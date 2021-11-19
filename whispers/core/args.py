@@ -90,13 +90,28 @@ def show_splash(func, **kwargs):
 
 
 def show_info():
-    rules = default_rules()
     argument_parser().print_help()
-    print("\nrule groups:")
-    list(map(lambda x: print(f"  - {x}"), list_rule_prop("group", rules)))
-    print("\nrule IDs:")
-    list(map(lambda x: print(f"  - {x}"), list_rule_prop("id", rules)))
-    print("\nseverity levels:")
-    list(map(lambda x: print(f"  - {x}"), DEFAULT_SEVERITY))
-    print("\nsource:  https://github.com/adeptex/whispers")
-    print("\nlicense: GNU General Public License v3.0\n")
+    rules_table = []
+    col_width = 20
+    for rule in default_rules():
+        line = (
+            "  | " + 
+            rule['group'].ljust(col_width)[:col_width] + " | " +
+            rule['id'].ljust(col_width)[:col_width] +  " | " +
+            rule['severity'].ljust(col_width)[:col_width] + " |"
+        )
+        rules_table.append(line)
+
+    draw_line = "\n  " + ("+--" + "-" * col_width) * 3 + "+"
+    print(
+        "\nrules:" + draw_line +
+        "\n  | " + 
+        "group".ljust(col_width) + " | " + 
+        "rule id".ljust(col_width) + " | " + 
+        "severity".ljust(col_width) + " |" +
+        draw_line +
+        "\n" + "\n".join(sorted(rules_table)) +
+        draw_line +
+        "\n\nsource:  https://github.com/adeptex/whispers"
+        "\n\nlicense: GNU General Public License v3.0\n"
+    )
