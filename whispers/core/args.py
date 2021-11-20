@@ -90,21 +90,22 @@ def show_splash(func, **kwargs):
 
 
 def show_info():
-    argument_parser().print_help()
+        argument_parser().print_help()
     rules_table = []
     col_width = 20
     for rule in default_rules():
         line = (
-            "  | " + 
+            "    " + 
             rule['group'].ljust(col_width)[:col_width] + " | " +
             rule['id'].ljust(col_width)[:col_width] +  " | " +
-            rule['severity'].ljust(col_width)[:col_width] + " |"
+            rule['severity'].ljust(col_width)[:col_width]
         )
         rules_table.append(line)
 
     draw_line = "\n  " + ("+--" + "-" * col_width) * 3 + "+"
     print(
-        "\nrules:" + draw_line +
+        "\n\nrules:\n" + 
+        draw_line +
         "\n  | " + 
         "group".ljust(col_width) + " | " + 
         "rule id".ljust(col_width) + " | " + 
@@ -113,5 +114,4 @@ def show_info():
         "\n" + "\n".join(sorted(rules_table)) +
         draw_line +
         "\n\nsource:  https://github.com/adeptex/whispers"
-        "\n\nlicense: GNU General Public License v3.0\n"
     )
