@@ -2,7 +2,7 @@
 
 ## :dizzy: Licensing changes :dizzy:
 
-Version 1 was released under [Apache License 2.0](https://github.com/Skyscanner/whispers/blob/master/LICENSE), which states that `Licensed works, modifications, and larger works may be distributed under different terms and without source code.`
+Version 1 was released under [Apache License 2.0](https://github.com/Skyscanner/whispers/blob/master/LICENSE), which states that `licensed works, modifications, and larger works may be distributed under different terms and without source code.`
 
 Version 2 is released under [GNU General Public License v3.0](https://github.com/adeptex/whispers/blob/master/LICENSE), which is `intended to guarantee your freedom to share and change all versions of a program--to make sure it remains free software for all its users.`
 
@@ -34,6 +34,35 @@ In version 1, the configuration file expected file exclusion specification to be
 In version 2, file exclusions are specified as regex. Instead of resolving globs, Whispers now uses the generator directly. Every file path received from the glob generator is now checked against the file exclusion regex to determine whether the file should be excluded on-the-fly.
 
 This highly improves performance for cases where the target directory contains a large number of files. In version 2 the tree is traversed file by file, individually checking if the file path matches a pre-compiled exclusion regex. This decreases CPU, RAM and time needed to scan directories of potentially unlimited trees and depths.
+
+
+### :x: Rule names and severity levels :x:
+Rule names and severity levels were adapted to make usage more intuitive, and results more useful. The following is the exhaustive list of default rules included in version 2:
+
+| Group                | Rule ID              | Severity            |
+|----------------------|----------------------|---------------------|
+| files                | file-known           | MINOR               |
+| infra                | dockercfg            | CRITICAL            |
+| infra                | htpasswd             | MAJOR               |
+| infra                | npmrc                | CRITICAL            |
+| infra                | pip                  | CRITICAL            |
+| infra                | pypirc               | CRITICAL            |
+| keys                 | apikey               | MAJOR               |
+| keys                 | apikey-known         | CRITICAL            |
+| keys                 | aws-id               | BLOCKER             |
+| keys                 | aws-secret           | BLOCKER             |
+| keys                 | aws-token            | BLOCKER             |
+| keys                 | privatekey           | CRITICAL            |
+| misc                 | comment              | INFO                |
+| misc                 | creditcard           | MINOR               |
+| misc                 | secret               | MINOR               |
+| misc                 | webhook              | MINOR               |
+| passwords            | password             | CRITICAL            |
+| passwords            | uri                  | CRITICAL            |
+| python               | cors                 | MINOR               |
+| python               | system               | MINOR               |
+
+Make sure to review and adapt your integration accordingly.
 
 
 ### :x: Rule specification format changes :x:
@@ -117,15 +146,15 @@ Whispers now runs on Linux, MacOS, and Windows. Install it from PyPI like so: `p
 - Added support for Gradle and Maven credentials
 - Improved private key detection
 - Added known API key formats ([GitGuardian](https://docs.gitguardian.com/secrets-detection/detectors/))
-- Added sensitive file extensions ([tell_me_your_secrets](https://github.com/valayDave/tell-me-your-secrets/blob/master/tell_me_your_secrets/config.yml))
+- Added knwon file extensions ([tell_me_your_secrets](https://github.com/valayDave/tell-me-your-secrets/blob/master/tell_me_your_secrets/config.yml))
 
 
 ### :hammer_and_wrench: Include and Exclude by Rule and Severity :hammer_and_wrench:
 Individual and grouped rules and severity levels to be included or excluded can now be directly specified with CLI args:
 
-Exclude sensitive files from results: `whispers --xrules sensitive-file`
-Exclude miscellaneous rules results: `whispers --xgroups misc`
-Exclude MINOR level severity from results: `whispers --xseverity MINOR`
+Exclude known files from results: `whispers -R known-file`
+Exclude miscellaneous results: `whispers -G misc`
+Exclude MAJOR and MINOR severity level results: `whispers -S MAJOR,MINOR`
 
 It is also possible to specify included and excluded rules and severity levels via config.yml. Custom rules can be added directly to the list using the following format:
 ```yaml
@@ -140,7 +169,7 @@ exclude:
     - SECRET_VALUE_PLACEHOLDER
   rules:
     - password
-    - privatekey
+    - uri
     - id: starks
       message: Whispers from the North
       severity: CRITICAL
@@ -162,20 +191,10 @@ If you don't specify any severity, all built-in severity levels will be used be 
 If you do, only those that you specify will be applicable.
 
 
-### :hammer_and_wrench: Rule severity changes :hammer_and_wrench:
-
-The following rule severity levels were adjusted for better filtering and alerting on relevant results:
-- sensitive-file (MINOR)
-- dangerous-functions (MINOR)
-- cors (MINOR)
-- creditcard (MINOR)
-- comment (INFO) **rule ID renamed from `comments` to `comment`**
-
-
 ## :white_check_mark: New features :white_check_mark:
 
-**No new features** were introduced in this release. The primary objective of the present release was to optimize currently implemented logic in order to make it easier to read, understand, and work with in general. This refactoring, along with the aforementioned breaking changes, have shown to increase scanning speed of up to 7-10 times (depending on conditions) in comparison with version 1. In addition, it allowed achieving 100% unit test coverage. 
+**No new features** were introduced in this release. The primary objective of the present release was to optimize version 1 logic in order to make it easier to read, understand, and work with in general. This refactoring, along with the aforementioned breaking changes, have shown to increase scanning speed up to 7-10 times (depending on conditions). In addition, it allowed achieving 100% unit test coverage. 
 
-Other focus areas of version 2 were improving usability, like being able to easily filter in/out results, or not writing a log file by default; and making code more Pythonic, by using built-in features and dataclass models.
+Other focus areas of version 2 were improving usability, like being able to easily filter results in or out from CLI; not writing a log file by default; dropping support for untestable dynamic code scanning; and making code more Pythonic by using built-in features and dataclass models.
 
-Complete list of arguments, rules, and severity levels can be found in `whispers --info`, along with documentation in [README.md](https://github.com/adeptex/whispers/blob/master/README.md.)
+Complete list of arguments, rules, and severity levels can be found in `whispers --info`, along with documentation in [README.md](https://github.com/adeptex/whispers/blob/master/README.md).
