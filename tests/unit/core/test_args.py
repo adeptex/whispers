@@ -52,9 +52,9 @@ def test_show_info():
     with patch("sys.stdout", mock_print):
         show_info()
         result = mock_print.getvalue()
-        assert "rule groups:" in result
-        assert "rule IDs:" in result
-        assert "severity levels:" in result
+        assert "apikeys" in result
+        assert "apikey-known" in result
+        assert "CRITICAL" in result
 
 
 def test_show_splash():
