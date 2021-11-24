@@ -13,19 +13,26 @@ jobs:
   build:
     strategy:
       matrix:
-        os-version: ["ubuntu-latest", "windows-latest", "macos-latest"]
-        python-version: [3.6, 3.9]
+        env-version: 
+          - os: "ubuntu-latest"
+            python: 3.6
+          - os: "ubuntu-latest"
+            python: 3.9
+          # - os: "windows-latest"
+          #   python: 3.9
+          # - os: "macos-latest"
+          #   python: 3.9
 
-    runs-on: ${{ matrix.os-version }}
+    runs-on: ${{ matrix.env-version.os }}
 
     steps:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: setup python ${{ matrix.python-version }}
+      - name: setup python ${{ matrix.env-version.python }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.env-version.python }}
 
       - name: setup pip
         run: python -m pip install --upgrade pip
