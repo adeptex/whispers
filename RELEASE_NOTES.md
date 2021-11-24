@@ -2,9 +2,9 @@
 
 ## :dizzy: Licensing changes :dizzy:
 
-Version 1 was released under [Apache License 2.0](https://github.com/Skyscanner/whispers/blob/master/LICENSE), which states that `licensed works, modifications, and larger works may be distributed under different terms and without source code.`
+Version 1 was developed and open sourced by [Artёm Tsvetkov](https://github.com/adeptex) at [Skyscanner](https://github.com/Skyscanner/whispers) under [Apache License 2.0](https://github.com/Skyscanner/whispers/blob/master/LICENSE), which states that `licensed works, modifications, and larger works may be distributed under different terms and without source code.`
 
-Version 2 is released under [GNU General Public License v3.0](https://github.com/adeptex/whispers/blob/master/LICENSE), which is `intended to guarantee your freedom to share and change all versions of a program--to make sure it remains free software for all its users.`
+Version 2 is an independent continuation of my work, which is now released under [GNU General Public License v3.0](https://github.com/adeptex/whispers/blob/master/LICENSE) that is `intended to guarantee your freedom to share and change all versions of a program--to make sure it remains free software for all its users.`
 
 
 ## :x: Breaking changes :x:
