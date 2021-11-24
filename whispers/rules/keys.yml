@@ -1,5 +1,5 @@
 - id: apikey
-  group: apikeys
+  group: keys
   description: Values resembling known API key formats
   message: API key
   severity: MAJOR
@@ -14,7 +14,7 @@
 
 
 - id: apikey-known
-  group: apikeys
+  group: keys
   description: Known API key formats
   message: API key
   severity: CRITICAL
@@ -33,7 +33,7 @@
 
 
 - id: aws-id
-  group: apikeys
+  group: keys
   description: Values formatted like AWS Access Key ID
   message: AWS Access Key ID
   severity: BLOCKER
@@ -43,7 +43,7 @@
 
 
 - id: aws-secret
-  group: apikeys
+  group: keys
   description: Values formatted like AWS Secret Access Key
   message: AWS Secret Access Key
   severity: BLOCKER
@@ -56,7 +56,7 @@
 
 
 - id: aws-token
-  group: apikeys
+  group: keys
   description: Values formatted like AWS Session Token
   message: AWS Session Token
   severity: BLOCKER
@@ -68,3 +68,13 @@
     ignorecase: False
     isBase64: True  # base64-encoded
     isAscii: False
+
+
+- id: privatekey
+  group: keys
+  description: Text resembling a private key signature
+  message: Private key
+  severity: CRITICAL
+  value:
+    regex: "[\\-]{5}BEGIN (RSA|DSA|EC|OPENSSH|PRIVATE|ENCRYPTED|PGP)? ?(PRIVATE)? KEY( BLOCK)?[\\-]{5}"
+    ignorecase: False

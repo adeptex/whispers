@@ -1,8 +1,0 @@
-- id: privatekey
-  group: privatekeys
-  description: Text resembling a private key signature
-  message: Private key
-  severity: CRITICAL
-  value:
-    regex: "[\\-]{5}BEGIN (RSA|DSA|EC|OPENSSH|PRIVATE|ENCRYPTED|PGP)? ?(PRIVATE)? KEY( BLOCK)?[\\-]{5}"
-    ignorecase: False

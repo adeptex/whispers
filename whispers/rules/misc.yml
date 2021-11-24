@@ -34,19 +34,6 @@
   similar: 0.4
 
 
-- id: uri
-  group: misc
-  description: Hardcoded credentials in a Uniform Resource Identifier (URI)
-  message: URI Credentials
-  severity: CRITICAL
-  key:
-    regex: ^uri creds$
-    ignorecase: False
-  value:
-    regex: "^\\w+:\\w+$"
-    minlen: 3
-
-
 - id: webhook
   group: misc
   description: Various known webhook formats

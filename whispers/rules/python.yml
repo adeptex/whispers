@@ -1,5 +1,5 @@
 - id: cors
-  group: functions
+  group: python
   description: Insecure Cross-Origin Resource Sharing (CORS) configuration
   message: Insecure CORS
   severity: MINOR
@@ -11,10 +11,10 @@
     ignorecase: False
 
 
-- id: dangerous
-  group: functions
-  description: Dangerous function calls that could lead to RCE
-  message: Dangerous Function
+- id: system
+  group: python
+  description: System command execution functions
+  message: System command
   severity: MINOR
   key:
     regex: ^function$

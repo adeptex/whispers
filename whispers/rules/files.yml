@@ -1,7 +1,7 @@
-- id: sensitive
+- id: file-known
   group: files
   description: Known files with potentially sensitive information
-  message: Sensitive file
+  message: Known file
   severity: MINOR
   key:
     regex: ^file$

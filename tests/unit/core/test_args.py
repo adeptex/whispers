@@ -52,7 +52,7 @@ def test_show_info():
     with patch("sys.stdout", mock_print):
         show_info()
         result = mock_print.getvalue()
-        assert "apikeys" in result
+        assert "keys" in result
         assert "apikey-known" in result
         assert "CRITICAL" in result
 

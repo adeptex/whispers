@@ -26,7 +26,7 @@ def test_load_rules_ids():
 
 
 def test_load_rules_groups():
-    args = parse_args(["-g", "functions,files", "-G", "files", "tests/fixtures"])
+    args = parse_args(["-g", "python,files", "-G", "files", "tests/fixtures"])
     config = load_config(args)
     rules = load_rules(args, config)
     assert len(rules) == 2
