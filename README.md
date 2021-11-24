@@ -235,7 +235,7 @@ class PluginName:
 ## Development
 
 ```
-git clone https://github.com/whispers/whispers
+git clone https://github.com/adeptex/whispers
 cd whispers
 make install-dev
 make test

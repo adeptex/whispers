@@ -193,8 +193,10 @@ If you do, only those that you specify will be applicable.
 
 ## :white_check_mark: New features :white_check_mark:
 
-**No new features** were introduced in this release. The primary objective of the present release was to optimize version 1 logic in order to make it easier to read, understand, and work with in general. This refactoring, along with the aforementioned breaking changes, have shown to increase scanning speed up to 7-10 times (depending on conditions). In addition, it allowed achieving 100% unit test coverage. 
+**No new features** were introduced in this release. Whispers 2 still does the same thing as 1, only better and faster. 
 
-Other focus areas of version 2 were improving usability, like being able to easily filter results in or out from CLI; not writing a log file by default; dropping support for untestable dynamic code scanning; and making code more Pythonic by using built-in features and dataclass models.
+The primary objective of the present release was to optimize version 1 logic in order to make it easier to read, understand, and work with in general. This refactoring, along with the aforementioned breaking changes, have shown to increase scanning speed up to 7-10 times (depending on conditions). In addition, it allowed achieving 100% unit test coverage. 
+
+Other focus areas of version 2 were improving usability, like being able to easily filter results in and out from CLI; not writing a log file by default; dropping support for untestable dynamic code scanning; and making code more Pythonic by using built-in features and dataclass models.
 
 Complete list of arguments, rules, and severity levels can be found in `whispers --info`, along with documentation in [README.md](https://github.com/adeptex/whispers/blob/master/README.md).
