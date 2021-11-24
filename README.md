@@ -45,6 +45,7 @@ pip3 install whispers
 
 ## Usage
 
+
 ### CLI
 
 ```
@@ -67,6 +68,7 @@ whispers --severity BLOCKER,CRITICAL target/file/or/dir
 whispers --xseverity MINOR target/file/or/dir
 ```
 
+
 ### Python
 
 ```py
@@ -77,6 +79,7 @@ args = "-c whispers/config.yml -R file-known -S INFO tests/fixtures"
 for secret in whispers.secrets(args):
   print(f"[{secret.file}:{secret.line}] {secret.key} = {secret.value}")
 ```
+
 
 ## Config
 
@@ -114,7 +117,8 @@ exclude:
     - ^token_for_testing$
 ```
 
-### General structure
+
+### General config format
 
 ```yaml
 include:
@@ -188,6 +192,9 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
 
 - Custom rules can be defined in the main config file under `rules:` key
 - Custom rules can be added to [whispers/rules](whispers/rules/) directory
+
+
+### General rule format
 
 ```yaml
 - id: rule-id                 # unique rule name
