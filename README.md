@@ -226,7 +226,7 @@ class PluginName:
     yield KeyValuePair(
       "key",
       "value",
-      keypath=["node", "path", "to", "key"],
+      keypath=["path", "to", "key"],
       file=filepath.as_posix()
     )
 ```
