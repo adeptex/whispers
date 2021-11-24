@@ -1,10 +1,10 @@
 # Whispers <img src="whispers.png" width="40px" alt="Whispers" style=""> 
 
 [![](https://img.shields.io/pypi/v/whispers.svg)](https://pypi.python.org/pypi/whispers/)
-[![](https://github.comworkflows/build/badge.svg)](https://github.com/whispers/whispers/actions)
+[![](https://github.comworkflows/build/badge.svg)](https://github.com/adeptex/whispers/actions)
 ![](coverage.svg)
-[![](https://img.shields.io/github/issues/whispers/whispers)](https://github.com/whispers/whispers/issues)
-[![](https://img.shields.io/github/issues-pr/whispers/whispers)](https://github.com/whispers/whispers/pulls)
+[![](https://img.shields.io/github/issues/adeptex/whispers)](https://github.com/adeptex/whispers/issues)
+[![](https://img.shields.io/github/issues-pr/adeptex/whispers)](https://github.com/adeptex/whispers/pulls)
 [![](https://img.shields.io/pypi/dm/whispers)](https://snyk.io/advisor/python/whispers)
 [![](https://img.shields.io/badge/system-linux%20|%20osx%20|%20windows-blue)]()
 
