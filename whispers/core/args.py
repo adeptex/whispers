@@ -4,7 +4,7 @@ from functools import wraps
 from sys import argv, stdout
 
 from whispers.__version__ import __version__, __whispers__
-from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop
+from whispers.core.utils import default_rules
 
 
 def argument_parser() -> ArgumentParser:
@@ -14,14 +14,12 @@ def argument_parser() -> ArgumentParser:
     args_parser.add_argument("-c", "--config", help="config file")
     args_parser.add_argument("-o", "--output", help="output file")
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
-    args_parser.add_argument("-r", "--rules", help="comma-separated list of rule IDs to report (see --info)")
-    args_parser.add_argument("-R", "--xrules", help="comma-separated list of rule IDs to exclude (see --info)")
-    args_parser.add_argument("-g", "--groups", help="comma-separated list of rule groups to report (see --info)")
-    args_parser.add_argument("-G", "--xgroups", help="comma-separated list of rule groups to exclude (see --info)")
-    args_parser.add_argument("-s", "--severity", help="comma-separated list of severity levels to report (see --info)")
-    args_parser.add_argument(
-        "-S", "--xseverity", help="comma-separated list of severity levels to exclude (see --info)"
-    )
+    args_parser.add_argument("-r", "--rules", help="csv of rule IDs to report (see --info)")
+    args_parser.add_argument("-R", "--xrules", help="csv of rule IDs to exclude (see --info)")
+    args_parser.add_argument("-g", "--groups", help="csv of rule groups to report (see --info)")
+    args_parser.add_argument("-G", "--xgroups", help="csv of rule groups to exclude (see --info)")
+    args_parser.add_argument("-s", "--severity", help="csv of severity levels to report (see --info)")
+    args_parser.add_argument("-S", "--xseverity", help="csv of severity levels to exclude (see --info)")
     args_parser.add_argument("-l", "--log", default=False, action="store_true", help="write /tmp/whispers.log")
     args_parser.add_argument(
         "-d",
@@ -90,13 +88,34 @@ def show_splash(func, **kwargs):
 
 
 def show_info():
-    rules = default_rules()
     argument_parser().print_help()
-    print("\nrule groups:")
-    list(map(lambda x: print(f"  - {x}"), list_rule_prop("group", rules)))
-    print("\nrule IDs:")
-    list(map(lambda x: print(f"  - {x}"), list_rule_prop("id", rules)))
-    print("\nseverity levels:")
-    list(map(lambda x: print(f"  - {x}"), DEFAULT_SEVERITY))
-    print("\nsource:  https://github.com/adeptex/whispers")
-    print("\nlicense: GNU General Public License v3.0\n")
+    rules_table = []
+    col_width = 20
+    for rule in default_rules():
+        line = (
+            "    "
+            + rule["group"].ljust(col_width)[:col_width]
+            + " | "
+            + rule["id"].ljust(col_width)[:col_width]
+            + " | "
+            + rule["severity"].ljust(col_width)[:col_width]
+        )
+        rules_table.append(line)
+
+    draw_line = "\n  " + ("+--" + "-" * col_width) * 3 + "+"
+    print(
+        "\n\nrules:\n"
+        + draw_line
+        + "\n  | "
+        + "group".ljust(col_width)
+        + " | "
+        + "rule id".ljust(col_width)
+        + " | "
+        + "severity".ljust(col_width)
+        + " |"
+        + draw_line
+        + "\n"
+        + "\n".join(sorted(rules_table))
+        + draw_line
+        + "\n\nreadme:  https://github.com/adeptex/whispers\n"
+    )
