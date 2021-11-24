@@ -39,7 +39,7 @@ pip3 install whispers
 * Authentication tokens
 * Webhooks
 * Sensitive files
-* Dangerous functions (Python)
+* Python functions
 * [See all rules](whispers/rules)
 
 
@@ -58,9 +58,9 @@ whispers --output /tmp/secrets.out target/file/or/dir
 whispers --exitcode 7 target/file/or/dir
 
 whispers --rules aws-id,aws-secret target/file/or/dir
-whispers --xrules sensitive target/file/or/dir
+whispers --xrules file-known target/file/or/dir
 
-whispers --groups apikeys,misc target/file/or/dir
+whispers --groups keys,misc target/file/or/dir
 whispers --xgroups files target/file/or/dir
 
 whispers --severity BLOCKER,CRITICAL target/file/or/dir
@@ -72,7 +72,7 @@ whispers --xseverity MINOR target/file/or/dir
 ```py
 import whispers
 
-args = "-c whispers/config.yml -R sensitive -S INFO tests/fixtures"
+args = "-c whispers/config.yml -R file-known -S INFO tests/fixtures"
 
 for secret in whispers.secrets(args):
   print(f"[{secret.file}:{secret.line}] {secret.key} = {secret.value}")
@@ -122,7 +122,7 @@ include:
     - "**/*.yml"  # glob
   rules:
     - password
-    - privatekey
+    - uri
     - id: starks  # inline rule
       message: Whispers from the North
       severity: CRITICAL
@@ -130,7 +130,7 @@ include:
         regex: (Aria|Ned) Stark
         ignorecase: True
   groups:
-    - apikeys
+    - keys
   severity:
     - CRITICAL
     - BLOCKER
@@ -149,12 +149,40 @@ exclude:
 
 ```
 
-The fastest way to tweak detection in a repeatable way (ie: remove false positives and unwanted results) is to copy the default [config.yml](whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers, for example: `whispers -c config.yml -r starks target`.
+The fastest way to tweak detection in a repeatable way (ie: remove false positives and unwanted results) is to copy the default [config.yml](whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers, for example: 
+
+`whispers -c config.yml -r starks target`
 
 Simple filtering based on rules and severity can also be done with CLI arguments directly, without having to provide a config file. See `whispers --info` for details.
 
 
-## Custom rules
+## Rules
+
+| Group                | Rule ID              | Severity            |
+|----------------------|----------------------|---------------------|
+| files                | file-known           | MINOR               |
+| infra                | dockercfg            | CRITICAL            |
+| infra                | htpasswd             | MAJOR               |
+| infra                | npmrc                | CRITICAL            |
+| infra                | pip                  | CRITICAL            |
+| infra                | pypirc               | CRITICAL            |
+| keys                 | apikey               | MAJOR               |
+| keys                 | apikey-known         | CRITICAL            |
+| keys                 | aws-id               | BLOCKER             |
+| keys                 | aws-secret           | BLOCKER             |
+| keys                 | aws-token            | BLOCKER             |
+| keys                 | privatekey           | CRITICAL            |
+| misc                 | comment              | INFO                |
+| misc                 | creditcard           | MINOR               |
+| misc                 | secret               | MINOR               |
+| misc                 | webhook              | MINOR               |
+| passwords            | password             | CRITICAL            |
+| passwords            | uri                  | CRITICAL            |
+| python               | cors                 | MINOR               |
+| python               | system               | MINOR               |
+
+
+### Custom rules
 
 Rules specify the actual things that should be pulled out from key-value pairs. There are several common ones that come built-in, such as AWS keys and passwords, but the tool is made to be easily expandable with new rules.
 
@@ -163,6 +191,7 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
 
 ```yaml
 - id: rule-id                 # unique rule name
+  group: rule-group           # rule group name
   description: Values formatted like AWS Session Token
   message: AWS Session Token  # report will show this message
   severity: BLOCKER           # one of BLOCKER, CRITICAL, MAJOR, MINOR, INFO
