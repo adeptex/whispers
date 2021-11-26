@@ -50,22 +50,22 @@ pip3 install whispers
 
 ```
 whispers
-whispers target/file/or/dir
+whispers dir/file
 
 whispers --help
 whispers --info
-whispers --config config.yml target/file/or/dir
-whispers --output /tmp/secrets.out target/file/or/dir
-whispers --exitcode 7 target/file/or/dir
+whispers --config config.yml dir/file
+whispers --output /tmp/secrets.out dir/file
+whispers --exitcode 7 dir/file
 
-whispers --rules aws-id,aws-secret target/file/or/dir
-whispers --xrules file-known target/file/or/dir
+whispers --rules aws-id,aws-secret dir/file
+whispers --xrules file-known dir/file
 
-whispers --groups keys,misc target/file/or/dir
-whispers --xgroups files target/file/or/dir
+whispers --groups keys,misc dir/file
+whispers --xgroups files dir/file
 
-whispers --severity BLOCKER,CRITICAL target/file/or/dir
-whispers --xseverity MINOR target/file/or/dir
+whispers --severity BLOCKER,CRITICAL dir/file
+whispers --xseverity MINOR dir/file
 ```
 
 
