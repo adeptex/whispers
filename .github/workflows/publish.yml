@@ -8,7 +8,7 @@ on:
       - released
 
 jobs:
-  deploy:
+  publish:
     strategy:
       matrix:
         env-version:
