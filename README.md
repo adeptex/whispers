@@ -2,8 +2,7 @@
 
 [![](https://img.shields.io/pypi/v/whispers.svg)](https://pypi.python.org/pypi/whispers/)
 [![](https://github.com/adeptex/whispers/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/adeptex/whispers/actions/workflows/build.yml)
-[![](https://github.comworkflows/build/badge.svg)](https://github.com/adeptex/whispers/actions)
-![](coverage.svg)
+[![](https://github.comworkflows/build/badge.svg)](https://github.com/adeptex/whispers/actions)![](coverage.svg)
 [![](https://img.shields.io/pypi/dm/whispers)](https://snyk.io/advisor/python/whispers)
 [![](https://img.shields.io/badge/system-linux%20|%20osx%20|%20windows-blue)]()
 
