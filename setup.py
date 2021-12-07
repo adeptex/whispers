@@ -28,7 +28,7 @@ setup(
     version=get_version(),
     url="https://github.com/whispers/whispers",
     author="Artëm Tsvetkov",
-    author_email="drop[to]adeptex[point]net",
+    author_email="linkedin@adeptex.net",
     description="Identify secrets in static structured text",
     packages=find_packages(exclude=("tests", "tests.*")),
     include_package_data=True,
