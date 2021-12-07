@@ -26,7 +26,7 @@ dev_requires = [
 setup(
     name="whispers",
     version=get_version(),
-    url="https://github.com/whispers/whispers",
+    url="https://github.com/adeptex/whispers",
     author="Artëm Tsvetkov",
     author_email="linkedin@adeptex.net",
     description="Identify secrets in static structured text",
