@@ -8,7 +8,7 @@ import pytest
 
 from tests.unit.conftest import config_path, does_not_raise, tmp_path
 from whispers.__version__ import __version__, __whispers__
-from whispers.core.args import argument_parser, parse_args, show_info, show_splash
+from whispers.core.args import argument_parser, parse_args, show_config, show_info, show_splash
 
 
 def test_argument_parser():
@@ -31,6 +31,7 @@ def test_argument_parser():
         (["-s", "a,b,c", "src"], "severity", ["a", "b", "c"], does_not_raise()),
         (["-i"], "info", True, pytest.raises(SystemExit)),
         (["-d"], "debug", True, pytest.raises(SystemExit)),
+        (["--print_config"], "print_config", True, pytest.raises(SystemExit)),
     ],
 )
 def test_parse_args(arguments, key, expected, exception):
@@ -52,9 +53,9 @@ def test_show_info():
     with patch("sys.stdout", mock_print):
         show_info()
         result = mock_print.getvalue()
-        assert "keys" in result
-        assert "apikey-known" in result
-        assert "CRITICAL" in result
+        expected = ["keys", "apikey-known", "CRITICAL"]
+        for item in expected:
+            assert item in result
 
 
 def test_show_splash():
@@ -62,5 +63,16 @@ def test_show_splash():
     with patch("sys.stdout", mock_print):
         show_splash(lambda: 1)()
         result = mock_print.getvalue()
-        assert __version__ in result
-        assert __whispers__ in result
+        expected = [__version__, __whispers__]
+        for item in expected:
+            assert item in result
+
+
+def test_show_config():
+    mock_print = StringIO()
+    with patch("sys.stdout", mock_print):
+        show_config()
+        result = mock_print.getvalue()
+        expected = ["include", "exclude"]
+        for item in expected:
+            assert item in result

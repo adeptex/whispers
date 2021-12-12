@@ -52,6 +52,8 @@ whispers dir/file
 
 whispers --help
 whispers --info
+whispers --print_config > config.yml
+
 whispers --config config.yml dir/file
 whispers --output /tmp/secrets.out dir/file
 whispers --exitcode 7 dir/file
@@ -153,7 +155,11 @@ exclude:
 
 The fastest way to tweak detection in a repeatable way (ie: remove false positives and unwanted results) is to copy the default [config.yml](whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers, for example: 
 
-`whispers -c config.yml -r starks target`
+```sh
+whispers --print_config > custom.yml
+# edit custom.yml as needed
+whispers -c custom.yml target
+```
 
 Simple filtering based on rules and severity can also be done with CLI arguments directly, without having to provide a config file. See `whispers --info` for details.
 

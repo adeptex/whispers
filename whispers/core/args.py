@@ -4,7 +4,7 @@ from functools import wraps
 from sys import argv, stdout
 
 from whispers.__version__ import __version__, __whispers__
-from whispers.core.utils import default_rules
+from whispers.core.utils import DEFAULT_PATH, default_rules
 
 
 def argument_parser() -> ArgumentParser:
@@ -12,6 +12,9 @@ def argument_parser() -> ArgumentParser:
     args_parser = ArgumentParser("whispers", description=("Identify secrets in static structured text."))
     args_parser.add_argument("-i", "--info", action="store_true", help="show extended help and exit")
     args_parser.add_argument("-c", "--config", help="config file")
+    args_parser.add_argument(
+        "-C", "--print_config", default=False, action="store_true", help="print default config and exit"
+    )
     args_parser.add_argument("-o", "--output", help="output file")
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
     args_parser.add_argument("-r", "--rules", help="csv of rule IDs to report (see --info)")
@@ -43,6 +46,10 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
 
     if args.info:
         show_info()
+        exit()
+
+    if args.print_config:
+        show_config()
         exit()
 
     if not args.src:
@@ -85,6 +92,10 @@ def show_splash(func, **kwargs):
         return func(*args, **kwargs)
 
     return splash
+
+
+def show_config():
+    print(DEFAULT_PATH.joinpath("config.yml").read_text())
 
 
 def show_info():
