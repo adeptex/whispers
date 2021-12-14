@@ -1,9 +1,6 @@
 from importlib import import_module
 from setuptools import find_packages, setup
-
-
-def get_version():
-    return import_module("whispers.__version__").__version__
+from pathlib import Path
 
 
 install_requires = ["dataclasses", "luhn", "lxml", "pyyaml", "astroid", "jproperties", "jellyfish", "beautifulsoup4"]
@@ -23,6 +20,15 @@ dev_requires = [
     "twine~=3.4",
 ]
 
+
+def get_version():
+    return import_module("whispers.__version__").__version__
+
+
+def get_readme():
+    return Path(__file__).parent.joinpath("README.md").read_text()
+
+
 setup(
     name="whispers",
     version=get_version(),
@@ -30,6 +36,8 @@ setup(
     author="Artëm Tsvetkov",
     author_email="linkedin@adeptex.net",
     description="Identify secrets in static structured text",
+    long_description=get_readme(),
+    long_description_content_type="text/markdown",
     packages=find_packages(exclude=("tests", "tests.*")),
     include_package_data=True,
     platforms="any",
