@@ -11,7 +11,7 @@ jellyfish==0.8.9
 jproperties==2.1.1
 lazy-object-proxy==1.6.0
 luhn==0.2.0
-lxml==4.7.0
+lxml==4.7.1
 pyyaml==6.0
 six==1.16.0
 soupsieve==2.3.1
