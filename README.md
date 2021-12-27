@@ -1,8 +1,8 @@
-# Whispers <img src="whispers.png" width="40px" alt="Whispers" style=""> 
+# Whispers <img src="whispers.png" width="40px" alt="" style=""> 
 
 [![](https://img.shields.io/pypi/v/whispers.svg)](https://pypi.python.org/pypi/whispers/)
 [![](https://github.com/adeptex/whispers/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/adeptex/whispers/actions/workflows/build.yml)
-[![](https://github.comworkflows/build/badge.svg)](https://github.com/adeptex/whispers/actions)![](https://github.com/adeptex/whispers/blob/master/coverage.svg)
+[![](https://github.com/adeptex/whispers/blob/master/coverage.svg)](https://github.com/adeptex/whispers/blob/master/coverage.svg)
 [![](https://img.shields.io/pypi/dm/whispers)](https://snyk.io/advisor/python/whispers)
 [![](https://img.shields.io/badge/system-linux%20|%20osx%20|%20windows-blue)]()
 
@@ -48,24 +48,24 @@ pip3 install whispers
 
 ```
 whispers
-whispers dir/file
+whispers dir/or/file
 
 whispers --help
 whispers --info
 whispers --print_config > config.yml
 
-whispers --config config.yml dir/file
-whispers --output /tmp/secrets.out dir/file
-whispers --exitcode 7 dir/file
+whispers --config config.yml dir/or/file
+whispers --output /tmp/secrets.out dir/or/file
+whispers --exitcode 7 dir/or/file
 
-whispers --rules aws-id,aws-secret dir/file
-whispers --xrules file-known dir/file
+whispers --rules aws-id,aws-secret dir/or/file
+whispers --xrules file-known dir/or/file
 
-whispers --groups keys,misc dir/file
-whispers --xgroups files dir/file
+whispers --groups keys,misc dir/or/file
+whispers --xgroups files dir/or/file
 
-whispers --severity BLOCKER,CRITICAL dir/file
-whispers --xseverity MINOR dir/file
+whispers --severity BLOCKER,CRITICAL dir/or/file
+whispers --xseverity MINOR dir/or/file
 ```
 
 
