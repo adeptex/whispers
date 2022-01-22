@@ -2,7 +2,7 @@ import re
 import string
 from base64 import b64decode
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Pattern
 
 from jellyfish import jaro_winkler_similarity
 from luhn import verify as luhn_verify
@@ -22,7 +22,7 @@ REGEX_IAC = re.compile(r"\![A-Za-z]+ .+", flags=re.IGNORECASE)
 REGEX_PRIVKEY_FILE = re.compile(r"(rsa|dsa|ed25519|ecdsa|pem|crt|cer|ca-bundle|p7b|p7c|p7s|ppk|pkcs12|pfx|p12)")
 
 
-def load_regex(regex: str, flags: Optional[re.RegexFlag] = 0) -> re.Pattern:
+def load_regex(regex: str, flags: Optional[re.RegexFlag] = 0) -> Pattern:
     """Try to compile a regex statement"""
     try:
         return re.compile(regex, flags=flags)
