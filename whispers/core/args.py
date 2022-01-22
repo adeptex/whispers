@@ -1,6 +1,7 @@
 import logging
 from argparse import ArgumentParser, Namespace
 from functools import wraps
+from re import compile
 from sys import argv, stdout
 
 from whispers.__version__ import __version__, __whispers__
@@ -16,7 +17,12 @@ def argument_parser() -> ArgumentParser:
         "-C", "--print_config", default=False, action="store_true", help="print default config and exit"
     )
     args_parser.add_argument("-o", "--output", help="output file")
+    args_parser.add_argument(
+        "-H", "--human", default=False, action="store_true", help="output in human-readable format"
+    )
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
+    args_parser.add_argument("-f", "--files", help="csv of globs for including files")
+    args_parser.add_argument("-F", "--xfiles", help="regex for excluding files")
     args_parser.add_argument("-g", "--groups", help="csv of rule groups to report (see --info)")
     args_parser.add_argument("-G", "--xgroups", help="csv of rule groups to exclude (see --info)")
     args_parser.add_argument("-r", "--rules", help="csv of rule IDs to report (see --info)")
@@ -60,6 +66,12 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
         args.output = open(args.output, "w")
     else:
         args.output = stdout
+
+    if args.files:
+        args.files = args.files.split(",")
+
+    if args.xfiles:
+        args.xfiles = compile(args.xfiles)
 
     if args.rules:
         args.rules = args.rules.split(",")

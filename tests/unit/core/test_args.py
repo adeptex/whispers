@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 from io import StringIO, TextIOWrapper
 from os import remove, urandom
+from re import compile
 from sys import stdout
 from unittest.mock import patch
 
@@ -18,8 +19,9 @@ def test_argument_parser():
 @pytest.mark.parametrize(
     ("arguments", "key", "expected", "exception"),
     [
-        (["target"], "src", "target", does_not_raise()),
-        (["target"], "output", stdout, does_not_raise()),
+        (["src"], "src", "src", does_not_raise()),
+        (["src"], "output", stdout, does_not_raise()),
+        (["-H", "src"], "human", True, does_not_raise()),
         (
             ["-c", config_path("detection_by_value.yml"), "src"],
             "config",
@@ -29,6 +31,8 @@ def test_argument_parser():
         (["-r", "rule-1,rule-2", "src"], "rules", ["rule-1", "rule-2"], does_not_raise()),
         (["-e", "123", "src"], "exitcode", 123, does_not_raise()),
         (["-s", "a,b,c", "src"], "severity", ["a", "b", "c"], does_not_raise()),
+        (["-f", "*.json", "src"], "files", ["*.json"], does_not_raise()),
+        (["-F", ".*\\.(yml|json)", "src"], "xfiles", compile(r".*\.(yml|json)"), does_not_raise()),
         (["-i"], "info", True, pytest.raises(SystemExit)),
         (["-d"], "debug", True, pytest.raises(SystemExit)),
         (["--print_config"], "print_config", True, pytest.raises(SystemExit)),
