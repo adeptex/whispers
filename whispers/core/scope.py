@@ -1,19 +1,21 @@
 from argparse import Namespace
 from pathlib import Path
-from typing import Iterator
+from typing import Iterable
 
 
-def load_scope(args: Namespace, config: dict) -> Iterator[Path]:
+def load_scope(args: Namespace, config: dict) -> Iterable[Path]:
     """Load a list of files in scope based on args and config"""
+    include_files = args.files or config.include.files
+    exclude_files = args.xfiles or config.exclude.files
     src = Path(args.src)
+
     if src.is_file():
         yield src
 
     else:
-        excluded = config.exclude.files
-        for include in config.include.files:
-            for path in src.rglob(include):
-                if excluded and excluded.match(path.as_posix()):
+        for include in include_files:
+            for filepath in src.rglob(include):
+                if exclude_files and exclude_files.match(filepath.as_posix()):
                     continue
 
-                yield path
+                yield filepath
