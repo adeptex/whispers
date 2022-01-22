@@ -1,4 +1,5 @@
 - id: valid
+  group: test
   description: Valid rule config
   message: Valid
   severity: INFO

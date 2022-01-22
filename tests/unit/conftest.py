@@ -19,7 +19,7 @@ def does_not_raise():
 
 @pytest.fixture
 def rule_fixture():
-    return Rule({"id": "fixture", "message": "test", "severity": "INFO", "key": {}, "value": {}})
+    return Rule({"id": "fixture", "group": "tests", "message": "test", "severity": "INFO", "key": {}, "value": {}})
 
 
 def fixture_path(filename: str = "") -> str:

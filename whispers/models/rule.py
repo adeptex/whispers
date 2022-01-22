@@ -59,6 +59,7 @@ class Rule:
     """Main rule configuration class"""
 
     id: str = field(default_factory=str)
+    group: str = field(default_factory=str)
     message: str = field(default_factory=str)
     severity: str = field(default_factory=str)
     key: Specification = field(default=None)
@@ -67,6 +68,7 @@ class Rule:
 
     def __init__(self, rule: Dict) -> None:
         self.id = self._get_required("id", rule)
+        self.group = self._get_required("group", rule)
         self.message = self._get_required("message", rule)
         self.severity = self._get_required("severity", rule)
         self.key = self._get_spec("key", rule)
