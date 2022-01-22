@@ -6,7 +6,7 @@ from whispers.core.printer import printer
 from whispers.models.pair import KeyValuePair
 
 
-def test_printer_to_file(tmp_path, rule_fixture):
+def test_printer_json(tmp_path, rule_fixture):
     tmp = tmp_path.joinpath("printer.test")
     args = parse_args(["-o", tmp.as_posix(), fixture_path()])
     pair = KeyValuePair("key", "value", ["root", "key"], "/file", 123, rule_fixture)
@@ -24,8 +24,8 @@ def test_printer_to_file(tmp_path, rule_fixture):
     assert result == expected
 
 
-def test_printer_to_stdout(rule_fixture):
-    args = parse_args([fixture_path()])
+def test_printer_human(rule_fixture):
+    args = parse_args(["-H", fixture_path()])
     pair = KeyValuePair("key", "value", ["root", "key"], "/file", 123, rule_fixture)
     expected = (
         f"[{pair.file}:{pair.line}:{pair.rule.group}:{pair.rule.id}:{pair.rule.severity}]"
