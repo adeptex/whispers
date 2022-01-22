@@ -47,26 +47,72 @@ pip3 install whispers
 
 ### CLI
 
-```
+```bash
+# General usage & help
 whispers
+
+# More information about Whispers
+whispers --info
+```
+
+```bash
+# Simplest usage with JSON output
 whispers dir/or/file
 
-whispers --help
-whispers --info
+# Simplest usage with human-readable output
+whispers -H dir/or/file
+
+# Write results to a file instead of the screen
+whispers -o /tmp/secrets.json dir/or/file
+
+# Advanced usage:
+#   - only check 'keys' rule group
+#   - with BLOCKER or CRITICAL severity
+#   - everywhere in target/dir except for .log & .raw files
+whispers -g keys -s BLOCKER,CRITICAL -F '.*\.(log|raw)' target/dir
+```
+
+```bash
+# Configuration file template
 whispers --print_config > config.yml
 
+# Provide custom configuration file
 whispers --config config.yml dir/or/file
-whispers --output /tmp/secrets.out dir/or/file
+
+# Return this system code on success
 whispers --exitcode 7 dir/or/file
+```
 
+```bash
+# Include only 'aws-id' & 'aws-secret' rule IDs
 whispers --rules aws-id,aws-secret dir/or/file
+
+# Exclude 'file-known' rule ID
 whispers --xrules file-known dir/or/file
+```
 
+```bash
+# Include only 'keys' & 'misc' rule groups
 whispers --groups keys,misc dir/or/file
-whispers --xgroups files dir/or/file
 
+# Exclude 'files' rule group
+whispers --xgroups files dir/or/file
+```
+
+```bash
+# Include only BLOCKER & CRITICAL severity
 whispers --severity BLOCKER,CRITICAL dir/or/file
+
+# Exclude all MINOR severity
 whispers --xseverity MINOR dir/or/file
+```
+
+```bash
+# Include only .json & .yml files
+whispers --files '*.json,*.yml' dir/or/file
+
+# Exclude .log & .cfg files
+whispers --xfiles '.*\.(log|cfg)' dir/or/file
 ```
 
 
