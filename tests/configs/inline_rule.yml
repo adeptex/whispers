@@ -13,6 +13,7 @@ include:
     - dockercfg
     - htpasswd
     - id: inline-rule
+      group: test
       description: This rule is defined directly in the config file
       message: Inline Rule
       severity: INFO
