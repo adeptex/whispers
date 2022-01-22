@@ -1,11 +1,10 @@
 import logging
 from argparse import ArgumentParser, Namespace
 from functools import wraps
-from re import compile
 from sys import argv, stdout
 
 from whispers.__version__ import __version__, __whispers__
-from whispers.core.utils import DEFAULT_PATH, default_rules
+from whispers.core.utils import DEFAULT_PATH, default_rules, load_regex
 
 
 def argument_parser() -> ArgumentParser:
@@ -39,7 +38,7 @@ def argument_parser() -> ArgumentParser:
         help="log debugging information",
     )
     args_parser.add_argument("-v", "--version", action="version", version=__version__)
-    args_parser.add_argument("src", nargs="?", help="target file or directory")
+    args_parser.add_argument("src", nargs="*", help="target file or directory")
 
     args_parser.print_help = show_splash(args_parser.print_help)
 
@@ -61,6 +60,8 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
     if not args.src:
         argument_parser().print_help()
         exit()
+    else:
+        args.src = args.src[0]
 
     if args.output:
         args.output = open(args.output, "w")
@@ -71,7 +72,7 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
         args.files = args.files.split(",")
 
     if args.xfiles:
-        args.xfiles = compile(args.xfiles)
+        args.xfiles = load_regex(args.xfiles)
 
     if args.rules:
         args.rules = args.rules.split(",")
