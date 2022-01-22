@@ -1,8 +1,8 @@
+import re
 from dataclasses import dataclass, field
-from re import IGNORECASE, compile
 from typing import Dict, List, Optional, Pattern
 
-from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop
+from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop, load_regex
 
 DEFAULT_RULES = default_rules()
 
@@ -42,7 +42,7 @@ class Exclude:
         if regex_list is None:
             return None
 
-        return compile("|".join(regex_list), flags=IGNORECASE)
+        return load_regex("|".join(regex_list), flags=re.IGNORECASE)
 
 
 @dataclass

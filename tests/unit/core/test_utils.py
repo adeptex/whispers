@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 import pytest
@@ -17,6 +18,7 @@ from whispers.core.utils import (
     is_path,
     is_uri,
     list_rule_prop,
+    load_regex,
     load_yaml_from_file,
     similar_strings,
     simple_string,
@@ -25,6 +27,19 @@ from whispers.core.utils import (
 )
 from whispers.main import run
 from whispers.models.pair import KeyValuePair
+
+
+@pytest.mark.parametrize(
+    ("rawstr", "expected", "raised"),
+    [
+        ("test", re.compile("test"), does_not_raise()),
+        ("*", None, pytest.raises(ValueError)),
+        (".*", re.compile(".*"), does_not_raise()),
+    ],
+)
+def test_load_regex(rawstr, expected, raised):
+    with raised:
+        assert load_regex(rawstr) == expected
 
 
 @pytest.mark.parametrize(
