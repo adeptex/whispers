@@ -118,6 +118,7 @@ def test_detect_secrets_by_key(src, expected):
         ("settings01.ini", "CRITICAL", 1),
         ("settings02.ini", "CRITICAL", 1),
         ("severity.yml", "BLOCKER", 1),
+        ("sops.yml", DEFAULT_SEVERITY, 1),
         ("uri.yml", "CRITICAL", 3),
         ("webhooks.yml", "MINOR", 6),
     ],

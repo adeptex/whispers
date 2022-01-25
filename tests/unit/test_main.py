@@ -13,4 +13,4 @@ def test_cli():
 def test_run():
     args = parse_args([fixture_path()])
     secrets = list(run(args))
-    assert len(secrets) == 294
+    assert len(secrets) == 295

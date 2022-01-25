@@ -132,6 +132,9 @@ def is_static(key: str, value: str) -> bool:
     if value.startswith("<") and value.endswith(">"):
         return False  # Placeholder
 
+    if value.startswith("ENC[AES256_GCM,data:") and value.endswith("]"):
+        return False  # Encrypted SOPS key
+
     s_key = simple_string(key)
     s_value = simple_string(value)
 
