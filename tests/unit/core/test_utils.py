@@ -16,6 +16,7 @@ from whispers.core.utils import (
     is_iac,
     is_luhn,
     is_path,
+    is_static,
     is_uri,
     list_rule_prop,
     load_regex,
@@ -121,6 +122,37 @@ def test_load_yaml_from_file(configfile, expected, raised):
     with raised:
         result = load_yaml_from_file(CONFIG_PATH.joinpath(configfile))
         assert result == expected
+
+
+@pytest.mark.parametrize(
+    ("key", "value", "expected"),
+    [
+        (None, None, False),
+        ("key", "", False),
+        ("key", "$value", False),
+        ("key", "{{value}}", False),
+        ("key", "{value}", False),
+        ("key", "{whispers~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}", False),
+        ("key", "{d2hpc3BlcnN+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+}", True),
+        ("key", "${value$}", False),
+        ("key", "<value>", False),
+        ("key", "{value}", False),
+        ("key", "null", False),
+        ("key", "!Ref Value", False),
+        ("key", "{value}", False),
+        ("key", "/system/path/value", False),
+        ("thesame", "THESAME", False),
+        ("label", "WhispersLabel", False),
+        ("_key", "-key", False),
+        ("_secret_value_placeholder_", "----SECRET-VALUE-PLACEHOLDER-", False),
+        ("_secret_value_placeholder_", "----SECRET-VALUE-PLACEHOLDER--", True),
+        ("SECRET_VALUE_KEY", "whispers", True),
+        ("whispers", "SECRET_VALUE_PLACEHOLDER", True),
+        ("secret", "whispers", True),
+    ],
+)
+def test_is_static(key, value, expected):
+    assert is_static(key, value) == expected
 
 
 @pytest.mark.parametrize(

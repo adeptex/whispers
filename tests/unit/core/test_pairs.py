@@ -6,7 +6,7 @@ import pytest
 from tests.unit.conftest import FIXTURE_PATH, config_path, fixture_path, forbidden_path, tmp_path
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
-from whispers.core.pairs import filter_included, filter_static, is_static, load_plugin, make_pairs, tag_file
+from whispers.core.pairs import filter_included, filter_static, load_plugin, make_pairs, tag_file
 from whispers.models.pair import KeyValuePair
 from whispers.plugins.config import Config
 from whispers.plugins.dockercfg import Dockercfg
@@ -96,37 +96,6 @@ def test_filter_included_config(xkeys, xvalues, expected):
 def test_filter_static(key, value, expected):
     pair = KeyValuePair(key, value)
     assert filter_static(pair) == expected
-
-
-@pytest.mark.parametrize(
-    ("key", "value", "expected"),
-    [
-        (None, None, False),
-        ("key", "", False),
-        ("key", "$value", False),
-        ("key", "{{value}}", False),
-        ("key", "{value}", False),
-        ("key", "{whispers~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}", False),
-        ("key", "{d2hpc3BlcnN+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+}", True),
-        ("key", "${value$}", False),
-        ("key", "<value>", False),
-        ("key", "{value}", False),
-        ("key", "null", False),
-        ("key", "!Ref Value", False),
-        ("key", "{value}", False),
-        ("key", "/system/path/value", False),
-        ("thesame", "THESAME", False),
-        ("label", "WhispersLabel", False),
-        ("_key", "-key", False),
-        ("_secret_value_placeholder_", "----SECRET-VALUE-PLACEHOLDER-", False),
-        ("_secret_value_placeholder_", "----SECRET-VALUE-PLACEHOLDER--", True),
-        ("SECRET_VALUE_KEY", "whispers", True),
-        ("whispers", "SECRET_VALUE_PLACEHOLDER", True),
-        ("secret", "whispers", True),
-    ],
-)
-def test_is_static(key, value, expected):
-    assert is_static(key, value) == expected
 
 
 @pytest.mark.parametrize(

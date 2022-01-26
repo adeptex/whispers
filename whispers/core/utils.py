@@ -77,6 +77,60 @@ def similar_strings(a: str, b: str) -> float:
     return jaro_winkler_similarity(a, b)
 
 
+def is_static(key: str, value: str) -> bool:
+    """Check if pair is static"""
+    if not isinstance(value, str):
+        return False  # Not string
+
+    if not value:
+        return False  # Empty
+
+    if value.lower() == "null":
+        return False  # Empty
+
+    if value.startswith("$") and "$" not in value[2:]:
+        return False  # Variable
+
+    if value.startswith("%") and value.endswith("%"):
+        return False  # Variable
+
+    if value.startswith("${") and value.endswith("}"):
+        return False  # Variable
+
+    if value.startswith("{") and value.endswith("}"):
+        if len(value) > 50:
+            if is_base64_bytes(value[1:-1]):
+                return True  # Token
+
+        return False  # Variable
+
+    if "{{" in value and "}}" in value:
+        return False  # Variable
+
+    if value.startswith("<") and value.endswith(">"):
+        return False  # Placeholder
+
+    if value.startswith("ENC[AES256_GCM,data:") and value.endswith("]"):
+        return False  # Encrypted SOPS key
+
+    s_key = simple_string(key)
+    s_value = simple_string(value)
+
+    if s_key == s_value:
+        return False  # Placeholder
+
+    if s_value.endswith(s_key):
+        return False  # Placeholder
+
+    if is_iac(value):
+        return False  # IaC !Ref !Sub ...
+
+    if is_path(value):
+        return False  # System path
+
+    return True  # Hardcoded static value
+
+
 def is_ascii(data: str) -> bool:
     """Checks if given data is printable text"""
     if isinstance(data, bytes):

@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Iterator, Optional
 
 from whispers.core.log import global_exception_handler
-from whispers.core.utils import REGEX_PRIVKEY_FILE, is_base64_bytes, is_iac, is_path, simple_string, strip_string
+from whispers.core.utils import REGEX_PRIVKEY_FILE, is_static, strip_string
 from whispers.models.appconfig import AppConfig
 from whispers.models.pair import KeyValuePair
 from whispers.plugins.config import Config
@@ -97,60 +97,6 @@ def filter_static(pair: KeyValuePair) -> Optional[KeyValuePair]:
 
     logging.debug(f"filter_static included value '{pair.value}'")
     return pair  # Static value
-
-
-def is_static(key: str, value: str) -> bool:
-    """Check if pair is static"""
-    if not isinstance(value, str):
-        return False  # Not string
-
-    if not value:
-        return False  # Empty
-
-    if value.lower() == "null":
-        return False  # Empty
-
-    if value.startswith("$") and "$" not in value[2:]:
-        return False  # Variable
-
-    if value.startswith("%") and value.endswith("%"):
-        return False  # Variable
-
-    if value.startswith("${") and value.endswith("}"):
-        return False  # Variable
-
-    if value.startswith("{") and value.endswith("}"):
-        if len(value) > 50:
-            if is_base64_bytes(value[1:-1]):
-                return True  # Token
-
-        return False  # Variable
-
-    if "{{" in value and "}}" in value:
-        return False  # Variable
-
-    if value.startswith("<") and value.endswith(">"):
-        return False  # Placeholder
-
-    if value.startswith("ENC[AES256_GCM,data:") and value.endswith("]"):
-        return False  # Encrypted SOPS key
-
-    s_key = simple_string(key)
-    s_value = simple_string(value)
-
-    if s_key == s_value:
-        return False  # Placeholder
-
-    if s_value.endswith(s_key):
-        return False  # Placeholder
-
-    if is_iac(value):
-        return False  # IaC !Ref !Sub ...
-
-    if is_path(value):
-        return False  # System path
-
-    return True  # Hardcoded static value
 
 
 def load_plugin(file: Path) -> Optional[object]:
