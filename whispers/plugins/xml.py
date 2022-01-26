@@ -4,9 +4,8 @@ from typing import Iterator
 from lxml import etree as ElementTree
 
 from whispers.core.log import global_exception_handler
-from whispers.core.utils import is_uri
 from whispers.models.pair import KeyValuePair
-from whispers.plugins.uri import Uri
+from whispers.plugins.common import Common
 
 
 class Xml:
@@ -29,10 +28,9 @@ class Xml:
                     yield KeyValuePair(key, value, list(self.keypath))
 
                     # Format: <elem name="jdbc:mysql://host?k1=v1&amp;k2=v2">
-                    if is_uri(value):
-                        for pair in Uri().pairs(value):
-                            pair.keypath = self.keypath + [pair.key]
-                            yield pair
+                    for pair in Common().pairs(value):
+                        pair.keypath = self.keypath + [pair.key]
+                        yield pair
 
                     self.keypath.pop()
 
@@ -69,5 +67,6 @@ class Xml:
             tree = ElementTree.parse(filepath.as_posix(), parser)
             tree = ElementTree.iterwalk(tree, events=("start", "end"))
             yield from _traverse(tree)
+
         except Exception:
             global_exception_handler(filepath.as_posix(), tree)

@@ -2,6 +2,7 @@ Compliant:
 
 -----ok
 ---ok---
+-----ok-----
 
 
 Noncompliant:

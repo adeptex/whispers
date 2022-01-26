@@ -38,7 +38,7 @@
   message: AWS Account ID
   severity: MINOR
   key:
-    regex: ^aws account$
+    regex: ^aws_account$
     ignorecase: False
   value:
     regex: ^\d{12}$

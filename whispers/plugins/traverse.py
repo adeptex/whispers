@@ -1,8 +1,7 @@
 from typing import Iterator
 
-from whispers.core.utils import is_uri
 from whispers.models.pair import KeyValuePair
-from whispers.plugins.uri import Uri
+from whispers.plugins.common import Common
 
 
 class StructuredDocument:
@@ -31,6 +30,9 @@ class StructuredDocument:
             for item in code:
                 if isinstance(item, (str, int)):
                     yield KeyValuePair(key, item, list(self.keypath))
+                    for pair in Common().pairs(item):
+                        pair.keypath = list(self.keypath)
+                        yield pair
 
                 yield from self.traverse(item, key=key)
 
@@ -40,8 +42,8 @@ class StructuredDocument:
                 if len(item) == 2:
                     yield KeyValuePair(item[0], item[1], list(self.keypath))
 
-            if is_uri(code):
-                for pair in Uri().pairs(code):
+            if not key:
+                for pair in Common().pairs(code):
                     pair.keypath = list(self.keypath)
                     yield pair
 
