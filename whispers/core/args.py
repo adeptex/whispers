@@ -10,15 +10,11 @@ from whispers.core.utils import DEFAULT_PATH, default_rules, load_regex
 def argument_parser() -> ArgumentParser:
     """CLI argument parser"""
     args_parser = ArgumentParser("whispers", description=("Identify secrets in static structured text."))
-    args_parser.add_argument("-i", "--info", action="store_true", help="show extended help and exit")
     args_parser.add_argument("-c", "--config", help="config file")
     args_parser.add_argument(
         "-C", "--print_config", default=False, action="store_true", help="print default config and exit"
     )
     args_parser.add_argument("-o", "--output", help="output file")
-    args_parser.add_argument(
-        "-H", "--human", default=False, action="store_true", help="output in human-readable format"
-    )
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
     args_parser.add_argument("-f", "--files", help="csv of globs for including files")
     args_parser.add_argument("-F", "--xfiles", help="regex for excluding files")
@@ -28,6 +24,9 @@ def argument_parser() -> ArgumentParser:
     args_parser.add_argument("-R", "--xrules", help="csv of rule IDs to exclude (see --info)")
     args_parser.add_argument("-s", "--severity", help="csv of severity levels to report (see --info)")
     args_parser.add_argument("-S", "--xseverity", help="csv of severity levels to exclude (see --info)")
+    args_parser.add_argument(
+        "-H", "--human", default=False, action="store_true", help="output in human-readable format"
+    )
     args_parser.add_argument("-l", "--log", default=False, action="store_true", help="write /tmp/whispers.log")
     args_parser.add_argument(
         "-d",
@@ -35,9 +34,10 @@ def argument_parser() -> ArgumentParser:
         action="store_const",
         const=logging.DEBUG,
         default=logging.INFO,
-        help="log debugging information",
+        help="log debugging information (implies --log)",
     )
-    args_parser.add_argument("-v", "--version", action="version", version=__version__)
+    args_parser.add_argument("-i", "--info", action="store_true", help="show extended help and exit")
+    args_parser.add_argument("-v", "--version", action="version", version=__version__, help="show version and exit")
     args_parser.add_argument("src", nargs="*", help="target file or directory")
 
     args_parser.print_help = show_splash(args_parser.print_help)
