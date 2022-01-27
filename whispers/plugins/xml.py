@@ -28,9 +28,7 @@ class Xml:
                     yield KeyValuePair(key, value, list(self.keypath))
 
                     # Format: <elem name="jdbc:mysql://host?k1=v1&amp;k2=v2">
-                    for pair in Common().pairs(value):
-                        pair.keypath = self.keypath + [pair.key]
-                        yield pair
+                    yield from Common(self.keypath).pairs(value)
 
                     self.keypath.pop()
 
@@ -39,6 +37,7 @@ class Xml:
                     continue
 
                 yield KeyValuePair(element.tag, element.text, list(self.keypath))
+                yield from Common(self.keypath).pairs(element.text)
 
                 # Format: <elem>key=value</elem>
                 if "=" in element.text:
@@ -60,6 +59,7 @@ class Xml:
                 if found_key and found_value:
                     self.keypath.append(found_key)
                     yield KeyValuePair(found_key, found_value, list(self.keypath))
+                    yield from Common(self.keypath).pairs(found_value)
                     self.keypath.pop()
 
         try:

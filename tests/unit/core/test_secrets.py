@@ -45,7 +45,6 @@ def test_detect_secrets_by_key(src, expected):
 @pytest.mark.parametrize(
     ("src", "severity", "expected"),
     [
-        ("arn.yml", "MINOR", 3),
         (".aws/credentials", "BLOCKER", 3),
         (".dockercfg", "CRITICAL", 1),
         (".htpasswd", "MAJOR", 2),
@@ -55,6 +54,8 @@ def test_detect_secrets_by_key(src, expected):
         ("apikeys.json", "MAJOR", 9),
         ("apikeys.xml", "MAJOR", 9),
         ("apikeys.yml", "MAJOR", 9),
+        ("arn.yml", "MINOR", 4),
+        ("arn.xml", "MINOR", 3),
         ("aws.yml", "BLOCKER", 3),
         ("aws.json", "BLOCKER", 3),
         ("aws.xml", "BLOCKER", 3),

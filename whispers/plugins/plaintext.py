@@ -1,4 +1,3 @@
-from itertools import chain
 from pathlib import Path
 from typing import Iterator
 
@@ -18,7 +17,6 @@ class Plaintext:
 
     @staticmethod
     def common_pairs(line: str, lineno: int) -> Iterator[KeyValuePair]:
-        pairs = [Common().pairs(line), Common().parse_pk(line)]
-        for pair in chain.from_iterable(pairs):
-            pair.line = lineno
-            yield pair
+        cmm = Common(line=lineno)
+        yield from cmm.pairs(line)
+        yield from cmm.parse_pk(line)

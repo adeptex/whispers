@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import Iterator, Optional
+from typing import Iterator, List
 from urllib.parse import parse_qsl, urlparse
 
 from whispers.core.utils import is_static
@@ -9,14 +9,28 @@ from whispers.models.pair import KeyValuePair
 class Common:
     """Checks text for common patterns, such as URI, AWS ARN, etc."""
 
+    def __init__(self, keypath: List = [], line: int = 0) -> None:
+        self.keypath = keypath
+        self.line = line
+
     def pairs(self, value: str) -> Iterator[KeyValuePair]:
         if not value:
             return []  # Empty
 
-        for word in value.split(" "):
-            yield from self.parse_uri(word)
-            yield from self.parse_arn(word)
+        if not isinstance(value, str):
+            return []  # Not a string
 
+        words = value.split(" ")
+        uris = map(self.parse_uri, words)
+        arns = map(self.parse_arn, words)
+        for parsed in chain.from_iterable([*uris, *arns]):
+            if self.keypath:
+                parsed.keypath = self.keypath
+
+            if self.line:
+                parsed.line = self.line
+
+            yield parsed
 
     @staticmethod
     def parse_uri(text: str) -> Iterator[KeyValuePair]:
@@ -25,8 +39,6 @@ class Common:
             return []  # Not URI
 
         uri = urlparse(text)
-
-        yield KeyValuePair("URI", text, [text])
 
         if uri.password:
             yield KeyValuePair("uri_creds", f"{uri.username}:{uri.password}", [text])
