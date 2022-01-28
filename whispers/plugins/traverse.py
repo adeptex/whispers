@@ -17,7 +17,6 @@ class StructuredDocument:
                 self.keypath.append(k)
                 if isinstance(v, (str, int)):
                     yield KeyValuePair(k, v, list(self.keypath))
-                    yield from Common(self.keypath).pairs(v)
 
                 yield from self.traverse(v, key=k)
                 self.keypath.pop()
@@ -31,7 +30,6 @@ class StructuredDocument:
             for item in code:
                 if isinstance(item, (str, int)):
                     yield KeyValuePair(key, item, list(self.keypath))
-                    yield from Common(self.keypath).pairs(item)
 
                 yield from self.traverse(item, key=key)
 
@@ -41,8 +39,7 @@ class StructuredDocument:
                 if len(item) == 2:
                     yield KeyValuePair(item[0], item[1], list(self.keypath))
 
-            if not key:
-                yield from Common(self.keypath).pairs(code)
+            yield from Common(self.keypath).pairs(code)
 
     def cloudformation(self, code: dict) -> Iterator[KeyValuePair]:
         """AWS CloudFormation format"""

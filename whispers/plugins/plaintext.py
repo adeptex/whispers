@@ -15,8 +15,17 @@ class Plaintext:
 
             yield from self.common_pairs(line, lineno)
 
+    def common_pairs(self, text: str, lineno: int) -> Iterator[KeyValuePair]:
+        yield from Common(line=lineno).pairs(text)
+        yield from self.parse_pk(text)
+
     @staticmethod
-    def common_pairs(line: str, lineno: int) -> Iterator[KeyValuePair]:
-        cmm = Common(line=lineno)
-        yield from cmm.pairs(line)
-        yield from cmm.parse_pk(line)
+    def parse_pk(text: str) -> Iterator[KeyValuePair]:
+        """Check if text resembles a Private Key (PK), only for plaintext files"""
+        if not (text.startswith("-----") and text.endswith("-----")):
+            return []
+
+        if len(text) < 15:
+            return []
+
+        yield KeyValuePair("private_key", text)

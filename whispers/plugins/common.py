@@ -2,7 +2,6 @@ from itertools import chain
 from typing import Iterator, List
 from urllib.parse import parse_qsl, urlparse
 
-from whispers.core.utils import is_static
 from whispers.models.pair import KeyValuePair
 
 
@@ -14,6 +13,7 @@ class Common:
         self.line = line
 
     def pairs(self, value: str) -> Iterator[KeyValuePair]:
+        """Check for common patterns in text"""
         if not value:
             return []  # Empty
 
@@ -23,17 +23,10 @@ class Common:
         words = value.split(" ")
         uris = map(self.parse_uri, words)
         arns = map(self.parse_arn, words)
-        for parsed in chain.from_iterable([*uris, *arns]):
-            if self.keypath:
-                parsed.keypath = self.keypath
+        parsed = chain.from_iterable([*uris, *arns])
+        yield from parsed
 
-            if self.line:
-                parsed.line = self.line
-
-            yield parsed
-
-    @staticmethod
-    def parse_uri(text: str) -> Iterator[KeyValuePair]:
+    def parse_uri(self, text: str) -> Iterator[KeyValuePair]:
         """Check if text resembles a Uniform Resource Identifier (URI)"""
         if "://" not in text:
             return []  # Not URI
@@ -41,35 +34,22 @@ class Common:
         uri = urlparse(text)
 
         if uri.password:
-            yield KeyValuePair("uri_creds", f"{uri.username}:{uri.password}", [text])
+            yield KeyValuePair("uri_creds", f"{uri.username}:{uri.password}", [*self.keypath, text])
 
         if uri.query:
             for key, value in parse_qsl(uri.query):
-                yield KeyValuePair(key, value, [text])
+                yield KeyValuePair(key, value, [*self.keypath, text], line=self.line)
 
-    @staticmethod
-    def parse_arn(text: str) -> Iterator[KeyValuePair]:
+    def parse_arn(self, text: str) -> Iterator[KeyValuePair]:
         """Check if text resembles an AWS ARN"""
         if not text.startswith("arn:aws:"):
             return []  # Not AWS ARN
 
         arn = text.split(":")
 
-        if len(arn) < 5:
+        if len(arn) < 5 or not arn[4]:
             return []  # Missing AWS Account ID
 
-        account = arn[4]
+        account = str(arn[4])
 
-        if is_static("account", account):
-            yield KeyValuePair("aws_account", account, [text])
-
-    @staticmethod
-    def parse_pk(text: str) -> Iterator[KeyValuePair]:
-        """Check if text resembles a Private Key (PK), only for plaintext files"""
-        if not (text.startswith("-----") and text.endswith("-----")):
-            return []
-
-        if len(text) < 15:
-            return []
-
-        yield KeyValuePair("private_key", text)
+        yield KeyValuePair("aws_account", account, [*self.keypath, text], line=self.line)

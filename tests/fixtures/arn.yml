@@ -4,8 +4,8 @@ compliant:
 
 
 noncompliant:
-  arn01: arn:aws:kms:eu-central-1:123456123456:key/920aff2e-c5f1-4040-943a-047fa387b27e
-  arn02: arn:aws:kms:ap-southeast-1:123456123456:key/9006a8aa-0fa6-4c14-930e-a2dfb916de1d
+  arn01: arn:aws:kms:eu-central-1:123456123456:key/hardcoded
+  arn02: arn:aws:kms:ap-southeast-1:123456123456:key/hardcoded
   arn03: arn:aws:iam::123456123456:oidc-provider/auth-dev.mozilla.auth0.com
   arn_list:
-    - arn:aws:kms:eu-central-1:123456123456:key/920aff2e-c5f1-4040-943a-047fa387b27e
+    - arn:aws:kms:eu-central-1:123456123456:key/hardcoded
