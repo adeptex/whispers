@@ -1,0 +1,7 @@
+# https://github.com/mozilla/sops
+
+compliant:
+  password: ENC[AES256_GCM,data:HARDCODED,iv:1=,aad:No=,tag:k=]
+
+noncompliant:
+  password: hardcoded01

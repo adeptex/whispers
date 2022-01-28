@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import Dict, List
 
 
 @dataclass
@@ -7,10 +8,10 @@ class KeyValuePair:
 
     key: str
     value: str
-    keypath: list = field(default_factory=list)
+    keypath: List = field(default_factory=list)
     file: str = ""
     line: int = 0
-    rule: dict = field(default_factory=dict)
+    rule: Dict = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if self.keypath == []:

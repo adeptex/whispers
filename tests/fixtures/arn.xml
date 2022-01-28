@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tests>
+  <compliant>
+      <ok01>aws:arn:</ok01>
+      <ok02>arn:aws:kms:{REGION}:{ACCOUNT}:key/{KEY_ID}</ok02>
+  </compliant>
+  <noncompliant>
+    <arn01>arn:aws:kms:eu-central-1:123456123456:key/hardcoded</arn01>
+    <arn02>arn:aws:kms:ap-southeast-1:123456123456:key/hardcoded</arn02>
+    <arn03>arn:aws:iam::123456123456:oidc-provider/auth-dev.mozilla.auth0.com</arn03>
+  </noncompliant>
+</tests>

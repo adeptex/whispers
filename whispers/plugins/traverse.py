@@ -1,8 +1,7 @@
 from typing import Iterator
 
-from whispers.core.utils import is_uri
 from whispers.models.pair import KeyValuePair
-from whispers.plugins.uri import Uri
+from whispers.plugins.common import Common
 
 
 class StructuredDocument:
@@ -40,10 +39,7 @@ class StructuredDocument:
                 if len(item) == 2:
                     yield KeyValuePair(item[0], item[1], list(self.keypath))
 
-            if is_uri(code):
-                for pair in Uri().pairs(code):
-                    pair.keypath = list(self.keypath)
-                    yield pair
+            yield from Common(self.keypath).pairs(code)
 
     def cloudformation(self, code: dict) -> Iterator[KeyValuePair]:
         """AWS CloudFormation format"""

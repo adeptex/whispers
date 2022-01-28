@@ -32,6 +32,19 @@
     ignorecase: False
 
 
+- id: aws-account
+  group: keys
+  description: Values formatted like AWS Account ID
+  message: AWS Account ID
+  severity: MINOR
+  key:
+    regex: ^aws_account$
+    ignorecase: False
+  value:
+    regex: ^\d{12}$
+    ignorecase: False
+
+
 - id: aws-id
   group: keys
   description: Values formatted like AWS Access Key ID

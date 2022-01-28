@@ -1,9 +1,9 @@
 from pathlib import Path
-from typing import Iterator, Optional
+from typing import Iterator
 
-from whispers.core.utils import is_uri, strip_string
+from whispers.core.utils import strip_string
 from whispers.models.pair import KeyValuePair
-from whispers.plugins.uri import Uri
+from whispers.plugins.common import Common
 
 
 class Plaintext:
@@ -13,28 +13,19 @@ class Plaintext:
             if not line:
                 continue
 
-            yield from self.uri_pairs(line, lineno)
-            yield from self.privatekey_pairs(line, lineno)
+            yield from self.common_pairs(line, lineno)
+
+    def common_pairs(self, text: str, lineno: int) -> Iterator[KeyValuePair]:
+        yield from Common(line=lineno).pairs(text)
+        yield from self.parse_pk(text)
 
     @staticmethod
-    def privatekey_pairs(line: str, lineno: int) -> Optional[Iterator[KeyValuePair]]:
-        if not (line.startswith("---") and line.endswith("---")):
-            return None
+    def parse_pk(text: str) -> Iterator[KeyValuePair]:
+        """Check if text resembles a Private Key (PK), only for plaintext files"""
+        if not (text.startswith("-----") and text.endswith("-----")):
+            return []
 
-        if len(line) < 12:
-            return None
+        if len(text) < 15:
+            return []
 
-        yield KeyValuePair("key", line, line=lineno)
-
-    @staticmethod
-    def uri_pairs(line: str, lineno: int) -> Optional[Iterator[KeyValuePair]]:
-        if "://" not in line:
-            return None
-
-        for value in line.split():
-            if not is_uri(value):
-                continue
-
-            for pair in Uri().pairs(value):
-                pair.line = lineno
-                yield pair
+        yield KeyValuePair("private_key", text)

@@ -34,7 +34,7 @@ def test_filter_rule_lineno(rule_fixture):
     ],
 )
 def test_detect_secrets_by_key(src, expected):
-    args = parse_args([fixture_path(src)])
+    args = parse_args(["-S", "MINOR", fixture_path(src)])
     config = load_config(args)
     rules = load_rules(args, config)
     pairs = make_pairs(config, FIXTURE_PATH.joinpath(src))
@@ -54,6 +54,8 @@ def test_detect_secrets_by_key(src, expected):
         ("apikeys.json", "MAJOR", 9),
         ("apikeys.xml", "MAJOR", 9),
         ("apikeys.yml", "MAJOR", 9),
+        ("arn.yml", "MINOR", 4),
+        ("arn.xml", "MINOR", 3),
         ("aws.yml", "BLOCKER", 3),
         ("aws.json", "BLOCKER", 3),
         ("aws.xml", "BLOCKER", 3),
@@ -118,6 +120,7 @@ def test_detect_secrets_by_key(src, expected):
         ("settings01.ini", "CRITICAL", 1),
         ("settings02.ini", "CRITICAL", 1),
         ("severity.yml", "BLOCKER", 1),
+        ("sops.yml", DEFAULT_SEVERITY, 1),
         ("uri.yml", "CRITICAL", 3),
         ("webhooks.yml", "MINOR", 6),
     ],
