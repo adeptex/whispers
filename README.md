@@ -12,7 +12,8 @@
 Whispers is a **static structured text** analysis tool designed for parsing various common software config formats in search of hardcoded secrets. Whispers can be used as a CLI executable, as well as a Python library, which is meant to facilitate its integration into automated processes and pipelines.
 
 * :clipboard: [Release notes](https://github.com/adeptex/whispers/blob/master/RELEASE_NOTES.md)
-* :lady_beetle: [Report a bug](https://github.com/adeptex/whispers/issues/new/choose) 
+* :gear: [Request a feature](https://github.com/adeptex/whispers/issues/new?assignees=&labels=&template=feature_request.md&title=)
+* :lady_beetle: [Report a bug](https://github.com/adeptex/whispers/issues/new?assignees=&labels=&template=bug_report.md&title=) 
 
 
 ## Installation
