@@ -34,8 +34,10 @@ jobs:
         with:
           python-version: ${{ matrix.env-version.python }}
 
-      - name: setup pip
-        run: python -m pip install --upgrade pip
+      - name: setup
+        run: |
+          python -m pip install --upgrade pip
+          pip3 install --upgrade click==8.0.2
 
       - name: install
         run: make install-dev
