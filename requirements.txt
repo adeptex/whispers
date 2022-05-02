@@ -15,7 +15,7 @@ pyyaml==6.0
 six==1.16.0
 soupsieve==2.3.2.post1
 typing-extensions==4.2.0
-wrapt==1.14.0
+wrapt==1.14.1
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

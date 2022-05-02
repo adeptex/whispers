@@ -37,7 +37,7 @@ setup(
     version=get_version(),
     url="https://github.com/adeptex/whispers",
     author="Artëm Tsvetkov",
-    author_email="linkedin@adeptex.net",
+    author_email="adeptex@users.noreply.github.com",
     description="Identify secrets in static structured text",
     long_description=get_readme(),
     long_description_content_type="text/markdown",
