@@ -69,7 +69,7 @@ whispers -o /tmp/secrets.json dir/or/file
 # Advanced usage:
 #   - only check 'keys' rule group
 #   - with BLOCKER or CRITICAL severity
-#   - everywhere in target/dir except for .log & .raw files
+#   - everywhere in target/dir except for .log & .raw files (regex)
 whispers -g keys -s BLOCKER,CRITICAL -F '.*\.(log|raw)' target/dir
 ```
 
@@ -109,10 +109,10 @@ whispers --xseverity MINOR dir/or/file
 ```
 
 ```bash
-# Include only .json & .yml files
+# Include only .json & .yml files (globs)
 whispers --files '*.json,*.yml' dir/or/file
 
-# Exclude .log & .cfg files
+# Exclude .log & .cfg files (regex)
 whispers --xfiles '.*\.(log|cfg)' dir/or/file
 ```
 

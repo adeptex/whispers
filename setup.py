@@ -1,9 +1,14 @@
 from importlib import import_module
 from setuptools import find_packages, setup
 from pathlib import Path
+from sys import version_info
 
 
-install_requires = ["dataclasses", "luhn", "lxml", "pyyaml", "astroid", "jproperties", "jellyfish", "beautifulsoup4"]
+install_requires = ["luhn", "lxml", "pyyaml", "astroid", "jproperties", "jellyfish", "beautifulsoup4"]
+
+# Python 3.6 requirements
+if version_info < (3, 7):
+    install_requires += ["dataclasses"]
 
 dev_requires = [
     "autoflake~=1.4",

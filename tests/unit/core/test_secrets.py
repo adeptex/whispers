@@ -48,7 +48,7 @@ def test_detect_secrets_by_key(src, expected):
         (".aws/credentials", "BLOCKER", 3),
         (".dockercfg", "CRITICAL", 1),
         (".htpasswd", "MAJOR", 2),
-        (".npmrc", "CRITICAL", 3),
+        (".npmrc", "CRITICAL", 5),
         (".pypirc", "CRITICAL", 1),
         ("apikeys-known.yml", "CRITICAL", 54),
         ("apikeys.json", "MAJOR", 9),
