@@ -129,7 +129,11 @@ def test_load_yaml_from_file(configfile, expected, raised):
     [
         (None, None, False),
         ("key", "", False),
-        ("key", "$value", False),
+        ("key", "$value", True),
+        ("key", "$$Value", True),
+        ("key", "$VALUE", False),
+        ("key", "${value}", False),
+        ("key", "${VALUE}", False),
         ("key", "{{value}}", False),
         ("key", "{value}", False),
         ("key", "{whispers~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}", False),

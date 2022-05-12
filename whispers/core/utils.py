@@ -20,6 +20,7 @@ REGEX_URI = re.compile(r"[:\w\d]+://.+", flags=re.IGNORECASE)
 REGEX_PATH = re.compile(r"^((([A-Z]|file|root):)?(\.+)?[/\\]+).*$", flags=re.IGNORECASE)
 REGEX_IAC = re.compile(r"\![A-Za-z]+ .+", flags=re.IGNORECASE)
 REGEX_PRIVKEY_FILE = re.compile(r"(rsa|dsa|ed25519|ecdsa|pem|crt|cer|ca-bundle|p7b|p7c|p7s|ppk|pkcs12|pfx|p12)")
+REGEX_ENVVAR = re.compile(r"^\$\$?[A-Z0-9_]+$")
 
 
 def load_regex(regex: str, flags: Optional[re.RegexFlag] = 0) -> Pattern:
@@ -89,7 +90,8 @@ def is_static(key: str, value: str) -> bool:
         return False  # Empty
 
     if value.startswith("$") and "$" not in value[2:]:
-        return False  # Variable
+        if REGEX_ENVVAR.match(value):
+            return False  # Variable
 
     if value.startswith("%") and value.endswith("%"):
         return False  # Variable

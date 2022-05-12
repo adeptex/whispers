@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tests>
   <compliant>
-    <o1_variable_password>$password</o1_variable_password>
-    <o2_variable_password>$$password</o2_variable_password>
+    <o1_variable_password>$PASSWORD</o1_variable_password>
+    <o2_variable_password>$$PASSWORD</o2_variable_password>
     <o3_variable_password>${password}</o3_variable_password>
     <o4_variable_password>${{password}}</o4_variable_password>
     <o5_variable_password>{{ password }}</o5_variable_password>

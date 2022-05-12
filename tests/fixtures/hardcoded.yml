@@ -1,6 +1,6 @@
 # Compliant
-01_variable_password: $password
-02_variable_password: $$password
+01_variable_password: $PASSWORD
+02_variable_password: $$PASSWORD
 03_variable_password: ${password}
 04_variable_password: ${{password}}
 05_variable_password: "{{ password }}"

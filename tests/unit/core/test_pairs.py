@@ -31,7 +31,7 @@ from whispers.plugins.yml import Yml
         (tmp_path("File.404"), 0),
         (forbidden_path(), 0),
         (fixture_path("language.py2"), 0),
-        (fixture_path(".npmrc"), 3),
+        (fixture_path(".npmrc"), 5),
         (fixture_path("placeholders.xml"), 0),
         (fixture_path("privatekey.pem"), 1),
         (fixture_path("putty.ppk"), 0),
