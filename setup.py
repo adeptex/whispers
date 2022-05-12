@@ -5,8 +5,10 @@ from sys import version_info
 
 
 install_requires = ["luhn", "lxml", "pyyaml", "astroid", "jproperties", "jellyfish", "beautifulsoup4"]
-if version_info < (3, 7):  # Python 3.6 requirements
-    install_requires.append("dataclasses")
+
+# Python 3.6 requirements
+if version_info < (3, 7):
+    install_requires += ["dataclasses"]
 
 dev_requires = [
     "autoflake~=1.4",
