@@ -14,6 +14,7 @@ dev_requires = [
     "autoflake~=1.4",
     "autopep8~=1.5",
     "black~=19.10b0",
+    "build~=0.8",
     "coverage~=4.5",
     "coverage-badge~=1.0",
     "flake8~=3.9",

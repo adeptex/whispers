@@ -1,17 +1,14 @@
-FROM python:3.8.1-slim-buster
+FROM python:3.9-slim
 
-USER root
-ENV HOME="/opt/whispers"
-RUN useradd --home-dir $HOME --shell /bin/false user
-
-WORKDIR $HOME
-COPY . $HOME/
 RUN apt update \
-    && apt install -y build-essential python3-lxml python3-yaml \
-    && apt clean \
-    && make install \
-    && chown -R user:user $HOME \
-    && whispers -v
+    && apt install -y make python3-lxml python3-yaml \
+    && apt clean
 
-USER user
+WORKDIR /whispers
+
+COPY dist/*.tar.gz .
+
+RUN pip3 install *.tar.gz \
+    && rm -rf *.tar.gz
+
 ENTRYPOINT [ "whispers" ]

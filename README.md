@@ -291,9 +291,27 @@ class PluginName:
 ```
 
 
+## CI/CD Integration
+
+### Docker
+
+Container image `WORKDIR` is `/whispers`.
+
+```bash
+docker run \
+  --volume $(pwd)/tests/fixtures:/whispers \
+  ghcr.io/adeptex/whispers .
+```
+
+### Github
+
+
+### Gitlab
+
+
 ## Development
 
-```
+```bash
 git clone https://github.com/adeptex/whispers
 cd whispers
 make install-dev
