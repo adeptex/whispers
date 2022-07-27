@@ -25,7 +25,7 @@ REGEX_ENVVAR = re.compile(r"^\$\$?[A-Z0-9_]+$")
 
 def global_exception_handler(file: Union[str, Path], data: str):
     """Global Exception Handler"""
-    logging.exception(f"Failed parsing file: {str(file)}\n{data}")
+    logging.exception(f"Failed parsing file '{str(file)}' with {data}")
 
 
 def load_regex(regex: str, flags: Optional[re.RegexFlag] = 0) -> Pattern:
@@ -269,7 +269,7 @@ def find_line_number(pair: KeyValuePair) -> int:
                     return foundline
 
     except Exception:  # pragma: no cover
-        global_exception_handler(pair.file, "Failed parsing file")
+        global_exception_handler(pair.file, "find_line_number()")
 
     return 0
 

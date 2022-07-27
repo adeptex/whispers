@@ -33,7 +33,7 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
             return None
 
     except Exception:  # pragma: no cover
-        global_exception_handler(file.as_posix(), "Failed making pairs")
+        global_exception_handler(file.as_posix(), "make_pairs()")
         return None
 
     # First, return file name to check if it is a sensitive file
@@ -58,7 +58,7 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
         yield from tagged
 
     except Exception:  # pragma: no cover
-        global_exception_handler(file.as_posix(), "Failed making pairs")
+        global_exception_handler(file.as_posix(), "make_pairs()")
         return None
 
 
