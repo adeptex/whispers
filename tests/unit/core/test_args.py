@@ -21,7 +21,6 @@ def test_argument_parser():
     [
         (["src"], "src", "src", does_not_raise()),
         (["src"], "output", stdout, does_not_raise()),
-        (["-H", "src"], "human", True, does_not_raise()),
         (
             ["-c", config_path("detection_by_value.yml"), "src"],
             "config",

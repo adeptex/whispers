@@ -50,5 +50,5 @@ setup(
     setup_requires=["pytest-runner"],
     tests_require=dev_requires,
     extras_require={"dev": dev_requires},
-    entry_points={"console_scripts": ["whispers=whispers.main:cli"]},
+    entry_points={"console_scripts": ["whispers=whispers.main:main"]},
 )

@@ -24,13 +24,13 @@ def test_printer_json(tmp_path, rule_fixture):
     assert result == expected
 
 
-def test_printer_human(rule_fixture):
-    args = parse_args(["-H", fixture_path()])
-    pair = KeyValuePair("key", "value", ["root", "key"], "/file", 123, rule_fixture)
-    expected = (
-        f"[{pair.file}:{pair.line}:{pair.rule.group}:{pair.rule.id}:{pair.rule.severity}]"
-        + f" {pair.key} = {pair.value}"
-    )
-    result = printer(args, pair)
+# def test_printer_human(rule_fixture):
+#     args = parse_args(["-H", fixture_path()])
+#     pair = KeyValuePair("key", "value", ["root", "key"], "/file", 123, rule_fixture)
+#     expected = (
+#         f"[{pair.file}:{pair.line}:{pair.rule.group}:{pair.rule.id}:{pair.rule.severity}]"
+#         + f" {pair.key} = {pair.value}"
+#     )
+#     result = printer(args, pair)
 
-    assert result == expected
+#     assert result == expected
