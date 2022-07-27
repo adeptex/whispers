@@ -3,7 +3,7 @@ from typing import Iterator
 
 from lxml import etree as ElementTree
 
-from whispers.core.log import global_exception_handler
+from whispers.core.utils import global_exception_handler
 from whispers.models.pair import KeyValuePair
 from whispers.plugins.common import Common
 

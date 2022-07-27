@@ -1,3 +1,5 @@
+import json
+import logging
 import sys
 from argparse import Namespace
 from itertools import chain
@@ -7,7 +9,6 @@ from typing import Iterator
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
 from whispers.core.pairs import make_pairs
-from whispers.core.printer import printer
 from whispers.core.rules import load_rules
 from whispers.core.scope import load_scope
 from whispers.core.secrets import detect_secrets
@@ -22,7 +23,10 @@ def main() -> None:  # pragma: no cover
 
     secrets = []
     for secret in run(args):
-        secrets.append(printer(args, secret))
+        logging.warning(str(secret))
+        secrets.append(secret.to_json())
+
+    args.output.write(json.dumps(secrets) + "\n")
 
     sys.exit(args.exitcode)
 

@@ -3,7 +3,7 @@ from typing import Iterator, Tuple
 
 import astroid
 
-from whispers.core.log import global_exception_handler
+from whispers.core.utils import global_exception_handler
 from whispers.models.pair import KeyValuePair
 
 

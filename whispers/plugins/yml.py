@@ -6,7 +6,7 @@ import yaml
 from yaml.parser import ParserError
 from yaml.resolver import Resolver
 
-from whispers.core.log import global_exception_handler
+from whispers.core.utils import global_exception_handler
 from whispers.models.pair import KeyValuePair
 from whispers.plugins.traverse import StructuredDocument
 
