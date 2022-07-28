@@ -54,19 +54,22 @@ whispers
 
 # More information about Whispers
 whispers --info
+
+# Show installed version
+whispers --version
 ```
 
 ```bash
-# Simplest usage with JSON output
+# Simplest usage
 whispers dir/or/file
 
-# Simplest usage with human-readable output
-whispers -H dir/or/file
+# Write JSON results to a file instead of the screen
+whispers dir/or/file -o /tmp/secrets.json
 
-# Write results to a file instead of the screen
-whispers -o /tmp/secrets.json dir/or/file
+# Pipe JSON results downstream
+whispers dir/or/file | jq '.[].value'
 
-# Advanced usage:
+# Custom usage:
 #   - only check 'keys' rule group
 #   - with BLOCKER or CRITICAL severity
 #   - everywhere in target/dir except for .log & .raw files (regex)
@@ -75,12 +78,12 @@ whispers -g keys -s BLOCKER,CRITICAL -F '.*\.(log|raw)' target/dir
 
 ```bash
 # Configuration file template
-whispers --print_config > config.yml
+whispers --init > config.yml
 
 # Provide custom configuration file
 whispers --config config.yml dir/or/file
 
-# Return this system code on success
+# Return custom system code on success
 whispers --exitcode 7 dir/or/file
 ```
 
@@ -204,7 +207,7 @@ exclude:
 The fastest way to tweak detection in a repeatable way (ie: remove false positives and unwanted results) is to copy the default [config.yml](https://github.com/adeptex/whispers/blob/master/whispers/config.yml) into a new file, adapt it, and pass it as an argument to Whispers, for example: 
 
 ```sh
-whispers --print_config > custom.yml
+whispers --init > custom.yml
 # edit custom.yml as needed
 whispers -c custom.yml target
 ```
@@ -291,9 +294,7 @@ class PluginName:
 ```
 
 
-## CI/CD Integration
-
-### Docker
+## Docker image
 
 Container image `WORKDIR` is `/whispers`.
 
@@ -302,11 +303,6 @@ docker run \
   --volume $(pwd)/tests/fixtures:/whispers \
   ghcr.io/adeptex/whispers .
 ```
-
-### Github
-
-
-### Gitlab
 
 
 ## Development
