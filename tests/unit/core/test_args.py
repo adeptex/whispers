@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 from io import StringIO, TextIOWrapper
+from logging import FileHandler, StreamHandler
 from os import remove, urandom
 from re import compile
 from sys import stdout
@@ -32,15 +33,33 @@ def test_argument_parser():
         (["-s", "a,b,c", "src"], "severity", ["a", "b", "c"], does_not_raise()),
         (["-f", "*.json", "src"], "files", ["*.json"], does_not_raise()),
         (["-F", ".*\\.(yml|json)", "src"], "xfiles", compile(r".*\.(yml|json)"), does_not_raise()),
-        (["-i"], "info", True, pytest.raises(SystemExit)),
-        (["-d"], "debug", True, pytest.raises(SystemExit)),
-        (["--print_config"], "print_config", True, pytest.raises(SystemExit)),
+        (["--info"], "info", True, pytest.raises(SystemExit)),
+        (["--debug"], "debug", True, pytest.raises(SystemExit)),
+        (["--init"], "init", True, pytest.raises(SystemExit)),
     ],
 )
 def test_parse_args(arguments, key, expected, exception):
     with exception:
         args = parse_args(arguments)
         assert args.__dict__[key] == expected
+
+
+@pytest.mark.parametrize(
+    ("arguments", "key", "expected", "exception"),
+    [
+        (["--log", "log.txt", "src"], "log", FileHandler, does_not_raise()),
+        (["src"], "log", StreamHandler, does_not_raise()),
+    ],
+)
+def test_parse_args_log(arguments, key, expected, exception):
+    with exception:
+        args = parse_args(arguments)
+        assert isinstance(args.__dict__[key], expected)
+
+    try:
+        remove("log.txt")
+    except BaseException:
+        pass
 
 
 def test_parse_args_output():
