@@ -132,6 +132,16 @@ for secret in whispers.secrets(args):
 ```
 
 
+## Docker
+
+```bash
+docker run \
+  --volume $(pwd)/tests/fixtures:/src \
+  --volume $(pwd)/tests/configs/integration.yml:/config.yml \
+  ghcr.io/adeptex/whispers --config /config.yml .
+```
+
+
 ## Config
 
 There are several configuration options available in Whispers. It’s possible to include and exclude results based on file path, keys, values, individual or grouped rules, and severity levels. There is a [default configuration file](https://github.com/adeptex/whispers/blob/master/whispers/config.yml) that will be used if you don't specify a custom one.
@@ -291,16 +301,6 @@ class PluginName:
       keypath=["path", "to", "key"],
       file=filepath.as_posix()
     )
-```
-
-
-## Docker image
-
-```bash
-docker run \
-  --volume $(pwd)/tests/fixtures:/src \
-  --volume $(pwd)/tests/configs/integration.yml:/config.yml \
-  ghcr.io/adeptex/whispers --config /config.yml .
 ```
 
 
