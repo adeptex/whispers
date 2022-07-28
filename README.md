@@ -296,12 +296,11 @@ class PluginName:
 
 ## Docker image
 
-Container image `WORKDIR` is `/whispers`.
-
 ```bash
 docker run \
-  --volume $(pwd)/tests/fixtures:/whispers \
-  ghcr.io/adeptex/whispers .
+  --volume $(pwd)/tests/fixtures:/src \
+  --volume $(pwd)/tests/configs/integration.yml:/config.yml \
+  ghcr.io/adeptex/whispers --config /config.yml .
 ```
 
 

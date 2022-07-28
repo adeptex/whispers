@@ -4,7 +4,7 @@ RUN apt update \
     && apt install -y make python3-lxml python3-yaml \
     && apt clean
 
-WORKDIR /whispers
+WORKDIR /src
 
 COPY dist/*.tar.gz .
 
