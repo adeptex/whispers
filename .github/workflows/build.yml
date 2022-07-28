@@ -69,7 +69,7 @@ jobs:
     runs-on: docker:latest
     needs: build-package
     env:
-      TEST_IMAGE: ghcr.io/$GITHUB_REPOSITORY:$GITHUB_REF_NAME
+      TEST_IMAGE: ghcr.io/$GITHUB_REPOSITORY:test
     steps:
       - uses: actions/download-artifact@master
         with:
