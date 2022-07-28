@@ -49,3 +49,38 @@ jobs:
 
       - name: coverage
         run: make coverage
+
+  build-package:
+    runs-on: python:3.9-slim
+    needs: build
+    steps:
+      - name: install
+        run: pip3 install build
+
+      - name: build
+        run: python3 -m build --skip-dependency-check
+      
+      - uses: actions/upload-artifact@master
+        with:
+          name: package
+          path: dist/
+
+  build-image:
+    runs-on: docker:latest
+    needs: build-package
+    env:
+      TEST_IMAGE: ghcr.io/$GITHUB_REPOSITORY:$GITHUB_REF_NAME
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: package
+          path: dist/
+
+      - name: login
+        run: docker login -u $GITHUB_REPOSITORY_OWNER -p $GITHUB_TOKEN ghcr.io
+
+      - name: build
+        run: docker build --pull -t $CONTAINER_TEST_IMAGE .
+
+      - name: push
+        run: docker push $CONTAINER_TEST_IMAGE
