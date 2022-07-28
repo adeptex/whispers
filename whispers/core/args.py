@@ -12,8 +12,8 @@ def argument_parser() -> ArgumentParser:
     args_parser = ArgumentParser("whispers", description=("Identify secrets in static structured text."))
     args_parser.add_argument("--info", action="store_true", help="show extended help and exit")
     args_parser.add_argument("--version", action="version", version=__version__, help="show version and exit")
-    args_parser.add_argument("--init", default=False, action="store_true", help="create config file and exit")
-    args_parser.add_argument("-c", "--config", default=None, help="config file")
+    args_parser.add_argument("--init", default=False, action="store_true", help="make config and exit")
+    args_parser.add_argument("-c", "--config", default=None, help="config filename")
     args_parser.add_argument("-o", "--output", default=None, help="output filename")
     args_parser.add_argument("-l", "--log", default=None, help="log filename")
     args_parser.add_argument(
