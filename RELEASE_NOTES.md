@@ -6,10 +6,17 @@
 
 Several arguments have been modified and/or adapted to improve usability.
 
-Creating a configuration template with `--print_config` (2.0) is replaced with `--init` (2.1).
-Example: `whispers --init`.
+- Human readable output is shown in logs (2.1), `-H` and `--human` (2.0) are removed.
 
-Live secret detection feed is now written to the logging stream with `WARNING` level (2.1), instead of `stdout` (2.0). Logs can be redirected to a file with `--log log.txt`.
+- Version can be shown with `--version` (2.1), `-v` (2.0) is removed.
+
+- Extended help can be shown with `--info` (2.1), `-i` (2.0) is removed.
+
+- Debug mode can be enabled with `--debug` (2.1), `-d` (2.0) is removed.
+
+- Logs can be redirected to a file with `--log log.txt` (2.1), constant `/tmp/whispers.log` (2.0) is removed.
+
+- Configuration template can be created with `--init` (2.1), `--print_config` (2.0) is removed.
 
 
 ### :x: Logging :x:
@@ -23,4 +30,4 @@ Live secret detection feed is now written to the logging stream with `WARNING` l
 
 ### :white_check_mark: Results as JSON list :white_check_mark:
 
-To improve integration and downstream processing, Whispers now outputs results as a JSON list of dictionaries with all detected secrets together (2.1), instead of one JSON dictionary per line (2.0).
+To improve integration and downstream processing, Whispers now outputs results as a JSON list of dictionaries with all detected secrets together (2.1), instead of one JSON dictionary per line (2.0). This list is directly loadable and parsable as JSON.
