@@ -58,10 +58,10 @@ class Specification:
 class Rule:
     """Main rule configuration class"""
 
-    id: str = field(default_factory=str)
-    group: str = field(default_factory=str)
-    message: str = field(default_factory=str)
-    severity: str = field(default_factory=str)
+    id: str = ""
+    group: str = ""
+    message: str = ""
+    severity: str = ""
     key: Specification = field(default=None)
     value: Specification = field(default=None)
     similar: float = field(default_factory=float)

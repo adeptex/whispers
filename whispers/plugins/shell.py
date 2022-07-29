@@ -2,8 +2,7 @@ import shlex
 from pathlib import Path
 from typing import Iterator, Tuple
 
-from whispers.core.log import global_exception_handler
-from whispers.core.utils import ESCAPED_CHARS, KeyValuePair, strip_string
+from whispers.core.utils import ESCAPED_CHARS, KeyValuePair, global_exception_handler, strip_string
 
 
 class Shell:

@@ -49,3 +49,6 @@ jobs:
 
       - name: coverage
         run: make coverage
+
+      - name: package
+        run: python3 -m build

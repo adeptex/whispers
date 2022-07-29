@@ -2,12 +2,12 @@ import pytest
 
 from tests.unit.conftest import fixture_path
 from whispers.core.args import parse_args
-from whispers.main import cli, run
+from whispers.main import main, run
 
 
-def test_cli():
+def test_main():
     with pytest.raises(SystemExit):
-        cli()
+        main()
 
 
 def test_run():

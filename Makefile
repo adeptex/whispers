@@ -33,9 +33,10 @@ coverage:
 test: 
 	make lint coverage
 
-docker:
+build-image:
+	python3 -m build
 	docker build -t=whispers --rm=true . 
-	docker rmi -f $$(docker images --filter "dangling=true" -q --no-trunc)
+	# docker rmi -f $$(docker images --filter "dangling=true" -q --no-trunc)
 
 freeze:
 	CUSTOM_COMPILE_COMMAND="make freeze" \
@@ -65,4 +66,4 @@ publish:
 test-pip:
 	python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps whispers
 
-.PHONY: install install-dev isort-lint black-lint flake8-lint format lint unit coverage test publish
+.PHONY: install install-dev isort-lint black-lint flake8-lint format lint unit coverage test publish build-image

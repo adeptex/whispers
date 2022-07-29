@@ -2,8 +2,7 @@ import logging
 from pathlib import Path
 from typing import Iterator, Optional
 
-from whispers.core.log import global_exception_handler
-from whispers.core.utils import REGEX_PRIVKEY_FILE, is_static, strip_string
+from whispers.core.utils import REGEX_PRIVKEY_FILE, global_exception_handler, is_static, strip_string
 from whispers.models.appconfig import AppConfig
 from whispers.models.pair import KeyValuePair
 from whispers.plugins.config import Config
@@ -34,7 +33,7 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
             return None
 
     except Exception:  # pragma: no cover
-        global_exception_handler(file.as_posix(), "Failed making pairs")
+        global_exception_handler(file.as_posix(), "make_pairs()")
         return None
 
     # First, return file name to check if it is a sensitive file
@@ -59,7 +58,7 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
         yield from tagged
 
     except Exception:  # pragma: no cover
-        global_exception_handler(file.as_posix(), "Failed making pairs")
+        global_exception_handler(file.as_posix(), "make_pairs()")
         return None
 
 

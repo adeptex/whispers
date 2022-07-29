@@ -10,34 +10,24 @@ from whispers.core.utils import DEFAULT_PATH, default_rules, load_regex
 def argument_parser() -> ArgumentParser:
     """CLI argument parser"""
     args_parser = ArgumentParser("whispers", description=("Identify secrets in static structured text."))
-    args_parser.add_argument("-c", "--config", help="config file")
+    args_parser.add_argument("--info", action="store_true", help="show extended help and exit")
+    args_parser.add_argument("--version", action="version", version=__version__, help="show version and exit")
+    args_parser.add_argument("--init", default=False, action="store_true", help="make config and exit")
+    args_parser.add_argument("-c", "--config", default=None, help="config filename")
+    args_parser.add_argument("-o", "--output", default=None, help="output filename")
+    args_parser.add_argument("-l", "--log", default=None, help="log filename")
     args_parser.add_argument(
-        "-C", "--print_config", default=False, action="store_true", help="print default config and exit"
+        "--debug", action="store_const", const=logging.DEBUG, default=logging.WARNING, help="show debug log",
     )
-    args_parser.add_argument("-o", "--output", help="output file")
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
-    args_parser.add_argument("-f", "--files", help="csv of globs for including files")
-    args_parser.add_argument("-F", "--xfiles", help="regex for excluding files")
-    args_parser.add_argument("-g", "--groups", help="csv of rule groups to report (see --info)")
-    args_parser.add_argument("-G", "--xgroups", help="csv of rule groups to exclude (see --info)")
-    args_parser.add_argument("-r", "--rules", help="csv of rule IDs to report (see --info)")
-    args_parser.add_argument("-R", "--xrules", help="csv of rule IDs to exclude (see --info)")
-    args_parser.add_argument("-s", "--severity", help="csv of severity levels to report (see --info)")
-    args_parser.add_argument("-S", "--xseverity", help="csv of severity levels to exclude (see --info)")
-    args_parser.add_argument(
-        "-H", "--human", default=False, action="store_true", help="output in human-readable format"
-    )
-    args_parser.add_argument("-l", "--log", default=False, action="store_true", help="write /tmp/whispers.log")
-    args_parser.add_argument(
-        "-d",
-        "--debug",
-        action="store_const",
-        const=logging.DEBUG,
-        default=logging.INFO,
-        help="log debugging information (implies --log)",
-    )
-    args_parser.add_argument("-i", "--info", action="store_true", help="show extended help and exit")
-    args_parser.add_argument("-v", "--version", action="version", version=__version__, help="show version and exit")
+    args_parser.add_argument("-f", "--files", default=None, help="csv of globs for including files")
+    args_parser.add_argument("-F", "--xfiles", default=None, help="regex for excluding files")
+    args_parser.add_argument("-g", "--groups", default=None, help="csv of rule groups to report (see --info)")
+    args_parser.add_argument("-G", "--xgroups", default=None, help="csv of rule groups to exclude (see --info)")
+    args_parser.add_argument("-r", "--rules", default=None, help="csv of rule IDs to report (see --info)")
+    args_parser.add_argument("-R", "--xrules", default=None, help="csv of rule IDs to exclude (see --info)")
+    args_parser.add_argument("-s", "--severity", default=None, help="csv of severity levels to report (see --info)")
+    args_parser.add_argument("-S", "--xseverity", default=None, help="csv of severity levels to exclude (see --info)")
     args_parser.add_argument("src", nargs="*", help="target file or directory")
 
     args_parser.print_help = show_splash(args_parser.print_help)
@@ -53,7 +43,7 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
         show_info()
         exit()
 
-    if args.print_config:
+    if args.init:
         show_config()
         exit()
 
@@ -62,6 +52,13 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
         exit()
     else:
         args.src = args.src[0]
+
+    if args.log:
+        args.log = logging.FileHandler(args.log, mode="w")
+    else:
+        args.log = logging.StreamHandler()
+
+    logging.basicConfig(format="[%(levelname)s] %(message)s", level=args.debug, handlers=[args.log])
 
     if args.output:
         args.output = open(args.output, "w")
@@ -91,8 +88,6 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
 
     if args.xseverity:
         args.xseverity = args.xseverity.split(",")
-
-    args.log |= args.debug == logging.DEBUG
 
     return args
 

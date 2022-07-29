@@ -1,3 +1,5 @@
+import json
+import logging
 import sys
 from argparse import Namespace
 from itertools import chain
@@ -6,9 +8,7 @@ from typing import Iterator
 
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
-from whispers.core.log import configure_log
 from whispers.core.pairs import make_pairs
-from whispers.core.printer import printer
 from whispers.core.rules import load_rules
 from whispers.core.scope import load_scope
 from whispers.core.secrets import detect_secrets
@@ -17,18 +17,22 @@ from whispers.models.pair import KeyValuePair
 environ["PYTHONIOENCODING"] = "UTF-8"
 
 
-def cli():  # pragma: no cover
-    """Main method when executing from CLI given argv"""
+def main() -> None:  # pragma: no cover
+    """Main entry point"""
     args = parse_args()
-    secrets = run(args)
-    list(map(lambda secret: printer(args, secret), secrets))
+
+    secrets = []
+    for secret in run(args):
+        logging.warning(str(secret))
+        secrets.append(secret.to_json())
+
+    args.output.write(json.dumps(secrets) + "\n")
+
     sys.exit(args.exitcode)
 
 
 def run(args: Namespace) -> Iterator[KeyValuePair]:
-    """Main method for getting secrets given args"""
-    configure_log(args)
-
+    """Main worker process"""
     config = load_config(args)
     rules = load_rules(args, config)
     scope = load_scope(args, config)
@@ -40,4 +44,4 @@ def run(args: Namespace) -> Iterator[KeyValuePair]:
 
 
 if __name__ == "__main__":
-    cli()
+    main()
