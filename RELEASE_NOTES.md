@@ -31,3 +31,11 @@ Several arguments have been modified and/or adapted to improve usability.
 ### :white_check_mark: Results as JSON list :white_check_mark:
 
 To improve integration and downstream processing, Whispers now outputs results as a JSON list of dictionaries with all detected secrets together (2.1), instead of one JSON dictionary per line (2.0). This list is directly loadable and parsable as JSON.
+
+
+# Changelog
+
+|Version|Release notes|
+|---|---|
+|2.0.0|https://github.com/adeptex/whispers/releases/tag/2.0.0|
+|2.1.0|https://github.com/adeptex/whispers/releases/tag/2.1.0|
