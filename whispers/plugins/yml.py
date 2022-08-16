@@ -31,15 +31,15 @@ class Yml(StructuredDocument):
         - Remove text between <% %> and {% %}
         - Remove comments that start with #
         """
+        regex_unquoted = re.compile(r".+(\[)?\{\{.*\}\}(\])?")
         document = ""
 
         for line in filepath.open("r").readlines():
             if line.startswith("---"):
                 continue
 
-            if re.match(r".+(\[)?\{\{.*\}\}(\])?", line):
-                line = line.replace('"', "'")
-                line = line.replace("{{", '"{{').replace("}}", '}}"')
+            if regex_unquoted.match(line):
+                line = line.replace("{{", "'{{").replace("}}", "}}'")
 
             document += line
 

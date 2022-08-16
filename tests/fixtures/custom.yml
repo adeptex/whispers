@@ -14,3 +14,7 @@ accounts:
   end
 %>
 iam.amazonaws.com/role: {{ assumed_iam_role }}
+list:
+  - name: set APP_NAME according to TALK_NAME
+    set_fact:
+      APP_NAME: "ecs-{{lookup('env', 'TALK_NAME')}}"
