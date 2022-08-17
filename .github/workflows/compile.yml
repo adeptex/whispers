@@ -46,16 +46,7 @@ jobs:
       - name: make binary
         # if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
         run: |
-          pyinstaller \
-            --clean \
-            --noconfirm \
-            --strip \
-            --noupx \
-            --console \
-            --onefile \
-            --add-data 'whispers/config.yml:whispers' \
-            --name ${{ matrix.env-version.binary }} \
-            whispers/main.py
+          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --name ${{ matrix.env-version.binary }} whispers/main.py
 
       # - name: make binary (exe)
       #   if: ${{ matrix.env-version.os == 'windows-latest' }}
