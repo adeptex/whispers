@@ -3,14 +3,14 @@ name: compile
 on:
   workflow_dispatch:
 
-  # release:
-  #   branches:
-  #     - master
-  #   types:
-  #     - released
+  release:
+    branches:
+      - master
+    types:
+      - released
 
 env:
-  RELEASE_TAG: "2.1.1"  # ${{ github.ref }}
+  RELEASE_TAG: "2.1.1"  #${{ github.ref }}
 
 jobs:
   compile:
@@ -19,10 +19,13 @@ jobs:
         env-version:
           # - os: "ubuntu-latest"
           #   python: 3.9
-          #   binary: whispers
-          - os: "windows-latest"
+          #   binary: whispers.elf
+          - os: "macos-latest"
             python: 3.9
-            binary: whispers.exe
+            binary: whispers.mac
+          # - os: "windows-latest"
+          #   python: 3.9
+          #   binary: whispers.exe
 
     runs-on: ${{ matrix.env-version.os }}
 
@@ -43,12 +46,17 @@ jobs:
       - name: install
         run: make install
 
-      - name: make binary (elf)
+      - name: 'whispers.elf: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked'
         if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --name ${{ matrix.env-version.binary }} whispers/main.py
+      
+      - name: 'whispers.mac: ...'
+        if: ${{ matrix.env-version.os == 'macos-latest' }}
+        run: |
+          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --name ${{ matrix.env-version.binary }} whispers/main.py
 
-      - name: make binary (exe)
+      - name: 'whispers.exe: PE32+ executable (console) x86-64, for MS Windows'
         if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: |
           pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --name ${{ matrix.env-version.binary }} whispers/main.py
