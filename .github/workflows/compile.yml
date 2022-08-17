@@ -38,14 +38,7 @@ jobs:
           pip3 install pyinstaller
 
       - name: make binary
-        run: |
-          pyinstaller \
-            --strip \
-            --noupx \
-            --console \
-            --onefile \
-            --name ${{ matrix.env-version.binary }} \
-            whispers/main.py
+        run: pyinstaller --strip --noupx --console --onefile --name ${{ matrix.env-version.binary }} whispers/main.py
 
       - name: upload binary
         uses: svenstaro/upload-release-action@v2
