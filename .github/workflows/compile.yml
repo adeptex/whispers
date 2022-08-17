@@ -9,6 +9,9 @@ on:
   #   types:
   #     - released
 
+env:
+  RELEASE_TAG: "2.1.1"  # ${{ github.ref }}
+
 jobs:
   compile:
     strategy:
@@ -37,6 +40,9 @@ jobs:
           python -m pip install --upgrade pip
           pip3 install pyinstaller
 
+      - name: install
+        run: make install
+
       - name: make binary
         run: pyinstaller --strip --noupx --console --onefile --name ${{ matrix.env-version.binary }} whispers/main.py
 
@@ -46,4 +52,4 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           asset_name: ${{ matrix.env-version.binary }}
           file: dist/${{ matrix.env-version.binary }}
-          tag: "2.1.1"  # ${{ github.ref }}
+          tag: $RELEASE_TAG
