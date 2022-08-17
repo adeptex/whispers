@@ -1,9 +1,9 @@
 import json
 import logging
-from sys import exit
 from argparse import Namespace
 from itertools import chain
 from os import environ
+from sys import exit
 from typing import Iterator
 
 from whispers.core.args import parse_args
