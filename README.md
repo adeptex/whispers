@@ -9,7 +9,7 @@
 
 > "My little birds are everywhere, even in the North, they whisper to me the strangest stories." - _Varys_
 
-Whispers is a **static structured text** analysis tool designed for parsing various common software config formats in search of hardcoded secrets. Whispers can be used as a CLI executable, as well as a Python library, which is meant to facilitate its integration into automated processes and pipelines.
+Whispers is a **static structured text** analysis tool designed for parsing various common software config formats in search of hardcoded secrets. Whispers can be used as a [standalone executable](https://github.com/adeptex/whispers#download), or as a [Python library](https://github.com/adeptex/whispers#install), which is meant to facilitate its integration into automated processes and pipelines.
 
 * :clipboard: [Release notes](https://github.com/adeptex/whispers/blob/master/RELEASE_NOTES.md)
 * :gear: [Request a feature](https://github.com/adeptex/whispers/issues/new?assignees=&labels=&template=feature_request.md&title=)
