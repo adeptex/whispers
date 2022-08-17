@@ -142,10 +142,12 @@ for secret in whispers.secrets(args):
 ## Docker
 
 ```bash
+docker build -t=whispers .
+
 docker run \
   --volume $(pwd)/tests/fixtures:/src \
   --volume $(pwd)/tests/configs/integration.yml:/config.yml \
-  ghcr.io/adeptex/whispers --config /config.yml .
+  whispers --config /config.yml .
 ```
 
 
