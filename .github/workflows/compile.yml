@@ -41,6 +41,7 @@ jobs:
         run: |
           pyinstaller \
             --strip \
+            --noupx \
             --console \
             --onefile \
             --name ${{ matrix.env-version.binary }} \

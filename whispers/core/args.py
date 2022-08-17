@@ -1,7 +1,7 @@
 import logging
 from argparse import ArgumentParser, Namespace
 from functools import wraps
-from sys import argv, stdout
+from sys import argv, exit, stdout
 
 from whispers.__version__ import __version__, __whispers__
 from whispers.core.utils import DEFAULT_PATH, default_rules, load_regex
