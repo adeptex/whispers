@@ -49,17 +49,17 @@ jobs:
       - name: 'whispers.elf: ELF 64-bit LSB executable, x86-64'
         if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
         run: |
-          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --name ${{ matrix.env-version.binary }} whispers/main.py
+          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
       
       - name: 'whispers.mac: Mach-O 64-bit x86_64 executable'
         if: ${{ matrix.env-version.os == 'macos-latest' }}
         run: |
-          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --name ${{ matrix.env-version.binary }} whispers/main.py
+          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
 
       - name: 'whispers.exe: PE32+ executable (console) x86-64'
         if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: |
-          pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --name ${{ matrix.env-version.binary }} whispers/main.py
+          pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
 
       - name: upload binary
         uses: svenstaro/upload-release-action@v2

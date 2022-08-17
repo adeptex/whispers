@@ -1,6 +1,6 @@
 import json
 import logging
-import sys
+from sys import exit
 from argparse import Namespace
 from itertools import chain
 from os import environ
@@ -28,7 +28,7 @@ def main() -> None:  # pragma: no cover
 
     args.output.write(json.dumps(secrets) + "\n")
 
-    sys.exit(args.exitcode)
+    exit(args.exitcode)
 
 
 def run(args: Namespace) -> Iterator[KeyValuePair]:

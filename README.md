@@ -16,7 +16,14 @@ Whispers is a **static structured text** analysis tool designed for parsing vari
 * :lady_beetle: [Report a bug](https://github.com/adeptex/whispers/issues/new?assignees=&labels=&template=bug_report.md&title=) 
 
 
-## Installation
+## Download
+
+* [ELF 64-bit LSB executable, x86-64](https://github.com/adeptex/whispers/releases/download/latest/whispers.elf)
+* [Mach-O 64-bit x86_64 executable](https://github.com/adeptex/whispers/releases/download/latest/whispers.mac)
+* [PE32+ executable (console) x86-64](https://github.com/adeptex/whispers/releases/download/latest/whispers.exe)
+
+
+## Install
 
 ```
 pip3 install whispers
