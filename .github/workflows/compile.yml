@@ -43,7 +43,7 @@ jobs:
       - name: install
         run: make install
 
-      - name: make binary (elf64)
+      - name: make binary (elf)
         if: ${{ matrix.env-version.os == "ubuntu-latest" }}
         run: pyinstaller --clean --noconfirm --strip --noupx --console --onefile --name ${{ matrix.env-version.binary }} whispers/main.py
       
