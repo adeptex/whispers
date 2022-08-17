@@ -43,8 +43,13 @@ jobs:
       - name: install
         run: make install
 
-      - name: make binary
-        run: pyinstaller --strip --noupx --console --onefile --add-data="whispers/config.yml;." --name ${{ matrix.env-version.binary }} whispers/main.py
+      - name: make binary (elf64)
+        if: ${{ matrix.env-version.os == "ubuntu-latest" }}
+        run: pyinstaller --clean --noconfirm --strip --noupx --console --onefile --name ${{ matrix.env-version.binary }} whispers/main.py
+      
+      - name: make binary (exe)
+        if: ${{ matrix.env-version.os == "windows-latest" }}
+        run: pyinstaller --clean --noconfirm --noupx --console --onefile --resource whispers/config.yml --name ${{ matrix.env-version.binary }} whispers/main.py
 
       - name: upload binary
         uses: svenstaro/upload-release-action@v2
