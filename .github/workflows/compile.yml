@@ -52,4 +52,4 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           asset_name: ${{ matrix.env-version.binary }}
           file: dist/${{ matrix.env-version.binary }}
-          tag: $RELEASE_TAG
+          tag: ${{ env.RELEASE_TAG }}
