@@ -18,9 +18,9 @@ Whispers is a **static structured text** analysis tool designed for parsing vari
 
 ## Download
 
-* [ELF 64-bit LSB executable, x86-64](https://github.com/adeptex/whispers/releases/download/latest/whispers.elf)
-* [Mach-O 64-bit x86_64 executable](https://github.com/adeptex/whispers/releases/download/latest/whispers.mac)
-* [PE32+ executable (console) x86-64](https://github.com/adeptex/whispers/releases/download/latest/whispers.exe)
+* [ELF 64-bit LSB executable, x86-64](https://github.com/adeptex/whispers/releases/latest/download/whispers.elf)
+* [Mach-O 64-bit x86_64 executable](https://github.com/adeptex/whispers/releases/latest/download/whispers.mac)
+* [PE32+ executable (console) x86-64](https://github.com/adeptex/whispers/releases/latest/download/whispers.exe)
 
 
 ## Install
