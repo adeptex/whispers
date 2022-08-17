@@ -44,11 +44,11 @@ jobs:
         run: make install
 
       - name: make binary (elf)
-        if: ${{ matrix.env-version.os == "ubuntu-latest" }}
+        if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
         run: pyinstaller --clean --noconfirm --strip --noupx --console --onefile --name ${{ matrix.env-version.binary }} whispers/main.py
       
       - name: make binary (exe)
-        if: ${{ matrix.env-version.os == "windows-latest" }}
+        if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: pyinstaller --clean --noconfirm --noupx --console --onefile --resource whispers/config.yml --name ${{ matrix.env-version.binary }} whispers/main.py
 
       - name: upload binary
