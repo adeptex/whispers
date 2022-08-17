@@ -3,9 +3,9 @@ name: compile
 on:
   workflow_dispatch:
 
-  release:
-    branches:
-      - dev
+  # release:
+  #   branches:
+  #     - master
   #   types:
   #     - released
 
@@ -41,15 +41,15 @@ jobs:
         run: |
           pyinstaller \
             --strip \
-            --noupx \
             --console \
             --onefile \
             --name ${{ matrix.env-version.binary }} \
             whispers/main.py
 
-      - name: upload asset
-        uses: softprops/action-gh-release@v1
+      - name: upload binary
+        uses: svenstaro/upload-release-action@v2
         with:
-          tag_name: "compiled"
-          draft: true
-          files: dist/${{ matrix.env-version.binary }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          asset_name: ${{ matrix.env-version.binary }}
+          file: dist/${{ matrix.env-version.binary }}
+          tag: "2.1.1"  # ${{ github.ref }}
