@@ -44,7 +44,7 @@ jobs:
         run: make install
 
       - name: make binary
-        run: pyinstaller --strip --noupx --console --onefile --name ${{ matrix.env-version.binary }} whispers/main.py
+        run: pyinstaller --strip --noupx --console --onefile --add-data="whispers/config.yml:." --name ${{ matrix.env-version.binary }} whispers/main.py
 
       - name: upload binary
         uses: svenstaro/upload-release-action@v2
