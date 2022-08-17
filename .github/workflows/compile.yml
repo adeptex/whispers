@@ -3,9 +3,9 @@ name: compile
 on:
   workflow_dispatch:
 
-  # release:
-  #   branches:
-  #     - master
+  release:
+    branches:
+      - dev
   #   types:
   #     - released
 
