@@ -17,9 +17,9 @@ jobs:
     strategy:
       matrix:
         env-version:
-          - os: "ubuntu-latest"
-            python: 3.9
-            binary: whispers
+          # - os: "ubuntu-latest"
+          #   python: 3.9
+          #   binary: whispers
           - os: "windows-latest"
             python: 3.9
             binary: whispers.exe
@@ -43,8 +43,8 @@ jobs:
       - name: install
         run: make install
 
-      - name: make binary (elf)
-        if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
+      - name: make binary
+        # if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
         run: |
           pyinstaller \
             --clean \
@@ -57,18 +57,18 @@ jobs:
             --name ${{ matrix.env-version.binary }} \
             whispers/main.py
 
-      - name: make binary (exe)
-        if: ${{ matrix.env-version.os == 'windows-latest' }}
-        run: |
-          pyinstaller ^
-            --clean ^
-            --noconfirm ^
-            --noupx ^
-            --console ^
-            --onefile ^
-            --add-data 'whispers/config.yml;whispers' ^
-            --name ${{ matrix.env-version.binary }} ^
-            whispers/main.py
+      # - name: make binary (exe)
+      #   if: ${{ matrix.env-version.os == 'windows-latest' }}
+      #   run: |
+      #     pyinstaller ^
+      #       --clean ^
+      #       --noconfirm ^
+      #       --noupx ^
+      #       --console ^
+      #       --onefile ^
+      #       --add-data 'whispers/config.yml;whispers' ^
+      #       --name ${{ matrix.env-version.binary }} ^
+      #       whispers/main.py
 
       - name: upload binary
         uses: svenstaro/upload-release-action@v2
