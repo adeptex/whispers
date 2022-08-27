@@ -22,13 +22,13 @@ jobs:
         env-version:
           - os: "ubuntu-latest"
             python: 3.9
-            binary: $BINARY_ELF
+            binary: ${{ env.BINARY_ELF }}
           - os: "macos-latest"
             python: 3.9
-            binary: $BINARY_MAC
+            binary: ${{ env.BINARY_MAC }}
           - os: "windows-latest"
             python: 3.9
-            binary: $BINARY_EXE
+            binary: ${{ env.BINARY_EXE }}
 
     runs-on: ${{ matrix.env-version.os }}
 
@@ -81,9 +81,9 @@ jobs:
     strategy:
       matrix:
         binary:
-          - name: $BINARY_ELF
-          - name: $BINARY_MAC
-          - name: $BINARY_EXE
+          - name: ${{ env.BINARY_ELF }}
+          - name: ${{ env.BINARY_MAC }}
+          - name: ${{ env.BINARY_EXE }}
 
     runs-on: ubuntu-latest
 
