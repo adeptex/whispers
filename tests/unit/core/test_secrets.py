@@ -97,7 +97,7 @@ def test_detect_secrets_by_key(src, expected):
         ("language.html", "INFO", 3),
         ("language.py", "CRITICAL", 11),
         ("language.py2", DEFAULT_SEVERITY, 0),
-        ("language.sh", "CRITICAL,MAJOR", 14),
+        ("language.sh", "CRITICAL,MAJOR", 15),
         ("passwords.json", "CRITICAL", 5),
         ("passwords.xml", "CRITICAL", 5),
         ("passwords.yml", "CRITICAL", 5),
