@@ -62,6 +62,7 @@ jobs:
         if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: |
           pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+          chcp 65001
           dist/${{ matrix.env-version.binary }}
 
       - name: upload binary
