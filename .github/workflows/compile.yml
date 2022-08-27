@@ -76,6 +76,8 @@ jobs:
           tag: ${{ env.RELEASE_TAG }}
 
   checksum:
+    needs: compile
+
     strategy:
       matrix:
         binary:
