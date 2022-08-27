@@ -50,7 +50,7 @@ def test_detect_secrets_by_key(src, expected):
         (".htpasswd", "MAJOR", 2),
         (".npmrc", "CRITICAL", 5),
         (".pypirc", "CRITICAL", 1),
-        ("apikeys-known.yml", "CRITICAL", 54),
+        ("apikeys-known.yml", "CRITICAL", 56),
         ("apikeys.json", "MAJOR", 9),
         ("apikeys.xml", "MAJOR", 9),
         ("apikeys.yml", "MAJOR", 9),
