@@ -11,24 +11,21 @@ on:
 
 env:
   RELEASE_TAG: ${{ github.ref }}
-  BINARY_ELF: whispers.elf
-  BINARY_MAC: whispers.mac
-  BINARY_EXE: whispers.exe
 
 jobs:
   compile:
     strategy:
       matrix:
         env-version:
-          - os: "ubuntu-latest"
+          - os: ubuntu-latest
             python: 3.9
-            binary: ${{ env.BINARY_ELF }}
-          - os: "macos-latest"
+            binary: whispers.elf
+          - os: macos-latest
             python: 3.9
-            binary: ${{ env.BINARY_MAC }}
-          - os: "windows-latest"
+            binary: whispers.mac
+          - os: windows-latest
             python: 3.9
-            binary: ${{ env.BINARY_EXE }}
+            binary: whispers.exe
 
     runs-on: ${{ matrix.env-version.os }}
 
@@ -81,9 +78,9 @@ jobs:
     strategy:
       matrix:
         binary:
-          - name: ${{ env.BINARY_ELF }}
-          - name: ${{ env.BINARY_MAC }}
-          - name: ${{ env.BINARY_EXE }}
+          - name: whispers.elf
+          - name: whispers.mac
+          - name: whispers.exe
 
     runs-on: ubuntu-latest
 
