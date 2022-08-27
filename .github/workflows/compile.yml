@@ -11,6 +11,9 @@ on:
 
 env:
   RELEASE_TAG: ${{ github.ref }}
+  BINARY_ELF: whispers.elf
+  BINARY_MAC: whispers.mac
+  BINARY_EXE: whispers.exe
 
 jobs:
   compile:
@@ -19,13 +22,13 @@ jobs:
         env-version:
           - os: "ubuntu-latest"
             python: 3.9
-            binary: whispers.elf
+            binary: $BINARY_ELF
           - os: "macos-latest"
             python: 3.9
-            binary: whispers.mac
+            binary: $BINARY_MAC
           - os: "windows-latest"
             python: 3.9
-            binary: whispers.exe
+            binary: $BINARY_EXE
 
     runs-on: ${{ matrix.env-version.os }}
 
@@ -67,4 +70,34 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           asset_name: ${{ matrix.env-version.binary }}
           file: dist/${{ matrix.env-version.binary }}
+          tag: ${{ env.RELEASE_TAG }}
+
+  checksum:
+    strategy:
+      matrix:
+        binary:
+          - name: $BINARY_ELF
+          - name: $BINARY_MAC
+          - name: $BINARY_EXE
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checksum ${{ matrix.binary.name }}
+        run: |
+          checksum=$(\
+            curl \
+              --location \
+              --url https://github.com/adeptex/whispers/releases/download/${RELEASE_TAG}/${{ matrix.binary.name }} \
+              | sha256sum \
+              | awk '{print $1}' \
+          )
+          echo "${{ matrix.binary.name }} - $checksum" | tee ${{ matrix.binary.name }}.$checksum.txt
+
+      - name: upload checksum ${{ matrix.binary.name }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          asset_name: ${{ matrix.binary.name }}.$checksum.txt
+          file: ${{ matrix.binary.name }}.$checksum.txt
           tag: ${{ env.RELEASE_TAG }}
