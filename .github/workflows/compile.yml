@@ -53,16 +53,19 @@ jobs:
         if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+          ./${{ matrix.env-version.binary }}
       
       - name: 'whispers.mac: Mach-O 64-bit x86_64 executable'
         if: ${{ matrix.env-version.os == 'macos-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+          ./${{ matrix.env-version.binary }}
 
       - name: 'whispers.exe: PE32+ executable (console) x86-64'
         if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: |
           pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+          ${{ matrix.env-version.binary }}
 
       - name: upload binary
         uses: svenstaro/upload-release-action@v2
@@ -83,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checksum ${{ matrix.binary.name }}
+      - name: checksum
         run: |
           checksum=$(\
             curl \
@@ -94,7 +97,7 @@ jobs:
           )
           echo "${{ matrix.binary.name }} - $checksum" | tee ${{ matrix.binary.name }}.$checksum.txt
 
-      - name: upload checksum ${{ matrix.binary.name }}
+      - name: upload checksum
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
