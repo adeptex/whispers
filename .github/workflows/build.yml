@@ -48,7 +48,12 @@ jobs:
         run: make lint
 
       - name: coverage
-        run: make coverage
+        run: |
+          make coverage
+          if ! [[ $(coverage report | egrep 100%) ]]; then
+            echo "Coverage should be 100%";
+            exit 1
+          fi
 
       - name: package
         run: python3 -m build
