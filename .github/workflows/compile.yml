@@ -88,9 +88,9 @@ jobs:
       - name: checksum
         run: |
           checksum=$(\
-            curl \
+            curl -v \
               --location \
-              --url https://github.com/adeptex/whispers/releases/download/${{ env.RELEASE_TAG }}/${{ matrix.binary.name }} \
+              --url "https://github.com/adeptex/whispers/releases/download/${{ env.RELEASE_TAG }}/${{ matrix.binary.name }}" \
               | sha256sum \
               | awk '{print $1}' \
           )
