@@ -94,12 +94,12 @@ jobs:
               | sha256sum \
               | awk '{print $1}' \
           )
-          echo "${{ matrix.binary.name }} - $checksum" | tee ${{ matrix.binary.name }}.$checksum.txt
+          echo "${{ matrix.binary.name }} - ${checksum}" | tee ${{ matrix.binary.name }}.checksum.txt
 
       - name: upload checksum
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          asset_name: ${{ matrix.binary.name }}.$checksum.txt
-          file: ${{ matrix.binary.name }}.$checksum.txt
+          asset_name: ${{ matrix.binary.name }}.checksum.txt
+          file: ${{ matrix.binary.name }}.checksum.txt
           tag: ${{ env.RELEASE_TAG }}
