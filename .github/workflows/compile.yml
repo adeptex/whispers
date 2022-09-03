@@ -50,21 +50,21 @@ jobs:
         if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
-          sha256sum --binary --tag --zero dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.checksum.txt
+          sha256sum --binary dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.checksum.txt
           dist/${{ matrix.env-version.binary }}
 
       - name: 'whispers.mac: Mach-O 64-bit x86_64 executable'
         if: ${{ matrix.env-version.os == 'macos-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
-          sha256sum --binary --tag --zero dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.checksum.txt
+          shasum --binary --algorithm 256 dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.checksum.txt
           dist/${{ matrix.env-version.binary }}
 
       - name: 'whispers.exe: PE32+ executable (console) x86-64'
         if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: |
           pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
-          sha256sum --binary --tag --zero dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.checksum.txt
+          certUtil -hashfile dist/${{ matrix.env-version.binary }} SHA256 > dist/${{ matrix.env-version.binary }}.checksum.txt
           dist/${{ matrix.env-version.binary }} --version
 
       - name: upload binary
