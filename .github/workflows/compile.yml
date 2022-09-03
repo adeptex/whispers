@@ -50,18 +50,21 @@ jobs:
         if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+          sha256sum --binary --tag --zero ${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.checksum.txt
           dist/${{ matrix.env-version.binary }}
-      
+
       - name: 'whispers.mac: Mach-O 64-bit x86_64 executable'
         if: ${{ matrix.env-version.os == 'macos-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+          sha256sum --binary --tag --zero ${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.checksum.txt
           dist/${{ matrix.env-version.binary }}
 
       - name: 'whispers.exe: PE32+ executable (console) x86-64'
         if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: |
           pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+          sha256sum --binary --tag --zero ${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.checksum.txt
           dist/${{ matrix.env-version.binary }} --version
 
       - name: upload binary
@@ -72,34 +75,10 @@ jobs:
           file: dist/${{ matrix.env-version.binary }}
           tag: ${{ env.RELEASE_TAG }}
 
-  checksum:
-    needs: compile
-
-    strategy:
-      matrix:
-        binary:
-          - name: whispers.elf
-          - name: whispers.mac
-          - name: whispers.exe
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: checksum
-        run: |
-          checksum=$(\
-            curl -v \
-              --location \
-              --url "https://github.com/adeptex/whispers/releases/download/${{ env.RELEASE_TAG }}/${{ matrix.binary.name }}" \
-              | sha256sum \
-              | awk '{print $1}' \
-          )
-          echo "${{ matrix.binary.name }} - ${checksum}" | tee ${{ matrix.binary.name }}.checksum.txt
-
-      - name: upload checksum
+      - name: upload binary checksum
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          asset_name: ${{ matrix.binary.name }}.checksum.txt
-          file: ${{ matrix.binary.name }}.checksum.txt
+          asset_name: ${{ matrix.env-version.binary }}.checksum.txt
+          file: dist/${{ matrix.env-version.binary }}.checksum.txt
           tag: ${{ env.RELEASE_TAG }}
