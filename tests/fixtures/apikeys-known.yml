@@ -23,6 +23,8 @@ noncompliant:
   Github05: 'ghr_1B4a2e77838347a7E420ce178F2E7c6912E169246c34E1ccbF66C46812d16D5B1A9HARDcoded'
   Google01: 'AIzaOK9dad4f632f53d4edcd03bd6fdeeea0411HARDcoded'
   Grafana01: 'eyJrIjoiJNydrKUOcWeIwBDCc18expFWzOsKBumusHARDcoded'
+  Grafana02: 'glsa_18expFWzOsKBumusHARDcoded_e5c6b96'
+  Grafana03: 'glc_eyJrIjoiJNydrKUOcWeIwBDCc18expFWzOsKBumusHARDcoded'
   Heartland01: 'skapi_cert_JNydrKUOcWeIwBDCc18expFWzOsKBumusHARDcoded'
   Intercom01: 'dG9rOpHMYZQx6obX9N1kKfj5QqnNIfFdwZxIWDgT9P3T6ec4bLHARDcoded='
   Ionic01: 'ion_JNydrKUOcWeIwBDCc18expFWzOsKBumusHARDcoded'

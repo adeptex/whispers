@@ -24,7 +24,7 @@
       (0|1)/[\\d]{16}:|CLOJARS|CFPAT|dp\\.(pt|ct|scim|st)\\.|dt0c01\\.|\
       EAACEdEose0cBA|[\\w\\d]+:APA91b|FLWSECK-|fio-u-|\
       eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOi|\
-      gh[pousr]_|AIza|eyJrIjoi|skapi_cert_|dG9rO|ion_|lin_(api|oauth)_|\
+      gh[pousr]_|AIza|eyJrIjoi|glsa_|glc_|skapi_cert_|dG9rO|ion_|lin_(api|oauth)_|\
       sk\\.eyj1ijoi|NR(AA|RA|AK|II|IQ|SP)-|PMAK-|pypi-|SG\\.|\
       x(app|ox[spbora])-[0-9]+-|sq0(atp|csp|idp)|[sr]k_live_|whsec_|\
       \\d{9}:AA|[\\w\\d]+\\.atlasv1\\.\

@@ -1,6 +1,6 @@
 import shlex
 from pathlib import Path
-from typing import Iterator, Tuple
+from typing import Iterator, List, Tuple
 
 from whispers.core.utils import ESCAPED_CHARS, KeyValuePair, global_exception_handler, strip_string
 
@@ -17,13 +17,10 @@ class Shell:
             if not cmd:
                 continue
 
-            elif cmd[0].lower() == "curl":
-                yield from self.curl(cmd)
+            yield from self.variables(cmd, lineno)
 
-            for item in cmd:
-                if "=" in item and len(item.split("=")) == 2:
-                    key, value = item.split("=")
-                    yield KeyValuePair(key, value, line=lineno)
+            if cmd[0].lower() == "curl":
+                yield from self.curl(cmd, lineno)
 
     def read_commands(self, filepath: Path) -> Tuple[str, int]:
         ret = []
@@ -41,7 +38,24 @@ class Shell:
             yield " ".join(ret), lineno
             ret = []
 
-    def curl(self, cmd) -> Iterator[KeyValuePair]:
+    def variables(self, cmd: List[str], lineno: int) -> Iterator[KeyValuePair]:
+        """
+        Checks if Shell variables contain a hardcoded or a default value.
+        Examples:
+            password="defaultPassword"
+            password=${ENV_VAR-defaultPassword}
+        """
+        for item in cmd:
+            if "=" in item and len(item.split("=")) == 2:
+                key, value = item.split("=")  # Variable assignment
+
+                if value.startswith("${") and value.endswith("}"):
+                    if "-" in value:
+                        value = value.split("-")[1].strip("}")  # Default value
+
+                yield KeyValuePair(key, value, line=lineno)
+
+    def curl(self, cmd: List[str], lineno: int) -> Iterator[KeyValuePair]:
         key = "password"
         indicators_combined = ["-u", "--user", "-U", "--proxy-user", "-E", "--cert"]
         indicators_single = ["--tlspassword", "--proxy-tlspassword"]
@@ -62,4 +76,4 @@ class Shell:
                 if ":" not in credentials:
                     continue  # Password not specified
 
-                yield KeyValuePair(key, credentials.split(":")[1], [key])
+                yield KeyValuePair(key, credentials.split(":")[1], keypath=[key], line=lineno)
