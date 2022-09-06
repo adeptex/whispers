@@ -54,14 +54,14 @@ jobs:
         run: python3 -m build
 
       - name: compile
-        if: matrix.env-version.os == "windows-latest"
+        if: matrix.env-version.os == 'windows-latest'
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name whispers.exe whispers/main.py
           dist/whispers.exe --help
           dist/whispers.exe --init
 
       - name: compile
-        if: matrix.env-version.os != "windows-latest"
+        if: matrix.env-version.os != 'windows-latest'
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name whispers.bin whispers/main.py
           dist/whispers.bin --help
