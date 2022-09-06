@@ -1,4 +1,4 @@
-name: compile
+name: release-binary
 
 on:
   workflow_dispatch:

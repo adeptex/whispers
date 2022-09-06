@@ -1,4 +1,4 @@
-name: publish
+name: release-pypi
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
       - released
 
 jobs:
-  publish:
+  package:
     strategy:
       matrix:
         env-version:

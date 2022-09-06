@@ -1,4 +1,4 @@
-name: build
+name: commit
 
 on:
   workflow_dispatch:
@@ -52,3 +52,9 @@ jobs:
 
       - name: package
         run: python3 -m build
+
+      - name: compile
+        run: |
+          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name whispers.exe whispers/main.py
+          dist/whispers.exe --help
+          dist/whispers.exe --init
