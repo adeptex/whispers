@@ -1,84 +1,84 @@
-name: release-binary
+# name: release-binary
 
-on:
-  workflow_dispatch:
+# on:
+#   workflow_dispatch:
 
-  release:
-    branches:
-      - master
-    types:
-      - released
+#   release:
+#     branches:
+#       - master
+#     types:
+#       - released
 
-env:
-  RELEASE_TAG: ${{ github.ref }}
+# env:
+#   RELEASE_TAG: ${{ github.ref }}
 
-jobs:
-  compile:
-    strategy:
-      matrix:
-        env-version:
-          - os: ubuntu-latest
-            python: 3.9
-            binary: whispers.elf
-          - os: macos-latest
-            python: 3.9
-            binary: whispers.mac
-          - os: windows-latest
-            python: 3.9
-            binary: whispers.exe
+# jobs:
+#   compile:
+#     strategy:
+#       matrix:
+#         env-version:
+#           - os: ubuntu-latest
+#             python: 3.9
+#             binary: whispers.elf
+#           - os: macos-latest
+#             python: 3.9
+#             binary: whispers.mac
+#           - os: windows-latest
+#             python: 3.9
+#             binary: whispers.exe
 
-    runs-on: ${{ matrix.env-version.os }}
+#     runs-on: ${{ matrix.env-version.os }}
 
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
+#     steps:
+#       - name: checkout
+#         uses: actions/checkout@v2
 
-      - name: setup python${{ matrix.env-version.python }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.env-version.python }}
+#       - name: setup python${{ matrix.env-version.python }}
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: ${{ matrix.env-version.python }}
 
-      - name: setup pip
-        run: |
-          python -m pip install --upgrade pip
-          pip3 install pyinstaller
+#       - name: setup pip
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip3 install pyinstaller
 
-      - name: install
-        run: make install
+#       - name: install
+#         run: make install
 
-      - name: 'whispers.elf: ELF 64-bit LSB executable, x86-64'
-        if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
-        run: |
-          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
-          sha256sum --binary dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.sha256.txt
-          dist/${{ matrix.env-version.binary }}
+#       - name: 'whispers.elf: ELF 64-bit LSB executable, x86-64'
+#         if: ${{ matrix.env-version.os == 'ubuntu-latest' }}
+#         run: |
+#           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+#           sha256sum --binary dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.sha256.txt
+#           dist/${{ matrix.env-version.binary }}
 
-      - name: 'whispers.mac: Mach-O 64-bit x86_64 executable'
-        if: ${{ matrix.env-version.os == 'macos-latest' }}
-        run: |
-          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
-          shasum --binary --algorithm 256 dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.sha256.txt
-          dist/${{ matrix.env-version.binary }}
+#       - name: 'whispers.mac: Mach-O 64-bit x86_64 executable'
+#         if: ${{ matrix.env-version.os == 'macos-latest' }}
+#         run: |
+#           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+#           shasum --binary --algorithm 256 dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.sha256.txt
+#           dist/${{ matrix.env-version.binary }}
 
-      - name: 'whispers.exe: PE32+ executable (console) x86-64'
-        if: ${{ matrix.env-version.os == 'windows-latest' }}
-        run: |
-          pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
-          certUtil -hashfile dist/${{ matrix.env-version.binary }} SHA256 > dist/${{ matrix.env-version.binary }}.sha256.txt
-          dist/${{ matrix.env-version.binary }} --version
+#       - name: 'whispers.exe: PE32+ executable (console) x86-64'
+#         if: ${{ matrix.env-version.os == 'windows-latest' }}
+#         run: |
+#           pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+#           certUtil -hashfile dist/${{ matrix.env-version.binary }} SHA256 > dist/${{ matrix.env-version.binary }}.sha256.txt
+#           dist/${{ matrix.env-version.binary }} --version
 
-      - name: upload binary
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          asset_name: ${{ matrix.env-version.binary }}
-          file: dist/${{ matrix.env-version.binary }}
-          tag: ${{ env.RELEASE_TAG }}
+#       - name: upload binary
+#         uses: svenstaro/upload-release-action@v2
+#         with:
+#           repo_token: ${{ secrets.GITHUB_TOKEN }}
+#           asset_name: ${{ matrix.env-version.binary }}
+#           file: dist/${{ matrix.env-version.binary }}
+#           tag: ${{ env.RELEASE_TAG }}
 
-      - name: upload binary checksum
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          asset_name: ${{ matrix.env-version.binary }}.sha256.txt
-          file: dist/${{ matrix.env-version.binary }}.sha256.txt
-          tag: ${{ env.RELEASE_TAG }}
+#       - name: upload binary checksum
+#         uses: svenstaro/upload-release-action@v2
+#         with:
+#           repo_token: ${{ secrets.GITHUB_TOKEN }}
+#           asset_name: ${{ matrix.env-version.binary }}.sha256.txt
+#           file: dist/${{ matrix.env-version.binary }}.sha256.txt
+#           tag: ${{ env.RELEASE_TAG }}
