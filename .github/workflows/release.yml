@@ -104,7 +104,7 @@ jobs:
         run: |
           pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
           certUtil -hashfile dist/${{ matrix.env-version.binary }} SHA256 > dist/${{ matrix.env-version.binary }}.sha256.txt
-          dist/${{ matrix.env-version.binary }} --version
+          dist/${{ matrix.env-version.binary }}
 
       - name: upload binary
         uses: svenstaro/upload-release-action@v2
@@ -113,6 +113,7 @@ jobs:
           asset_name: ${{ matrix.env-version.binary }}
           file: dist/${{ matrix.env-version.binary }}
           tag: ${{ env.RELEASE_TAG }}
+          overwrite: true
 
       - name: upload binary checksum
         uses: svenstaro/upload-release-action@v2
@@ -121,3 +122,4 @@ jobs:
           asset_name: ${{ matrix.env-version.binary }}.sha256.txt
           file: dist/${{ matrix.env-version.binary }}.sha256.txt
           tag: ${{ env.RELEASE_TAG }}
+          overwrite: true
