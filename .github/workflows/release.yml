@@ -1,4 +1,4 @@
-name: release-binary
+name: release
 
 on:
   workflow_dispatch:
@@ -14,7 +14,7 @@ env:
   PYTHONUTF8: 1
 
 jobs:
-  package:
+  pypi:
     strategy:
       matrix:
         env-version:
@@ -52,7 +52,7 @@ jobs:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
-  compile:
+  binary:
     strategy:
       matrix:
         env-version:
