@@ -102,7 +102,7 @@ jobs:
       - name: 'whispers.exe: PE32+ executable (console) x86-64'
         if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: |
-          pyinstaller --clean --noconfirm --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
+          pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
           certUtil -hashfile dist/${{ matrix.env-version.binary }} SHA256 > dist/${{ matrix.env-version.binary }}.sha256.txt
           dist/${{ matrix.env-version.binary }}
 
