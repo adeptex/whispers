@@ -55,6 +55,8 @@ jobs:
 
       - name: compile .exe
         if: matrix.env-version.os == 'windows-latest'
+        env:
+          PYTHONUTF8: 1
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name whispers.exe whispers/main.py
           dist/whispers.exe --help
@@ -62,6 +64,8 @@ jobs:
 
       - name: compile .bin
         if: matrix.env-version.os != 'windows-latest'
+        env:
+          PYTHONUTF8: 1
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name whispers.bin whispers/main.py
           dist/whispers.bin --help
