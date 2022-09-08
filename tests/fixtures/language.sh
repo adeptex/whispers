@@ -20,7 +20,7 @@ wget --user=admin --password= https://localhost
 mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"
 
 # Noncompliant
-API_TOKEN=${PLACEHOLDER-YXNkZmZmZmZm_HARDcoded}
+API_TOKEN=${PLACEHOLDER:-YXNkZmZmZmZm_HARDcoded}
 export DANGER_GITHUB_API_TOKEN=YXNkZmZmZmZm_HARDcoded
 export DANGER_GITHUB_API_TOKEN="YXNkZmZmZmZm_HARDcoded"
 # export COMMENTED_API_TOKEN="YXNkZmZmZmZm_HARDcoded"

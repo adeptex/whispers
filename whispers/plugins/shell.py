@@ -43,7 +43,7 @@ class Shell:
         Checks if Shell variables contain a hardcoded or a default value.
         Examples:
             password="defaultPassword"
-            password=${ENV_VAR-defaultPassword}
+            password=${ENV_VAR:-defaultPassword}
         """
         for item in cmd:
             if "=" in item and len(item.split("=")) == 2:
@@ -51,7 +51,7 @@ class Shell:
 
                 if value.startswith("${") and value.endswith("}"):
                     if "-" in value:
-                        value = value.split("-")[1].strip("}")  # Default value
+                        value = value.split(":-")[-1].strip("}")  # Default value
 
                 yield KeyValuePair(key, value, line=lineno)
 
