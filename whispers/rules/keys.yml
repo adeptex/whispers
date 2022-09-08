@@ -4,7 +4,7 @@
   message: API key
   severity: MAJOR
   key:
-    regex: "^(?!.*\\s)[\\w\\d\\.\\-_]+(key|token)$"
+    regex: "^(?!.*\\s)[\\w\\d\\$\\.\\-_]+(key|token)$"
     ignorecase: True
   value:
     regex: "^(?!.*[\\s])[\\S]{12,}$"

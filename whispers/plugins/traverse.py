@@ -1,4 +1,4 @@
-from typing import Iterator
+from typing import Iterator, Optional
 
 from whispers.models.pair import KeyValuePair
 from whispers.plugins.common import Common
@@ -8,7 +8,7 @@ class StructuredDocument:
     def __init__(self):
         self.keypath = []
 
-    def traverse(self, code, key=None):
+    def traverse(self, code, key=None) -> Optional[Iterator[KeyValuePair]]:
         """Recursively traverse YAML/JSON document"""
         if isinstance(code, dict):
             yield from self.cloudformation(code)

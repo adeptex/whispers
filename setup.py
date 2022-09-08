@@ -4,7 +4,16 @@ from pathlib import Path
 from sys import version_info
 
 
-install_requires = ["luhn", "lxml", "pyyaml", "astroid", "jproperties", "jellyfish", "beautifulsoup4"]
+install_requires = [
+    "astroid",
+    "beautifulsoup4",
+    "crossplane",
+    "jellyfish",
+    "jproperties",
+    "luhn",
+    "lxml",
+    "pyyaml",
+]
 
 # Python 3.6 requirements
 if version_info < (3, 7):

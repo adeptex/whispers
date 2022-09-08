@@ -3,8 +3,12 @@ from itertools import chain
 from pathlib import Path
 from typing import Iterator, Optional
 
+from crossplane import parse as nginx_parse
+
 from whispers.core.utils import strip_string
 from whispers.models.pair import KeyValuePair
+from whispers.plugins.common import Common
+from whispers.plugins.traverse import StructuredDocument
 from whispers.plugins.xml import Xml
 
 
@@ -14,6 +18,9 @@ class Config:
             yield from Xml().pairs(filepath)
 
         else:
+            # Attempt to parse as Nginx config
+            yield from self.parse_as_nginx(filepath)
+
             try:
                 # Attempt to parse as Windows INI
                 yield from self.parse_as_ini(filepath)
@@ -24,6 +31,7 @@ class Config:
 
     @staticmethod
     def parse_as_ini(filepath: Path) -> Optional[KeyValuePair]:
+        """Parse file as Windows .ini"""
         parser = ConfigParser()
         parser.read(filepath.as_posix())
         sections = map(lambda section: section.items(), parser.values())
@@ -35,6 +43,7 @@ class Config:
 
     @staticmethod
     def parse_as_text(filepath: Path) -> Optional[KeyValuePair]:
+        """Parse as plain text"""
         for lineno, line in enumerate(filepath.open(), 1):
             line = line.strip()
             if "=" not in line:
@@ -46,3 +55,24 @@ class Config:
 
             if value:
                 yield KeyValuePair(key, value, line=lineno)
+
+    @staticmethod
+    def parse_as_nginx(filepath: Path) -> Optional[Iterator[KeyValuePair]]:
+        """Parse file as nginx.conf"""
+        nginx_conf = nginx_parse(filepath, strict=False, single=True)
+        if nginx_conf.get("status") != "ok":
+            return  # skip failed (ie: not nginx.conf format)
+
+        pairs = StructuredDocument().traverse(nginx_conf)
+        args = filter(lambda pair: pair.key == "args", pairs)
+
+        while True:
+            try:
+                key = next(args).value
+                value = next(args).value
+                keypath = [key, value]
+                yield KeyValuePair(key, value, keypath, filepath.as_posix())
+                yield from Common(keypath).parse_uri(value)
+
+            except Exception:
+                return
