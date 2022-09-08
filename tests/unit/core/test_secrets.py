@@ -98,6 +98,7 @@ def test_detect_secrets_by_key(src, expected):
         ("language.py", "CRITICAL", 11),
         ("language.py2", DEFAULT_SEVERITY, 0),
         ("language.sh", "CRITICAL,MAJOR", 15),
+        ("nginx.conf", DEFAULT_SEVERITY, 4),
         ("passwords.json", "CRITICAL", 5),
         ("passwords.xml", "CRITICAL", 5),
         ("passwords.yml", "CRITICAL", 5),
