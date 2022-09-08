@@ -1,7 +1,7 @@
 # Whispers <img src="whispers.png" width="40px" alt="" style=""> 
 
 [![](https://img.shields.io/pypi/v/whispers.svg)](https://pypi.python.org/pypi/whispers/)
-[![](https://github.com/adeptex/whispers/actions/workflows/commit.yml/badge.svg?branch=master)](https://github.com/adeptex/whispers/actions/workflows/commit.yml)
+[![](https://github.com/adeptex/whispers/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/adeptex/whispers/actions/workflows/build.yml)
 [![](https://github.com/adeptex/whispers/blob/master/coverage.svg)](https://github.com/adeptex/whispers/blob/master/coverage.svg)
 [![](https://img.shields.io/pypi/dm/whispers)](https://snyk.io/advisor/python/whispers)
 ![](https://img.shields.io/badge/python-3.6+-blue)
