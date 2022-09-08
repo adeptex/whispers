@@ -1,4 +1,4 @@
-name: commit
+name: build
 
 on:
   workflow_dispatch:
@@ -13,9 +13,10 @@ on:
 
 env:
   PYTHONUTF8: 1
+  PYTHONIOENCODING: UTF-8
 
 jobs:
-  build:
+  commit:
     strategy:
       matrix:
         env-version: 

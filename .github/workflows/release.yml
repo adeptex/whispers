@@ -12,6 +12,7 @@ on:
 env:
   RELEASE_TAG: ${{ github.ref }}
   PYTHONUTF8: 1
+  PYTHONIOENCODING: UTF-8
 
 jobs:
   pypi:
