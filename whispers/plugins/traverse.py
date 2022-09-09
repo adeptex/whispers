@@ -2,6 +2,7 @@ from typing import Iterator, Optional
 
 from whispers.models.pair import KeyValuePair
 from whispers.plugins.common import Common
+from whispers.plugins.shell import Shell
 
 
 class StructuredDocument:
@@ -34,11 +35,7 @@ class StructuredDocument:
                 yield from self.traverse(item, key=key)
 
         elif isinstance(code, str):
-            if "=" in code:
-                item = code.split("=")
-                if len(item) == 2:
-                    yield KeyValuePair(item[0], item[1], list(self.keypath))
-
+            yield from Shell().variables([code])
             yield from Common(self.keypath).pairs(code)
 
     def cloudformation(self, code: dict) -> Iterator[KeyValuePair]:

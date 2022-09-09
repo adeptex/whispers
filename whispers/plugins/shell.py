@@ -38,22 +38,26 @@ class Shell:
             yield " ".join(ret), lineno
             ret = []
 
-    def variables(self, cmd: List[str], lineno: int) -> Iterator[KeyValuePair]:
+    def variables(self, cmd: List[str], lineno: int = 0) -> Iterator[KeyValuePair]:
         """
         Checks if Shell variables contain a hardcoded or a default value.
         Examples:
             password="defaultPassword"
-            password=${ENV_VAR-defaultPassword}
+            password=${ENV_VAR:-defaultPassword}
         """
-        for item in cmd:
-            if "=" in item and len(item.split("=")) == 2:
-                key, value = item.split("=")  # Variable assignment
+        for value in cmd:
+            key = ""
 
-                if value.startswith("${") and value.endswith("}"):
-                    if "-" in value:
-                        value = value.split("-")[1].strip("}")  # Default value
+            if "=" in value and len(value.split("=")) == 2:
+                key, value = value.split("=")  # Variable assignment
 
-                yield KeyValuePair(key, value, line=lineno)
+            if ":-" in value and value.startswith("${") and value.endswith("}"):
+                key, value = value[2:-1].split(":-")  # Default value
+
+            if not (key or value):
+                continue
+
+            yield KeyValuePair(key, value, line=lineno)
 
     def curl(self, cmd: List[str], lineno: int) -> Iterator[KeyValuePair]:
         key = "password"
