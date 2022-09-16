@@ -94,6 +94,7 @@ def test_similar_strings(str1, str2, expected):
         ("apikeys.yml", "apikey", "YXNkZmZmZmZm_HARDcoded", 11),
         ("apikeys.yml", "GITHUBKEY", "YXNkZmZmZmZm_HARDcoded", 19),
         ("pip.conf", "username", "hardcoded1", 7),
+        ("java.properties", "sonar.jdbc.password", "hardcoded02", 10),
     ],
 )
 def test_find_line_number_single(src, key, value, expected):
@@ -102,7 +103,12 @@ def test_find_line_number_single(src, key, value, expected):
 
 
 @pytest.mark.parametrize(
-    ("src", "linenumbers"), [("hardcoded.yml", [12, 14, 15, 16, 19]), ("privatekeys.yml", [5, 7, 11, 12, 13, 14])],
+    ("src", "linenumbers"),
+    [
+        ("hardcoded.yml", [12, 14, 15, 16, 19]),
+        ("privatekeys.yml", [5, 7, 11, 12, 13, 14]),
+        ("java.properties", [9, 10, 11]),
+    ],
 )
 def test_find_line_number_all(src, linenumbers):
     args = parse_args([fixture_path(src)])
