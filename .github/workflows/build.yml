@@ -20,8 +20,8 @@ jobs:
     strategy:
       matrix:
         env-version: 
-          - os: "ubuntu-latest"
-            python: 3.6.15
+          - os: "ubuntu-2004"
+            python: 3.6
           - os: "ubuntu-latest"
             python: 3.11.1
           - os: "windows-latest"
