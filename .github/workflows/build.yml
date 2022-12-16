@@ -21,13 +21,13 @@ jobs:
       matrix:
         env-version: 
           - os: "ubuntu-latest"
-            python: 3.6
+            python: 3.6.15
           - os: "ubuntu-latest"
-            python: 3.9
+            python: 3.11.1
           - os: "windows-latest"
-            python: 3.9
+            python: 3.11.1
           - os: "macos-latest"
-            python: 3.9
+            python: 3.11.1
 
     runs-on: ${{ matrix.env-version.os }}
 
