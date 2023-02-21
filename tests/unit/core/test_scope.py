@@ -8,7 +8,11 @@ from whispers.core.scope import load_scope
 
 @pytest.mark.parametrize(
     ("src", "expected"),
-    [(fixture_path("404"), 0), (fixture_path(".npmrc"), 1), (fixture_path(), len(list(FIXTURE_PATH.rglob("**/*")))),],
+    [
+        (fixture_path("404"), 0),
+        (fixture_path(".npmrc"), 1),
+        (fixture_path(), len(list(FIXTURE_PATH.rglob("**/*")))),
+    ],
 )
 def test_load_scope(src, expected):
     args = parse_args([src])
@@ -18,7 +22,8 @@ def test_load_scope(src, expected):
 
 
 @pytest.mark.parametrize(
-    ("config_file", "expected"), [("include_files.yml", [FIXTURE_PATH.joinpath(".pypirc")]), ("exclude_files.yml", [])],
+    ("config_file", "expected"),
+    [("include_files.yml", [FIXTURE_PATH.joinpath(".pypirc")]), ("exclude_files.yml", [])],
 )
 def test_load_scope_config(config_file, expected):
     args = parse_args(["-c", config_path(config_file), fixture_path()])

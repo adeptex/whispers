@@ -5,7 +5,10 @@ install-dev:
 	pip3 install -e ".[dev]"
 
 flake8-lint:
-	flake8 whispers/ tests/
+	flake8 \
+		--ignore E231,E501,W503 \
+		--exclude .eggs,.venv,venv,dev,tests/fixtures/*,whispers/__version__.py \
+		whispers/ tests/
 
 isort-lint:
 	isort --check-only whispers/ tests/

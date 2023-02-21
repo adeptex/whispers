@@ -10,7 +10,11 @@ from whispers.plugins.python import Python
 
 
 @pytest.mark.parametrize(
-    ("code", "exception"), [("a=1", does_not_raise()), ("invalid:", pytest.raises(StopIteration)),],
+    ("code", "exception"),
+    [
+        ("a=1", does_not_raise()),
+        ("invalid:", pytest.raises(StopIteration)),
+    ],
 )
 def test_pairs(code, exception):
     stamp = datetime.now().timestamp()

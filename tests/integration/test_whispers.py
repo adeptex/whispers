@@ -19,7 +19,12 @@ def test_whispers(args, expected):
 
 
 @pytest.mark.parametrize(
-    ("args", "expected"), [("-f '*json'", ("json",)), ("-f '*yml'", ("yml",)), ("-f '*json,*yml'", ("json", "yml")),],
+    ("args", "expected"),
+    [
+        ("-f '*json'", ("json",)),
+        ("-f '*yml'", ("yml",)),
+        ("-f '*json,*yml'", ("json", "yml")),
+    ],
 )
 def test_glob_filter(args, expected):
     args = f"{args} {fixture_path()}"
@@ -29,7 +34,11 @@ def test_glob_filter(args, expected):
 
 @pytest.mark.parametrize(
     ("args", "expected"),
-    [("-F '.*json'", ("json",)), ("-F '.*yml'", ("yml",)), ("-F '.*(json|yml)'", ("json", "yml")),],
+    [
+        ("-F '.*json'", ("json",)),
+        ("-F '.*yml'", ("yml",)),
+        ("-F '.*(json|yml)'", ("json", "yml")),
+    ],
 )
 def test_regex_filter(args, expected):
     args = f"{args} {fixture_path()}"

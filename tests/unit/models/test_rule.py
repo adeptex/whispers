@@ -69,14 +69,26 @@ def test_rule_structure(rule, expected):
             assert result.value is None
 
 
-@pytest.mark.parametrize(("idx", "expected"), [("id", does_not_raise()), ("missing", pytest.raises(IndexError)),])
+@pytest.mark.parametrize(
+    ("idx", "expected"),
+    [
+        ("id", does_not_raise()),
+        ("missing", pytest.raises(IndexError)),
+    ],
+)
 def test_rule_get_required(idx, expected, rule_fixture):
     rule = {"id": "test"}
     with expected:
         rule_fixture._get_required(idx, rule)
 
 
-@pytest.mark.parametrize(("idx", "expected"), [("key", Specification(minlen=1)), ("value", None),])
+@pytest.mark.parametrize(
+    ("idx", "expected"),
+    [
+        ("key", Specification(minlen=1)),
+        ("value", None),
+    ],
+)
 def test_rule_get_spec(idx, expected, rule_fixture):
     rule_fixture.key = {"minlen": 1}
     rule_fixture.value = {}
@@ -84,7 +96,13 @@ def test_rule_get_spec(idx, expected, rule_fixture):
     assert rule_fixture._get_spec(idx, rule_fixture.__dict__) == expected
 
 
-@pytest.mark.parametrize(("idx", "expected"), [("key", True), ("value", False),])
+@pytest.mark.parametrize(
+    ("idx", "expected"),
+    [
+        ("key", True),
+        ("value", False),
+    ],
+)
 def test_rule_matches_spec(idx, expected, rule_fixture):
     pair = KeyValuePair("sonar.jdbc.password", "a")
     rule_fixture.__dict__[idx] = Specification(**{"regex": r"sonar\.jdbc\.password"})
@@ -133,12 +151,26 @@ def test_rule_matches_regex(idx, regex, ignorecase, expected, rule_fixture):
 )
 def test_rule_matches_param(value, isBase64, isAscii, isUri, isLuhn, expected, rule_fixture):
     pair = KeyValuePair("key", value)
-    rule_fixture.value = Specification(**{"isBase64": isBase64, "isAscii": isAscii, "isUri": isUri, "isLuhn": isLuhn,})
+    rule_fixture.value = Specification(
+        **{
+            "isBase64": isBase64,
+            "isAscii": isAscii,
+            "isUri": isUri,
+            "isLuhn": isLuhn,
+        }
+    )
 
     assert rule_fixture.matches(pair) is expected
 
 
-@pytest.mark.parametrize(("minlen", "expected"), [(0, True), (4, True), (5, False),])
+@pytest.mark.parametrize(
+    ("minlen", "expected"),
+    [
+        (0, True),
+        (4, True),
+        (5, False),
+    ],
+)
 def test_rule_matches_minlen(minlen, expected, rule_fixture):
     pair = KeyValuePair("key", "test")
     rule_fixture.value = Specification(**{"minlen": minlen})
@@ -148,7 +180,12 @@ def test_rule_matches_minlen(minlen, expected, rule_fixture):
 
 @pytest.mark.parametrize(
     ("key", "value", "similar", "expected"),
-    [("key", "KEY", 1, False), ("key", "KEY", 0, False), ("key", "value", 0.3, True), ("key", "value", 0, False),],
+    [
+        ("key", "KEY", 1, False),
+        ("key", "KEY", 0, False),
+        ("key", "value", 0.3, True),
+        ("key", "value", 0, False),
+    ],
 )
 def test_rule_matches_similar(key, value, similar, expected, rule_fixture):
     pair = KeyValuePair(key, value)

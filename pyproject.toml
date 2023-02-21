@@ -1,3 +1,22 @@
+[project]
+name = "whispers"
+version = "2.1.6"
+authors = [
+  { name="Artëm Tsvetkov", email="adeptex@users.noreply.github.com" },
+]
+description = "Identify secrets in static structured text"
+readme = "README.md"
+requires-python = ">=3.6"
+
+[project.scripts]
+whispers = "whispers.main:main"
+
+[project.urls]
+repository = "https://github.com/adeptex/whispers"
+homepage = "https://github.com/adeptex/whispers#whispers-"
+documentation = "https://github.com/adeptex/whispers/blob/master/README.md"
+changelog = "https://github.com/adeptex/whispers/blob/master/RELEASE_NOTES.md"
+
 [tool.black]
 line-length = 120
 exclude = '''
@@ -9,3 +28,35 @@ exclude = '''
   | tests/fixtures/invalid.py
 )
 '''
+
+[tool.flake8]
+max-line-length = 120
+exclude = [".eggs", ".venv", "venv", "dev", "tests/fixtures/*", "whispers/__version__.py"]
+ignore = ["E231", "W503", "E501"]
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+combine_as_imports = true
+line_length = 120
+skip = [".eggs", ".venv", "venv", "dev", "tests/fixtures/*"]
+float_to_top = true
+
+[tool.pep8]
+max-line-length = 120
+
+[tool.autopep8]
+max-line-length = 120
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = [
+  "pragma: no cover",
+  "if __name__ == .__main__.:"
+]
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
