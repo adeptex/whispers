@@ -4,10 +4,11 @@ install:
 install-dev:
 	pip3 install -e ".[dev]"
 
+# flake8 does not support pyproject.toml
 flake8-lint:
 	flake8 \
 		--ignore E231,E501,W503 \
-		--exclude .eggs,.venv,venv,dev,tests/fixtures/*,whispers/__version__.py \
+		--exclude '.eggs','.venv','venv','dev','tests/fixtures/*','whispers/__version__.py' \
 		whispers/ tests/
 
 isort-lint:
