@@ -4,21 +4,6 @@ from pathlib import Path
 from sys import version_info
 
 
-install_requires = [
-    "astroid",
-    "beautifulsoup4",
-    "crossplane",
-    "jellyfish",
-    "jproperties",
-    "luhn",
-    "lxml",
-    "pyyaml",
-]
-
-# Python 3.6 requirements
-if version_info < (3, 7):
-    install_requires += ["dataclasses"]
-
 dev_requires = [
     "autoflake~=1.4",
     "autopep8~=1.5",
@@ -43,11 +28,12 @@ def get_readme():
 setup(
     long_description=get_readme(),
     long_description_content_type="text/markdown",
-    packages=find_packages(exclude=("tests", "tests.*")),
+    packages=find_packages(
+        include=["whispers*"],
+        exclude=["tests", "tests.*"],
+    ),
     include_package_data=True,
     platforms="any",
-    install_requires=install_requires,
-    setup_requires=["pytest-runner"],
     tests_require=dev_requires,
     extras_require={"dev": dev_requires},
 )

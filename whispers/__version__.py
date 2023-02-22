@@ -1,6 +1,6 @@
-import pkg_resources
+VERSION = (2, 1, 6)
 
-__version__ = pkg_resources.get_distribution("whispers").version
+__version__ = ".".join(map(str, VERSION))
 
 __whispers__ = """
  █     █░ ██░ ██  ██▓  ██████  ██▓███  ▓█████  ██▀███    ██████

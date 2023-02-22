@@ -1,12 +1,34 @@
+[build-system]
+requires = ["setuptools", "wheel", "pytest-runner"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "whispers"
-version = "2.1.6"
+dynamic = ["version"]
 authors = [
   { name="Artëm Tsvetkov", email="adeptex@users.noreply.github.com" },
 ]
 description = "Identify secrets in static structured text"
 readme = "README.md"
 requires-python = ">=3.6"
+dependencies = [
+  "astroid==2.14.2",
+  "beautifulsoup4==4.11.2",
+  "jellyfish==0.9.0",
+  "jproperties==2.1.1",
+  "lazy-object-proxy==1.9.0",
+  "luhn==0.2.0",
+  "lxml==4.9.2",
+  "pyyaml==6.0",
+  "six==1.16.0",
+  "soupsieve==2.4",
+  "typing-extensions==4.5.0",
+  "wrapt==1.14.1",
+  "dataclasses; python_version<'3.7'"
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "whispers.__version__.__version__"}
 
 [project.scripts]
 whispers = "whispers.main:main"
