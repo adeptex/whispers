@@ -1,5 +1,5 @@
 install:
-	pip3 install -e .
+	pip3 install .
 
 install-dev: install
 	pip3 install -e ".[dev]"
