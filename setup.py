@@ -29,7 +29,6 @@ setup(
     long_description=get_readme(),
     long_description_content_type="text/markdown",
     packages=find_packages(
-        include=["whispers*"],
         exclude=["tests", "tests.*"],
     ),
     include_package_data=True,

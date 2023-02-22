@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel", "pytest-runner"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -81,4 +81,4 @@ exclude_lines = [
 
 [tool.coverage.run]
 branch = true
-source = ["app"]
+source = ["whispers"]
