@@ -1,7 +1,7 @@
 install:
 	pip3 install -e .
 
-install-dev:
+install-dev: install
 	pip3 install -e ".[dev]"
 
 # flake8 does not support pyproject.toml
