@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -12,18 +12,19 @@ description = "Identify secrets in static structured text"
 readme = "README.md"
 requires-python = ">=3.6"
 dependencies = [
-  "astroid==2.14.2",
-  "beautifulsoup4==4.11.2",
-  "jellyfish==0.9.0",
-  "jproperties==2.1.1",
-  "lazy-object-proxy==1.9.0",
-  "luhn==0.2.0",
-  "lxml==4.9.2",
-  "pyyaml==6.0",
-  "six==1.16.0",
-  "soupsieve==2.4",
-  "typing-extensions==4.5.0",
-  "wrapt==1.14.1",
+  "astroid~=2.14",
+  "beautifulsoup4~=4.11",
+  "crossplane~=0.5",
+  "jellyfish~=0.9",
+  "jproperties~=2.1",
+  "lazy-object-proxy~=1.9",
+  "luhn~=0.2",
+  "lxml~=4.9",
+  "pyyaml~=6.0",
+  "six~=1.16",
+  "soupsieve~=2.4",
+  "typing-extensions~=4.5",
+  "wrapt~=1.14",
   "dataclasses; python_version<'3.7'"
 ]
 
