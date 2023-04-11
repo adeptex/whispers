@@ -22,7 +22,7 @@ if version_info < (3, 7):
 dev_requires = [
     "autoflake~=1.7",
     "autopep8~=1.7",
-    "black~=23.3",
+    "black~=22.8",
     "build~=0.8",
     "coverage~=4.5",
     "coverage-badge~=1.0",
