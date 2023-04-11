@@ -74,7 +74,12 @@ def test_strip_string(rawstr):
 
 
 @pytest.mark.parametrize(
-    ("rawstr", "expected"), [(None, ""), (1, "1"), ("~|wHisP3R5~|", "__whisp3r5__"),],
+    ("rawstr", "expected"),
+    [
+        (None, ""),
+        (1, "1"),
+        ("~|wHisP3R5~|", "__whisp3r5__"),
+    ],
 )
 def test_simple_string(rawstr, expected):
     assert simple_string(rawstr) == expected
@@ -82,7 +87,11 @@ def test_simple_string(rawstr, expected):
 
 @pytest.mark.parametrize(
     ("str1", "str2", "expected"),
-    [("whispers", "WHISPERS!!!", True), ("W h  I S P e r s", "WHISPERS!!!", True), ("AAAAAAA", "WHISPERS!!!", False),],
+    [
+        ("whispers", "WHISPERS!!!", True),
+        ("W h  I S P e r s", "WHISPERS!!!", True),
+        ("AAAAAAA", "WHISPERS!!!", False),
+    ],
 )
 def test_similar_strings(str1, str2, expected):
     assert bool(similar_strings(str1, str2)) is expected

@@ -17,7 +17,11 @@ def argument_parser() -> ArgumentParser:
     args_parser.add_argument("-o", "--output", default=None, help="output filename")
     args_parser.add_argument("-l", "--log", default=None, help="log filename")
     args_parser.add_argument(
-        "--debug", action="store_const", const=logging.DEBUG, default=logging.WARNING, help="show debug log",
+        "--debug",
+        action="store_const",
+        const=logging.DEBUG,
+        default=logging.WARNING,
+        help="show debug log",
     )
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
     args_parser.add_argument("-f", "--files", default=None, help="csv of globs for including files")

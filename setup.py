@@ -20,15 +20,15 @@ if version_info < (3, 7):
     install_requires += ["dataclasses"]
 
 dev_requires = [
-    "autoflake~=1.4",
-    "autopep8~=1.5",
-    "black~=19.10b0",
+    "autoflake~=2.0",
+    "autopep8~=2.0",
+    "black~=23.3",
     "build~=0.8",
     "coverage~=4.5",
     "coverage-badge~=1.0",
-    "flake8~=3.9",
+    "flake8~=6.0",
     "isort~=5.9",
-    "pytest~=6.2",
+    "pytest~=7.3",
     "pytest-mock~=3.6",
     "pip-tools~=6.2",
     "wheel~=0.37",

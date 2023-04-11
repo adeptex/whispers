@@ -33,7 +33,10 @@ def test_appconfig_severity(config, expected):
 
 @pytest.mark.parametrize(
     ("config", "expected"),
-    [({"include": {}, "exclude": {"rules": ["rule-id"]}}, ["rule-id"]), ({"include": {}, "exclude": {}}, []),],
+    [
+        ({"include": {}, "exclude": {"rules": ["rule-id"]}}, ["rule-id"]),
+        ({"include": {}, "exclude": {}}, []),
+    ],
 )
 def test_appconfig_rules(config, expected):
     config = AppConfig(config)
