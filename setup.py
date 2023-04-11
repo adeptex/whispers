@@ -20,7 +20,7 @@ if version_info < (3, 7):
     install_requires += ["dataclasses"]
 
 dev_requires = [
-    "autoflake~=1.7",
+    "autoflake~=1.4",
     "autopep8~=1.7",
     "black~=22.8",
     "build~=0.8",
