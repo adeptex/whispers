@@ -2,7 +2,8 @@ import re
 
 import pytest
 
-from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop
+from whispers.core.constants import DEFAULT_SEVERITY
+from whispers.core.utils import default_rules, list_rule_prop
 from whispers.models.appconfig import AppConfig
 
 

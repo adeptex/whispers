@@ -3,10 +3,11 @@ import pytest
 from tests.unit.conftest import FIXTURE_PATH, config_path, fixture_path
 from whispers.core.args import parse_args
 from whispers.core.config import load_config
+from whispers.core.constants import DEFAULT_SEVERITY
 from whispers.core.pairs import make_pairs
 from whispers.core.rules import load_rules
 from whispers.core.secrets import detect_secrets, filter_rule
-from whispers.core.utils import DEFAULT_SEVERITY, is_base64
+from whispers.core.utils import is_base64
 from whispers.models.pair import KeyValuePair
 from whispers.models.rule import Specification
 
