@@ -14,7 +14,7 @@
   group: misc
   description: Potential credit card number
   message: Credit Card
-  severity: MINOR
+  severity: LOW
   value:
     regex: ^[0-9]{14,}$
     ignorecase: False
@@ -25,7 +25,7 @@
   group: misc
   description: Variable names refering to secrets
   message: Secret
-  severity: MINOR
+  severity: LOW
   key:
     regex: .*(se[ck]ret[sz]?)[\-_\.]?(key|hash)?$
     ignorecase: True
@@ -38,7 +38,7 @@
   group: misc
   description: Various known webhook formats
   message: Webhook
-  severity: MINOR
+  severity: LOW
   value:
     regex: "https?://(\
       hooks\\.slack\\.com/services/[\\w\\d]{9}/[\\w\\d]{9}/[\\w\\d]+|\

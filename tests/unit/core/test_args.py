@@ -75,7 +75,7 @@ def test_show_info():
     with patch("sys.stdout", mock_print):
         show_info()
         result = mock_print.getvalue()
-        expected = ["keys", "apikey-known", "CRITICAL"]
+        expected = ["keys", "apikey-known", "HIGH"]
         for item in expected:
             assert item in result
 

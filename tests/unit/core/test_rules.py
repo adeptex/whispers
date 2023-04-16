@@ -33,7 +33,7 @@ def test_load_rules_groups():
 
 
 def test_load_rules_severity():
-    args = parse_args(["-s", "BLOCKER,CRITICAL,MINOR", "-S", "MINOR", "tests/fixtures"])
+    args = parse_args(["-s", "CRITICAL,HIGH,LOW", "-S", "LOW", "tests/fixtures"])
     config = load_config(args)
     rules = load_rules(args, config)
     assert len(rules) == 11

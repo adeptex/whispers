@@ -6,7 +6,7 @@
 - id: dup2
   description: This rule is duplicated
   message: Rule ID already exists
-  severity: CRITICAL
+  severity: HIGH
 
 - id: dup3
   description: This rule is ok
@@ -16,4 +16,4 @@
 - id: dup4
   description: This rule is duplicated
   message: Rule ID already exists
-  severity: CRITICAL
+  severity: HIGH
