@@ -13,7 +13,7 @@ luhn==0.2.0
 lxml==4.9.2
 pyyaml==6.0
 six==1.16.0
-soupsieve==2.4
+soupsieve==2.4.1
 typing-extensions==4.5.0
 wrapt==1.15.0
 
