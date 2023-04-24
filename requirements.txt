@@ -4,7 +4,7 @@
 #
 #    make freeze-upgrade
 #
-astroid==2.15.3
+astroid==2.15.4
 beautifulsoup4==4.12.2
 jellyfish==0.11.2
 jproperties==2.1.1
