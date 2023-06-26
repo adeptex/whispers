@@ -6,7 +6,7 @@
 #
 astroid==2.15.5
 beautifulsoup4==4.12.2
-jellyfish==0.11.2
+jellyfish==1.0.0
 jproperties==2.1.1
 lazy-object-proxy==1.9.0
 luhn==0.2.0
