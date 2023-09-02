@@ -15,5 +15,10 @@
     <environment>GITHUBKEY=YXNkZmZmZmZm_HARDcoded</environment>
     <license_key>YXNkZmZmZmZm_HARDcoded</license_key>
     <NUMERIC_APIKEY>1925483168813050783076</NUMERIC_APIKEY>
+    <bearer>
+      <key>token</key>
+      <value>hArdcoded5</value>
+    </bearer>
+    <bearer key="token" value="hardcoded-bearer-v41u3" />
   </noncompliant>
 </tests>

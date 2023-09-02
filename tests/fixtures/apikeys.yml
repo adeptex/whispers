@@ -19,3 +19,6 @@ noncompliant:
     - GITHUBKEY=YXNkZmZmZmZm_HARDcoded
     - license_key: YXNkZmZmZmZm_HARDcoded
   NUMERIC_APIKEY: 1925483168813050783076
+  bearer:
+    - key: token
+      value: hardcoded-bearer-v41u3

@@ -32,6 +32,20 @@
     ignorecase: False
 
 
+- id: apikey-maybe
+  group: keys
+  description: Values potentially resembling tokens
+  message: Potential secret
+  severity: LOW
+  key:
+    regex: "(token$|bearer)"
+    ignorecase: True
+  value:
+    minlen: 16
+    ignorecase: True
+    isUri: False
+
+
 - id: aws-account
   group: keys
   description: Values formatted like AWS Account ID
