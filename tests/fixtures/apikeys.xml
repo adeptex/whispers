@@ -17,8 +17,8 @@
     <NUMERIC_APIKEY>1925483168813050783076</NUMERIC_APIKEY>
     <bearer>
       <key>token</key>
-      <value>hArdcoded5</value>
+      <value>hardcoded-bearer-v41u3-01</value>
     </bearer>
-    <bearer key="token" value="hardcoded-bearer-v41u3" />
+    <bearer key="token" value="hardcoded-bearer-v41u3-02" />
   </noncompliant>
 </tests>
