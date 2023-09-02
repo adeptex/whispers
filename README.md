@@ -326,4 +326,4 @@ make test
 
 ## License
 
-[GNU General Public License v3.0](https://github.com/adeptex/whispers/blob/master/LICENSE)
+[BSD 3-Clause License](https://github.com/adeptex/whispers/blob/master/LICENSE)
