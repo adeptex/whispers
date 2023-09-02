@@ -22,7 +22,7 @@ def test_appconfig():
 @pytest.mark.parametrize(
     ("config", "expected"),
     [
-        ({"include": {"severity": ["BLOCKER"]}, "exclude": {}}, ["BLOCKER"]),
+        ({"include": {"severity": ["CRITICAL"]}, "exclude": {}}, ["CRITICAL"]),
         ({"include": {}, "exclude": {}}, DEFAULT_SEVERITY),
     ],
 )
