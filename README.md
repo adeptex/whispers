@@ -180,7 +180,7 @@ include:
   files:
     - "**/*.npmrc"
   severity:
-    - 
+    - HIGH
 
 exclude:
   values: 
@@ -199,7 +199,7 @@ include:
     - uri
     - id: starks  # inline rule
       message: Whispers from the North
-      severity: 
+      severity: CRITICAL
       value:
         regex: (Aria|Ned) Stark
         ignorecase: True
