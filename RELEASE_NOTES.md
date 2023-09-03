@@ -16,7 +16,7 @@ Version 2.1 was released under [GNU General Public License v3.0](https://github.
 
 Version 2.2 is released under [BSD 3-Clause License](https://github.com/adeptex/whispers/blob/master/LICENSE), which is a permissive license that `prohibits others from using the name of the copyright holder or its contributors to promote derived products without written consent.` 
 
-This change removes source code discloure requirement 🕵️
+This change removes source code disclosure requirement 🕵️
 
 
 ## ❌ Breaking changes ❌
