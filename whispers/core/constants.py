@@ -3,7 +3,7 @@ from pathlib import Path
 
 DEFAULT_PATH = Path(__file__).parents[1]
 
-DEFAULT_SEVERITY = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"]
+DEFAULT_SEVERITY = ["Critical", "High", "Medium", "Low", "Info"]
 
 ESCAPED_CHARS = str.maketrans({"'": r"\'", '"': r"\""})
 

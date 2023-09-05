@@ -2,7 +2,7 @@
   group: infra
   description: Hardcoded .dockercfg auth
   message: Dockercfg auth
-  severity: HIGH
+  severity: High
   key:
     regex: ^dockercfg auth$
     ignorecase: False
@@ -16,7 +16,7 @@
   group: infra
   description: Hardcoded .htpasswd credentials
   message: .htpasswd Hash
-  severity: MEDIUM
+  severity: Medium
   key:
     regex: ^htpasswd hash$
     ignorecase: False
@@ -28,7 +28,7 @@
   group: infra
   description: Hardcoded .npmrc authToken
   message: .npmrc authToken
-  severity: HIGH
+  severity: High
   key:
     regex: ^npm authToken$
     ignorecase: False
@@ -40,7 +40,7 @@
   group: infra
   description: Hardcoded pip.conf password
   message: pip.conf Password
-  severity: HIGH
+  severity: High
   key:
     regex: ^pip password$
     ignorecase: False
@@ -52,7 +52,7 @@
   group: infra
   description: Hardcoded .pypirc Password
   message: .pypirc Password
-  severity: HIGH
+  severity: High
   key:
     regex: ^pypi password$
     ignorecase: False

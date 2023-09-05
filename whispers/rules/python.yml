@@ -2,7 +2,7 @@
   group: python
   description: Insecure Cross-Origin Resource Sharing (CORS) configuration
   message: Insecure CORS
-  severity: LOW
+  severity: Low
   key:
     regex: ^function$
     ignorecase: False
@@ -15,7 +15,7 @@
   group: python
   description: System command execution functions
   message: System command
-  severity: LOW
+  severity: Low
   key:
     regex: ^function$
     ignorecase: False

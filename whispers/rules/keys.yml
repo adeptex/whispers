@@ -2,7 +2,7 @@
   group: keys
   description: Values resembling known API key formats
   message: API key
-  severity: MEDIUM
+  severity: Medium
   key:
     regex: "^(?!.*\\s)[\\w\\d\\$\\.\\-_]+(key|token)$"
     ignorecase: True
@@ -17,7 +17,7 @@
   group: keys
   description: Known API key formats
   message: API key
-  severity: HIGH
+  severity: High
   value:
     regex: "^(?!.*\\s)(\
       akab|aio|amzn\\.mws\\.|\
@@ -36,7 +36,7 @@
   group: keys
   description: Values potentially resembling tokens
   message: Potential secret
-  severity: LOW
+  severity: Low
   key:
     regex: "(token$|bearer)"
     ignorecase: True
@@ -50,7 +50,7 @@
   group: keys
   description: Values formatted like AWS Account ID
   message: AWS Account ID
-  severity: LOW
+  severity: Low
   key:
     regex: ^aws_account$
     ignorecase: False
@@ -63,7 +63,7 @@
   group: keys
   description: Values formatted like AWS Access Key ID
   message: AWS Access Key ID
-  severity: CRITICAL
+  severity: Critical
   value:
     regex: ^(?=.*[A-Z])(?=.*[0-9])A(AGA|CCA|GPA|IDA|IPA|KIA|NPA|NVA|PKA|ROA|SCA|SIA|3T[A-Z0-9])[A-Z0-9]{16}$
     ignorecase: False
@@ -73,7 +73,7 @@
   group: keys
   description: Values formatted like AWS Secret Access Key
   message: AWS Secret Access Key
-  severity: CRITICAL
+  severity: Critical
   key:
     regex: ^(?!.*name)
     ignorecase: True
@@ -86,7 +86,7 @@
   group: keys
   description: Values formatted like AWS Session Token
   message: AWS Session Token
-  severity: CRITICAL
+  severity: Critical
   key:
       regex: .*aws.*
       ignorecase: True
@@ -101,7 +101,7 @@
   group: keys
   description: Text resembling a private key signature
   message: Private key
-  severity: HIGH
+  severity: High
   value:
     regex: "[\\-]{5}BEGIN (RSA|DSA|EC|OPENSSH|PRIVATE|ENCRYPTED|PGP)? ?(PRIVATE)? KEY( BLOCK)?[\\-]{5}"
     ignorecase: False

@@ -27,11 +27,11 @@ Severity level names have been adapted to a more common format:
 
 | Version 2.1 (before) | Version 2.2 (now) |
 |---|---|
-| BLOCKER | CRITICAL |
-| CRITICAL | HIGH |
-| MAJOR | MEDIUM |
-| MINOR | LOW |
-| INFO | INFO |
+| BLOCKER | Critical |
+| CRITICAL | High |
+| MAJOR | Medium |
+| MINOR | Low |
+| INFO | Info |
 
 Please update your custom rules and CLI args to reflect these changes.
 

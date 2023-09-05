@@ -78,9 +78,9 @@ whispers dir/or/file | jq '.[].value'
 
 # Custom usage:
 #   - only check 'keys' rule group
-#   - with CRITICAL or HIGH severity
+#   - with Critical or High severity
 #   - everywhere in target/dir except for .log & .raw files (regex)
-whispers -g keys -s CRITICAL,HIGH -F '.*\.(log|raw)' target/dir
+whispers -g keys -s Critical,High -F '.*\.(log|raw)' target/dir
 ```
 
 ```bash
@@ -111,11 +111,11 @@ whispers --xgroups files dir/or/file
 ```
 
 ```bash
-# Include only CRITICAL & HIGH severity
-whispers --severity CRITICAL,HIGH dir/or/file
+# Include only Critical & High severity
+whispers --severity Critical,High dir/or/file
 
-# Exclude all LOW severity
-whispers --xseverity LOW dir/or/file
+# Exclude all Low severity
+whispers --xseverity Low dir/or/file
 ```
 
 ```bash
@@ -132,7 +132,7 @@ whispers --xfiles '.*\.(log|cfg)' dir/or/file
 ```py
 import whispers
 
-args = "-c whispers/config.yml -R file-known -S INFO tests/fixtures"
+args = "-c whispers/config.yml -R file-known -S Info tests/fixtures"
 
 for secret in whispers.secrets(args):
   print(f"[{secret.file}:{secret.line}] {secret.key} = {secret.value}")
@@ -180,7 +180,7 @@ include:
   files:
     - "**/*.npmrc"
   severity:
-    - HIGH
+    - High
 
 exclude:
   values: 
@@ -199,16 +199,16 @@ include:
     - uri
     - id: starks  # inline rule
       message: Whispers from the North
-      severity: CRITICAL
+      severity: Critical
       value:
         regex: (Aria|Ned) Stark
         ignorecase: True
   groups:
     - keys
   severity:
-    - CRITICAL
-    - HIGH
-    - MEDIUM
+    - Critical
+    - High
+    - Medium
 
 exclude:
   files:
@@ -238,27 +238,27 @@ Simple filtering based on rules and severity can also be done with CLI arguments
 
 | Group                | Rule ID              | Severity        |
 |----------------------|----------------------|-----------------|
-| files                | file-known           | LOW             |
-| infra                | dockercfg            | HIGH            |
-| infra                | htpasswd             | MEDIUM          |
-| infra                | npmrc                | HIGH            |
-| infra                | pip                  | HIGH            |
-| infra                | pypirc               | HIGH            |
-| keys                 | apikey               | MEDIUM          |
-| keys                 | apikey-known         | HIGH            |
-| keys                 | apikey-maybe         | LOW             |
-| keys                 | aws-id               | CRITICAL        |
-| keys                 | aws-secret           | CRITICAL        |
-| keys                 | aws-token            | CRITICAL        |
-| keys                 | privatekey           | HIGH            |
-| misc                 | comment              | INFO            |
-| misc                 | creditcard           | LOW             |
-| misc                 | secret               | LOW             |
-| misc                 | webhook              | LOW             |
-| passwords            | password             | HIGH            |
-| passwords            | uri                  | HIGH            |
-| python               | cors                 | LOW             |
-| python               | system               | LOW             |
+| files                | file-known           | Low             |
+| infra                | dockercfg            | High            |
+| infra                | htpasswd             | Medium          |
+| infra                | npmrc                | High            |
+| infra                | pip                  | High            |
+| infra                | pypirc               | High            |
+| keys                 | apikey               | Medium          |
+| keys                 | apikey-known         | High            |
+| keys                 | apikey-maybe         | Low             |
+| keys                 | aws-id               | Critical        |
+| keys                 | aws-secret           | Critical        |
+| keys                 | aws-token            | Critical        |
+| keys                 | privatekey           | High            |
+| misc                 | comment              | Info            |
+| misc                 | creditcard           | Low             |
+| misc                 | secret               | Low             |
+| misc                 | webhook              | Low             |
+| passwords            | password             | High            |
+| passwords            | uri                  | High            |
+| python               | cors                 | Low             |
+| python               | system               | Low             |
 
 
 ### Custom rules
@@ -276,7 +276,7 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
   group: rule-group           # rule group name
   description: Values formatted like AWS Session Token
   message: AWS Session Token  # report will show this message
-  severity: CRITICAL           # one of CRITICAL, HIGH, MEDIUM, LOW, INFO
+  severity: Critical           # one of Critical, High, Medium, Low, Info
 
   key:                        # specify key format
     regex: (aws.?session.?token)?
