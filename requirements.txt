@@ -14,7 +14,7 @@ lxml==4.9.3
 pyyaml==6.0
 six==1.16.0
 soupsieve==2.4.1
-typing-extensions==4.7.1
+typing-extensions==4.8.0
 wrapt==1.15.0
 
 # The following packages are considered to be unsafe in a requirements file:
