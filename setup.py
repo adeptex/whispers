@@ -5,7 +5,7 @@ from sys import version_info
 
 
 install_requires = [
-    "astroid",
+    "astroid<=2.15.6",
     "beautifulsoup4",
     "crossplane",
     "jellyfish",
