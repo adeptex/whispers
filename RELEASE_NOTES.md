@@ -23,19 +23,27 @@ This change removes source code disclosure requirement 🕵️
 
 ### ❌ Severity levels ❌
 
-Severity level names have been adapted to a more common format:
+Severity level names have been adapted to a more common format. For example, `BLOCKER` is replaced by `Critical` and so on. The full list is as follows:
 
 | Version 2.1 (before) | Version 2.2 (now) |
 |---|---|
-| BLOCKER | Critical |
-| CRITICAL | High |
-| MAJOR | Medium |
-| MINOR | Low |
-| INFO | Info |
+| `BLOCKER` | `Critical` |
+| `CRITICAL` | `High` |
+| `MAJOR` | `Medium` |
+| `MINOR` | `Low` |
+| `INFO` | `Info` |
 
-Please update your custom rules and CLI args to reflect these changes.
+⚠️ **Please update your custom rules and CLI args to reflect these changes** ⚠️
 
-See [README](https://github.com/adeptex/whispers#readme) for details.
+Instead of 
+
+> `whispers -s BLOCKER dir/or/file`
+
+use
+
+> `whispers -s Critical dir/or/file`
+
+See [README](https://github.com/adeptex/whispers#readme) for details and examples.
 
 
 # Changelog
