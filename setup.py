@@ -5,7 +5,7 @@ from sys import version_info
 
 
 install_requires = [
-    "astroid<=2.15.6",
+    "astroid",
     "beautifulsoup4",
     "crossplane",
     "jellyfish",
@@ -14,10 +14,6 @@ install_requires = [
     "lxml",
     "pyyaml",
 ]
-
-# Python 3.6 requirements
-if version_info < (3, 7):
-    install_requires += ["dataclasses"]
 
 dev_requires = [
     "autoflake~=1.4",
