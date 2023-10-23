@@ -58,6 +58,6 @@ setup(
     extras_require={"dev": dev_requires},
     entry_points={"console_scripts": ["whispers=whispers.main:main"]},
     classifiers=[
-        "License :: BSD-3-Clause",
+        "License :: OSI Approved :: BSD License",
     ],
 )
