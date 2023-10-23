@@ -19,7 +19,8 @@ pyyaml==6.0.1
 six==1.16.0
 soupsieve==2.4.1; python_version > '3.6'
 soupsieve==2.3.2.post1; python_version <= '3.6'
-typing-extensions==4.7.1
+typing-extensions==4.7.1; python_version > '3.6'
+typing-extensions==4.1.1; python_version <= '3.6'
 wrapt==1.15.0
 
 # The following packages are considered to be unsafe in a requirements file:
