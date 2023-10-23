@@ -15,10 +15,6 @@ install_requires = [
     "pyyaml",
 ]
 
-# Python 3.6 requirements
-if version_info < (3, 7):
-    install_requires += ["dataclasses"]
-
 dev_requires = [
     "autoflake~=1.4",
     "autopep8~=1.7",
@@ -61,4 +57,7 @@ setup(
     tests_require=dev_requires,
     extras_require={"dev": dev_requires},
     entry_points={"console_scripts": ["whispers=whispers.main:main"]},
+    classifiers=[
+        "License :: BSD-3-Clause",
+    ],
 )

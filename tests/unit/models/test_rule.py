@@ -13,7 +13,7 @@ def test_rule():
     rule = Rule(yml)
     assert rule.id == "valid"
     assert rule.message == "Valid"
-    assert rule.severity == "INFO"
+    assert rule.severity == "Info"
     assert rule.key is None
     assert rule.value.regex == re.compile(r"^test$")
     assert rule.value.ignorecase is False

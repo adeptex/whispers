@@ -9,18 +9,8 @@ from jellyfish import jaro_winkler_similarity
 from luhn import verify as luhn_verify
 from yaml import safe_load, safe_load_all
 
+from whispers.core.constants import DEFAULT_PATH, REGEX_ENVVAR, REGEX_IAC, REGEX_PATH, REGEX_URI
 from whispers.models.pair import KeyValuePair
-
-DEFAULT_PATH = Path(__file__).parents[1]
-DEFAULT_SEVERITY = ["BLOCKER", "CRITICAL", "MAJOR", "MINOR", "INFO"]
-
-ESCAPED_CHARS = str.maketrans({"'": r"\'", '"': r"\""})
-
-REGEX_URI = re.compile(r"[:\w\d]+://.+", flags=re.IGNORECASE)
-REGEX_PATH = re.compile(r"^((([A-Z]|file|root):)?(\.+)?[/\\]+).*$", flags=re.IGNORECASE)
-REGEX_IAC = re.compile(r"\![A-Za-z]+ .+", flags=re.IGNORECASE)
-REGEX_PRIVKEY_FILE = re.compile(r"(rsa|dsa|ed25519|ecdsa|pem|crt|cer|ca-bundle|p7b|p7c|p7s|ppk|pkcs12|pfx|p12)")
-REGEX_ENVVAR = re.compile(r"^\$\$?\{?[A-Z0-9_]+\}?$")
 
 
 def global_exception_handler(file: Union[str, Path], data: str):

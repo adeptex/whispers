@@ -2,7 +2,8 @@ import logging
 from argparse import Namespace
 from pathlib import Path
 
-from whispers.core.utils import DEFAULT_PATH, load_yaml_from_file
+from whispers.core.constants import DEFAULT_PATH
+from whispers.core.utils import load_yaml_from_file
 from whispers.models.appconfig import AppConfig
 
 

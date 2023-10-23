@@ -1,8 +1,8 @@
 install:
-	pip3 install -e .
+	pip3 install -r requirements.txt -e .
 
 install-dev:
-	pip3 install -e ".[dev]"
+	pip3 install -r requirements.txt -e ".[dev]"
 
 flake8-lint:
 	flake8 whispers/ tests/

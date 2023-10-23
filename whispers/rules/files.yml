@@ -2,7 +2,7 @@
   group: files
   description: Known files with potentially sensitive information
   message: Known file
-  severity: MINOR
+  severity: Low
   key:
     regex: ^file$
     ignorecase: False

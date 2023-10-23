@@ -2,7 +2,7 @@
   group: test
   description: Valid rule config
   message: Valid
-  severity: INFO
+  severity: Info
   value:
     regex: ^test$
     ignorecase: False

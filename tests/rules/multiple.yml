@@ -1,19 +1,19 @@
 - id: dup1
   description: This rule is ok
   message: Valid
-  severity: INFO
+  severity: Info
 
 - id: dup2
   description: This rule is duplicated
   message: Rule ID already exists
-  severity: CRITICAL
+  severity: High
 
 - id: dup3
   description: This rule is ok
   message: Valid
-  severity: INFO
+  severity: Info
 
 - id: dup4
   description: This rule is duplicated
   message: Rule ID already exists
-  severity: CRITICAL
+  severity: High

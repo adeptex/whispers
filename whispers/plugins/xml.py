@@ -32,6 +32,10 @@ class Xml:
 
                     self.keypath.pop()
 
+                # Format: <elem key=a value=b>
+                if "key" in element.attrib and "value" in element.attrib:
+                    yield KeyValuePair(element.attrib["key"], element.attrib["value"], list(self.keypath))
+
                 # Format: <key>value</key>
                 if not element.text:
                     continue

@@ -1,36 +1,49 @@
-# Whispers 2.1.0 release notes
+# Whispers 2.2.0 release notes
 
-## :x: Breaking changes :x:
-
-### :x: Arguments :x:
-
-Several arguments have been modified and/or adapted to improve usability.
-
-- Human readable output is shown in logs (2.1), `-H` and `--human` (2.0) are removed.
-
-- Version can be shown with `--version` (2.1), `-v` (2.0) is removed.
-
-- Extended help can be shown with `--info` (2.1), `-i` (2.0) is removed.
-
-- Debug mode can be enabled with `--debug` (2.1), `-d` (2.0) is removed.
-
-- Logs can be redirected to a file with `--log log.txt` (2.1), constant `/tmp/whispers.log` (2.0) is removed.
-
-- Configuration template can be created with `--init` (2.1), `--print_config` (2.0) is removed.
+* License change
+* Compatibility improvements
+    * Standardize severity levels
+    * Minor code refactor
+* Detection improvements
+    * Add XML cases
+    * Add `apikey-maybe` rule
 
 
-### :x: Logging :x:
 
-**Version 2.0:** Opt-in logging for tracing execution flow, useful only for debugging. Results printed to `stdout` using `print()` as a JSON dict, one result per line. Enabling logging required adding the `--log` argument.
+## 💫 Licensing changes (again) 💫
 
-**Version 2.1:** Logging is used to alert identified secrets during execution with `WARNING` level. Results are written to `stdout` as a JSON list at the end. This improves results parseability as a JSON list, while maintaining live results display that was previously achieved by printing secrets as JSON one per line.
+Version 2.1 was released under [GNU General Public License v3.0](https://github.com/adeptex/whispers/blob/3f5282ea3855d658ea37ec96dfc693598c16d7a7/LICENSE), which is `intended to guarantee your freedom to share and change all versions of a program--to make sure it remains free software for all its users.` 
+
+Version 2.2 is released under [BSD 3-Clause License](https://github.com/adeptex/whispers/blob/master/LICENSE), which is a permissive license that `prohibits others from using the name of the copyright holder or its contributors to promote derived products without written consent.` 
+
+This change removes source code disclosure requirement 🕵️
 
 
-## :white_check_mark: New features :white_check_mark:
+## ❌ Breaking changes ❌
 
-### :white_check_mark: Results as JSON list :white_check_mark:
+### ❌ Severity levels ❌
 
-To improve integration and downstream processing, Whispers now outputs results as a JSON list of dictionaries with all detected secrets together (2.1), instead of one JSON dictionary per line (2.0). This list is directly loadable and parsable as JSON.
+Severity level names have been adapted to a more common format. For example, `BLOCKER` is replaced by `Critical` and so on. The full list is as follows:
+
+| Version 2.1 (before) | Version 2.2 (now) |
+|---|---|
+| `BLOCKER` | `Critical` |
+| `CRITICAL` | `High` |
+| `MAJOR` | `Medium` |
+| `MINOR` | `Low` |
+| `INFO` | `Info` |
+
+⚠️ **Please update your custom rules and CLI args to reflect these changes** ⚠️
+
+Instead of 
+
+> `whispers -s BLOCKER dir/or/file`
+
+use
+
+> `whispers -s Critical dir/or/file`
+
+See [README](https://github.com/adeptex/whispers#readme) for details and examples.
 
 
 # Changelog
@@ -39,3 +52,4 @@ To improve integration and downstream processing, Whispers now outputs results a
 |---|---|
 |2.0.0|https://github.com/adeptex/whispers/releases/tag/2.0.0|
 |2.1.0|https://github.com/adeptex/whispers/releases/tag/2.1.0|
+|2.2.0|https://github.com/adeptex/whispers/releases/tag/2.2.0|

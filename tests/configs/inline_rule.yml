@@ -16,7 +16,7 @@ include:
       group: test
       description: This rule is defined directly in the config file
       message: Inline Rule
-      severity: INFO
+      severity: Info
       key:
         regex: inline
         ignorecase: False

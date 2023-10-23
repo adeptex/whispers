@@ -2,7 +2,8 @@ import re
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Pattern
 
-from whispers.core.utils import DEFAULT_SEVERITY, default_rules, list_rule_prop, load_regex
+from whispers.core.constants import DEFAULT_SEVERITY
+from whispers.core.utils import default_rules, list_rule_prop, load_regex
 
 DEFAULT_RULES = default_rules()
 
