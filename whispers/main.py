@@ -14,6 +14,7 @@ from whispers.core.scope import load_scope
 from whispers.core.secrets import detect_secrets
 from whispers.models.pair import KeyValuePair
 
+environ["PYTHONUTF8"] = "1"
 environ["PYTHONIOENCODING"] = "UTF-8"
 
 
