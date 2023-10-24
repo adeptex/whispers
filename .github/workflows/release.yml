@@ -91,21 +91,21 @@ jobs:
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
           sha256sum --binary dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.sha256.txt
-          dist/${{ matrix.env-version.binary }}
+          dist/${{ matrix.env-version.binary }} --version
 
       - name: 'whispers.mac: Mach-O 64-bit x86_64 executable'
         if: ${{ matrix.env-version.os == 'macos-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
           shasum --binary --algorithm 256 dist/${{ matrix.env-version.binary }} > dist/${{ matrix.env-version.binary }}.sha256.txt
-          dist/${{ matrix.env-version.binary }}
+          dist/${{ matrix.env-version.binary }} --version
 
       - name: 'whispers.exe: PE32+ executable (console) x86-64'
         if: ${{ matrix.env-version.os == 'windows-latest' }}
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name ${{ matrix.env-version.binary }} whispers/main.py
           certUtil -hashfile dist/${{ matrix.env-version.binary }} SHA256 > dist/${{ matrix.env-version.binary }}.sha256.txt
-          dist/${{ matrix.env-version.binary }}
+          dist/${{ matrix.env-version.binary }} --version
 
       - name: upload binary
         uses: svenstaro/upload-release-action@v2
