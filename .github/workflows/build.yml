@@ -13,9 +13,7 @@ on:
 
 env:
   PYTHONUTF8: 1
-  PYTHONIOENCODING: UTF8
-  PYTHONLEGACYWINDOWSSTDIO: ""
-  PYTHONLEGACYWINDOWSFSENCODING: ""
+  PYTHONIOENCODING: UTF-8
 
 jobs:
   commit:
@@ -62,6 +60,8 @@ jobs:
       - name: compile .exe
         if: matrix.env-version.os == 'windows-latest'
         run: |
+          set PYTHONUTF8=1
+          set PYTHONIOENCODING=UTF-8
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name whispers.exe whispers/main.py
           dist/whispers.exe --help
           dist/whispers.exe --init
