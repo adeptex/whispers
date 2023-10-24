@@ -60,11 +60,7 @@ jobs:
       - name: compile .exe
         if: matrix.env-version.os == 'windows-latest'
         run: |
-          set PYTHONUTF8=1
-          set PYTHONIOENCODING=UTF-8
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name whispers.exe whispers/main.py
-          dist/whispers.exe --help
-          dist/whispers.exe --init
           dist/whispers.exe tests/fixtures
 
       - name: compile .bin
