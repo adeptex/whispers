@@ -8,7 +8,7 @@ astroid==2.15.6; python_version > '3.6'
 astroid==2.11.7; python_version <= '3.6'
 beautifulsoup4==4.12.2
 dataclasses==0.8; python_version <= '3.6'
-jellyfish==1.0.1; python_version > '3.6'
+jellyfish==1.0.3; python_version > '3.6'
 jellyfish==0.10.0; python_version <= '3.6'
 jproperties==2.1.1
 lazy-object-proxy==1.9.0; python_version > '3.6'
