@@ -3,7 +3,7 @@ from os import remove
 
 import astroid
 import pytest
-from astroid.node_classes import AssignName, Const, JoinedStr, Name
+from astroid.nodes import AssignName, Const, JoinedStr, Name
 
 from tests.unit.conftest import FIXTURE_PATH, does_not_raise
 from whispers.plugins.python import Python
