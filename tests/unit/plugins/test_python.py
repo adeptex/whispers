@@ -36,11 +36,11 @@ def test_pairs(code, exception):
         (None, False),
         (True, False),
         (1, False),
-        ("a", False),
-        (Name(), True),
-        (AssignName(), True),
-        (Const("a"), False),
-        (JoinedStr("a"), False),
+        ("test", False),
+        (Name("test", 1, 0, None), True),
+        (AssignName("test"), True),
+        (Const("test"), False),
+        (JoinedStr("test"), False),
     ],
 )
 def test_is_key(key, expected):
@@ -54,11 +54,11 @@ def test_is_key(key, expected):
         (None, False),
         (True, False),
         (1, False),
-        ("a", False),
-        (Name(), False),
-        (AssignName(), False),
-        (Const("a"), True),
-        (JoinedStr("a"), True),
+        ("test", False),
+        (Name("test"), False),
+        (AssignName("test"), False),
+        (Const("test"), True),
+        (JoinedStr("test"), True),
     ],
 )
 def test_is_value(value, expected):
