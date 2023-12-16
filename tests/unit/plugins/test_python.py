@@ -38,9 +38,9 @@ def test_pairs(code, exception):
         (1, False),
         ("test", False),
         (Name("test", 1, 0, None, end_lineno=0, end_col_offset=0), True),
-        (AssignName("test"), True),
-        (Const("test"), False),
-        (JoinedStr("test"), False),
+        (AssignName("test", 1, 0, None, end_lineno=0, end_col_offset=0), True),
+        (Const("test", 1, 0, None, end_lineno=0, end_col_offset=0), False),
+        (JoinedStr(1, 0, None), False),
     ],
 )
 def test_is_key(key, expected):
@@ -56,9 +56,9 @@ def test_is_key(key, expected):
         (1, False),
         ("test", False),
         (Name("test", 1, 0, None, end_lineno=0, end_col_offset=0), False),
-        (AssignName("test"), False),
-        (Const("test"), True),
-        (JoinedStr("test"), True),
+        (AssignName("test", 1, 0, None, end_lineno=0, end_col_offset=0), False),
+        (Const("test", 1, 0, None, end_lineno=0, end_col_offset=0), True),
+        (JoinedStr(1, 0, None), True),
     ],
 )
 def test_is_value(value, expected):
