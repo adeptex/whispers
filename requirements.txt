@@ -4,7 +4,7 @@
 #
 #    make freeze-upgrade
 #
-astroid==2.15.6; python_version > '3.6'
+astroid==3.0.2; python_version > '3.6'
 astroid==2.11.7; python_version <= '3.6'
 beautifulsoup4==4.12.2
 dataclasses==0.8; python_version <= '3.6'

@@ -3,7 +3,7 @@ from os import remove
 
 import astroid
 import pytest
-from astroid.node_classes import AssignName, Const, JoinedStr, Name
+from astroid.nodes import AssignName, Const, JoinedStr, Name
 
 from tests.unit.conftest import FIXTURE_PATH, does_not_raise
 from whispers.plugins.python import Python
@@ -36,11 +36,11 @@ def test_pairs(code, exception):
         (None, False),
         (True, False),
         (1, False),
-        ("a", False),
-        (Name(), True),
-        (AssignName(), True),
-        (Const("a"), False),
-        (JoinedStr("a"), False),
+        ("test", False),
+        (Name("test", 1, 0, None, end_lineno=0, end_col_offset=0), True),
+        (AssignName("test", 1, 0, None, end_lineno=0, end_col_offset=0), True),
+        (Const("test", 1, 0, None, end_lineno=0, end_col_offset=0), False),
+        (JoinedStr(1, 0, None), False),
     ],
 )
 def test_is_key(key, expected):
@@ -54,11 +54,11 @@ def test_is_key(key, expected):
         (None, False),
         (True, False),
         (1, False),
-        ("a", False),
-        (Name(), False),
-        (AssignName(), False),
-        (Const("a"), True),
-        (JoinedStr("a"), True),
+        ("test", False),
+        (Name("test", 1, 0, None, end_lineno=0, end_col_offset=0), False),
+        (AssignName("test", 1, 0, None, end_lineno=0, end_col_offset=0), False),
+        (Const("test", 1, 0, None, end_lineno=0, end_col_offset=0), True),
+        (JoinedStr(1, 0, None), True),
     ],
 )
 def test_is_value(value, expected):
