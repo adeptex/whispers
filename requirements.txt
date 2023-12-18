@@ -11,7 +11,7 @@ dataclasses==0.8; python_version <= '3.6'
 jellyfish==1.0.3; python_version > '3.6'
 jellyfish==0.10.0; python_version <= '3.6'
 jproperties==2.1.1
-lazy-object-proxy==1.9.0; python_version > '3.6'
+lazy-object-proxy==1.10.0; python_version > '3.6'
 lazy-object-proxy==1.7.1; python_version <= '3.6'
 luhn==0.2.0
 lxml==4.9.3
