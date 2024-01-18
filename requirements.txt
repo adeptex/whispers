@@ -6,7 +6,7 @@
 #
 astroid==3.0.2; python_version > '3.6'
 astroid==2.11.7; python_version <= '3.6'
-beautifulsoup4==4.12.2
+beautifulsoup4==4.12.3
 dataclasses==0.8; python_version <= '3.6'
 jellyfish==1.0.3; python_version > '3.6'
 jellyfish==0.10.0; python_version <= '3.6'
