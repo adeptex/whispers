@@ -13,9 +13,9 @@ from whispers.core.constants import DEFAULT_PATH, REGEX_ENVVAR, REGEX_IAC, REGEX
 from whispers.models.pair import KeyValuePair
 
 
-def global_exception_handler(file: Union[str, Path], data: str):
+def global_exception_handler(file: Union[str, Path], data: str = ""):
     """Global Exception Handler"""
-    logging.exception(f"Failed parsing file '{str(file)}' with {data}")
+    logging.debug(f"Failed parsing file '{str(file)}'", exc_info=True)
 
 
 def load_regex(regex: str, flags: Optional[re.RegexFlag] = 0) -> Pattern:

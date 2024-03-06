@@ -18,6 +18,7 @@ class Specification:
     isAscii: Optional[bool] = None
     isUri: Optional[bool] = None
     isLuhn: Optional[bool] = None
+    isFile: Optional[bool] = False
 
     def __post_init__(self) -> None:
         """Compile regex with explicit ignorecase"""
@@ -86,7 +87,7 @@ class Rule:
 
     @staticmethod
     def _get_spec(idx: str, rule: Dict) -> Optional[Specification]:
-        """Get an optional rule specification"""
+        """Get an optional rule specification."""
         spec = rule.get(idx, False)
         if not spec:
             return None
@@ -104,6 +105,9 @@ class Rule:
             return False
 
         if is_similar(pair.key, pair.value, self.similar):
+            return False
+
+        if pair.key == "file" and not self.value.isFile:
             return False
 
         return True

@@ -31,3 +31,4 @@
       ventrilo(-|_)srv.ini|muttrc|trc|ovpn|dayone|tugboat|esmtprc|ftpconfig|\
       backup|back|bck|~1)$"
     ignorecase: True
+    isFile: True

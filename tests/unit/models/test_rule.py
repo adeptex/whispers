@@ -192,3 +192,17 @@ def test_rule_matches_similar(key, value, similar, expected, rule_fixture):
     rule_fixture.similar = similar
 
     assert rule_fixture.matches(pair) is expected
+
+
+@pytest.mark.parametrize(
+    ("isFile", "expected"),
+    [
+        (False, False),
+        (True, True),
+    ],
+)
+def test_rule_matches_isfile(isFile, expected, rule_fixture):
+    pair = KeyValuePair("file", "tests/fixtures/test.txt")
+    rule_fixture.value = Specification(regex=re.compile(".*test.*"), isFile=isFile)
+
+    assert rule_fixture.matches(pair) is expected

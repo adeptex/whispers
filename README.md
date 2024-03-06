@@ -163,7 +163,7 @@ Note: all keys and static values are always included, and then filtered out base
 * Everything else is a list of strings
 
 
-### Simple examples
+### Config examples
 
 Exclude all log files:
 
@@ -173,7 +173,7 @@ exclude:
     - .*\.log
 ```
 
-Only scan for  level findings in .npmrc files, excluding a known testing value:
+Only scan for *High* level findings in .npmrc files, excluding a known testing value:
 
 ```yaml
 include:
@@ -188,7 +188,10 @@ exclude:
 ```
 
 
-### General config format
+### Config format
+
+See [whispers/models/appconfig.py](https://github.com/adeptex/whispers/blob/master/whispers/models/appconfig.py) for available fields and their defaults.
+
 
 ```yaml
 include:
@@ -269,7 +272,9 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
 - Custom rules can be added to [whispers/rules](https://github.com/adeptex/whispers/blob/master/whispers/rules/) directory
 
 
-### General rule format
+### Rule format
+
+See [whispers/models/rule.py](https://github.com/adeptex/whispers/blob/master/whispers/models/rule.py) for available fields and their defaults.
 
 ```yaml
 - id: rule-id                 # unique rule name
@@ -289,6 +294,7 @@ Rules specify the actual things that should be pulled out from key-value pairs. 
     isBase64: True            # value is base64-encoded
     isAscii: False            # value is binary data when decoded
     isUri: False              # value is not formatted like a URI
+    isFile: False             # value doesn't match filenames
 
   similar: 0.35               # maximum allowed Jaro-Winkler similarity
                               # between key and value (1.0 being exactly the same)
@@ -320,7 +326,7 @@ class PluginName:
 git clone https://github.com/adeptex/whispers
 cd whispers
 make install-dev
-make test
+make format test
 ```
 
 
