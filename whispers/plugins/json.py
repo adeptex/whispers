@@ -1,7 +1,7 @@
 import json
 import re
 from pathlib import Path
-from typing import Iterator
+from typing import Dict, Iterator
 
 from whispers.core.utils import global_exception_handler
 from whispers.models.pair import KeyValuePair
@@ -11,7 +11,20 @@ from whispers.plugins.traverse import StructuredDocument
 class Json(StructuredDocument):
     def pairs(self, filepath: Path) -> Iterator[KeyValuePair]:
         """
-        Convert custom JSON to parsable JSON
+        Try to load as as. Otherwise, try to
+        """
+        try:
+            document = json.load(filepath.open())
+
+        except json.decoder.JSONDecodeError:
+            document = self.load_custom_json(filepath)
+
+        yield from self.traverse(document)
+
+    @staticmethod
+    def load_custom_json(filepath: Path) -> Dict:
+        """
+        Try converting custom JSON to a parsable format:
         - Remove lines that start with // comments
         - Strip // comments from the end the line
         """
@@ -22,9 +35,9 @@ class Json(StructuredDocument):
             line = re.sub(r" // ?.*$", "", line)
             document += line
 
-        # Load converted JSON
         try:
-            document = json.loads(document)
-            yield from self.traverse(document)
+            return json.loads(document)
+
         except Exception:
             global_exception_handler(filepath.as_posix(), document)
+            return {}
