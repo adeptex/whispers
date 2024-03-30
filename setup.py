@@ -18,7 +18,8 @@ install_requires = [
 dev_requires = [
     "autoflake~=1.4",
     "autopep8~=1.7",
-    "black~=24.3",
+    "black==22.8; python_version <= '3.6'",
+    "black~=24.3; python_version > '3.6'",
     "build~=0.8",
     "coverage~=4.5",
     "coverage-badge~=1.0",
