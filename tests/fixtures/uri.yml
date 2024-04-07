@@ -8,4 +8,5 @@ compliant:
 noncompliant:
   - "jdbc:mysql://localhost/authority?user=admin&userpass=hardcoded0"
   - "https://admin:hardcoded1@localhost:8000/admin"
-  - 'amqp://root:hardcoded2@localhost.local:5434/topic'
+  - "amqp://root:hardcoded2@localhost.local:5434/topic"
+  - "git+https://token:hardcoded3@github.com/org/repo.git"
