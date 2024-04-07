@@ -11,7 +11,7 @@ from whispers.plugins.traverse import StructuredDocument
 class Json(StructuredDocument):
     def pairs(self, filepath: Path) -> Iterator[KeyValuePair]:
         """
-        Try to load as as. Otherwise, try to
+        Try to load JSON as is. Otherwise, try as a custom format.
         """
         try:
             document = json.load(filepath.open())
