@@ -128,7 +128,7 @@ def test_detect_secrets_by_key(src, expected):
         ("uri.yml", "High", 4),
         ("webhooks.yml", "Low", 6),
         ("falsepositive/values.yml", DEFAULT_SEVERITY, 4),
-        ("falsepositive/deps.txt", DEFAULT_SEVERITY, 0),
+        ("falsepositive/plain.txt", DEFAULT_SEVERITY, 0),
         ("falsepositive/semver.json", DEFAULT_SEVERITY, 0),
     ],
 )
