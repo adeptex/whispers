@@ -22,10 +22,10 @@ class Plaintext:
     @staticmethod
     def parse_pk(text: str) -> Iterator[KeyValuePair]:
         """Check if text resembles a Private Key (PK), only for plaintext files"""
-        if not (text.startswith("-----") and text.endswith("-----")):
+        if len(text) < 15:
             return []
 
-        if len(text) < 15:
+        if not (text.startswith("-----BEGIN ") and text.endswith("-----")):
             return []
 
         yield KeyValuePair("private_key", text)

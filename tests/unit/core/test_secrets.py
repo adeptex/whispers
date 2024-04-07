@@ -81,7 +81,6 @@ def test_detect_secrets_by_key(src, expected):
         ("excluded.json", "Critical", 0),
         ("excluded.xml", "Critical", 0),
         ("excluded.yml", "Critical", 0),
-        ("falsepositive.yml", DEFAULT_SEVERITY, 4),
         ("Groups.xml", "High", 2),
         ("hardcoded.json", "High", 5),
         ("hardcoded.xml", "High", 5),
@@ -128,6 +127,9 @@ def test_detect_secrets_by_key(src, expected):
         ("sops.yml", DEFAULT_SEVERITY, 1),
         ("uri.yml", "High", 3),
         ("webhooks.yml", "Low", 6),
+        ("falsepositive/values.yml", DEFAULT_SEVERITY, 4),
+        ("falsepositive/deps.txt", DEFAULT_SEVERITY, 0),
+        ("falsepositive/semver.json", DEFAULT_SEVERITY, 0),
     ],
 )
 def test_detect_secrets_by_value(src, severity, expected):

@@ -3,7 +3,7 @@ from base64 import b64decode
 from dataclasses import dataclass, field
 from typing import Any, Dict, Optional, Pattern
 
-from whispers.core.utils import is_ascii, is_base64, is_base64_bytes, is_luhn, is_similar, is_uri
+from whispers.core.utils import is_ascii, is_base64, is_base64_bytes, is_luhn, is_semver, is_similar, is_uri
 from whispers.models.pair import KeyValuePair
 
 
@@ -50,6 +50,9 @@ class Specification:
             return False
 
         if self.isLuhn is not None and self.isLuhn is not is_luhn(target):
+            return False
+
+        if is_semver(target):
             return False
 
         return True

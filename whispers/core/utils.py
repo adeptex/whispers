@@ -9,7 +9,7 @@ from jellyfish import jaro_winkler_similarity
 from luhn import verify as luhn_verify
 from yaml import safe_load, safe_load_all
 
-from whispers.core.constants import DEFAULT_PATH, REGEX_ENVVAR, REGEX_IAC, REGEX_PATH, REGEX_URI
+from whispers.core.constants import DEFAULT_PATH, REGEX_ENVVAR, REGEX_IAC, REGEX_PATH, REGEX_SEMVER, REGEX_URI
 from whispers.models.pair import KeyValuePair
 
 
@@ -222,6 +222,14 @@ def is_luhn(data: str) -> bool:
         return False
 
     return luhn_verify(str(data))
+
+
+def is_semver(data: str) -> bool:
+    """Checks if given data resembles a SemVer-like format"""
+    if not is_ascii(data):
+        return False
+
+    return bool(REGEX_SEMVER.match(data))
 
 
 def is_similar(key: str, value: str, similarity: float) -> bool:

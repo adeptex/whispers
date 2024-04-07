@@ -16,6 +16,7 @@ from whispers.core.utils import (
     is_iac,
     is_luhn,
     is_path,
+    is_semver,
     is_static,
     is_uri,
     list_rule_prop,
@@ -302,6 +303,22 @@ def test_is_iac(data, expected):
 )
 def test_is_luhn(data, expected):
     assert is_luhn(data) == expected
+
+
+@pytest.mark.parametrize(
+    ("data", "expected"),
+    [
+        ("a.a.a", False),
+        ("1,2,3", False),
+        ("1.2.3", True),
+        ("^1.2.3", True),
+        ("v1.2.3", True),
+        ("==1.2", True),
+        (">=1.2", True),
+    ],
+)
+def test_is_semver(data, expected):
+    assert is_semver(data) == expected
 
 
 def test_default_rules():
