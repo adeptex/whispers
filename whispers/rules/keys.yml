@@ -103,5 +103,5 @@
   message: Private key
   severity: High
   value:
-    regex: "[\\-]{5}BEGIN (RSA|DSA|EC|OPENSSH|PRIVATE|ENCRYPTED|PGP|CERTIFICATE)? ?(PRIVATE)? KEY( BLOCK)?[\\-]{5}"
+    regex: "[\\-]{5}BEGIN (RSA|DSA|EC|OPENSSH|PRIVATE|ENCRYPTED|PGP)? ?(PRIVATE)? KEY( BLOCK)?[\\-]{5}"
     ignorecase: False
