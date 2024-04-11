@@ -9,6 +9,7 @@ from whispers.models.pair import KeyValuePair
 from whispers.plugins.config import Config
 from whispers.plugins.dockercfg import Dockercfg
 from whispers.plugins.dockerfile import Dockerfile
+from whispers.plugins.elixir import Elixir
 from whispers.plugins.gradle import Gradle
 from whispers.plugins.html import Html
 from whispers.plugins.htpasswd import Htpasswd
@@ -156,6 +157,9 @@ def load_plugin(file: Path) -> Optional[object]:
 
     elif filetype in ["py", "py3", "py35", "py36", "py37", "py38", "py39"]:
         return Python
+
+    elif filetype == "exs":
+        return Elixir
 
     elif REGEX_PRIVKEY_FILE.match(filetype):
         return Plaintext
