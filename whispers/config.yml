@@ -10,7 +10,7 @@ exclude:
     - (package(-lock)?|npm-shrinkwrap)\.json
 
   keys:
-    - .*(public|project).*
+    - .*(public|project|translation|row|col(umn)?|uniq(ue)?).*
 
   values:
     - ^(true|false|yes|no|1|0)$
