@@ -13,4 +13,4 @@ def test_main():
 def test_run():
     args = parse_args([fixture_path()])
     secrets = list(run(args))
-    assert len(secrets) == 319
+    assert len(secrets) == 322

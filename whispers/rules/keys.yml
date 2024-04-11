@@ -52,10 +52,10 @@
   message: AWS Account ID
   severity: Low
   key:
-    regex: ^aws_account$
+    regex: .*aws.*
     ignorecase: False
   value:
-    regex: ^\d{12}$
+    regex: ^(?!.*(.)\1{4}.*)[0-9]{12}$
     ignorecase: False
 
 
