@@ -55,7 +55,7 @@
     regex: .*aws.*
     ignorecase: False
   value:
-    regex: ^(?!.*(.)\1{4}.*)[0-9]{12}$
+    regex: ^(?!.*(.)\1{11})[0-9]{12}$
     ignorecase: False
 
 
