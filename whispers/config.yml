@@ -4,10 +4,10 @@ include:
 
 exclude:
   files:
-    - __pycache__|\.eggs|build|dev|\.vscode|\.git
-    - .*/(locale|spec|test|mock)s?/
-    - integration|node_modules
-    - (package(-lock)?|npm-shrinkwrap)\.json
+    - .*(__pycache__|\.eggs|build|dev|\.vscode|\.git)
+    - .*(locale|spec|test|mock|dummy|fixture)s?
+    - .*(integration|node_modules)
+    - .*(package(-lock)?|npm-shrinkwrap)\.json
 
   keys:
     - .*(public|project|translation|row|col(umn)?|uniq(ue)?).*

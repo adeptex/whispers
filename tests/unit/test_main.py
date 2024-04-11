@@ -11,6 +11,7 @@ def test_main():
 
 
 def test_run():
-    args = parse_args([fixture_path()])
+    argv = ["-F", "None", fixture_path()]
+    args = parse_args(argv)
     secrets = list(run(args))
     assert len(secrets) == 325
