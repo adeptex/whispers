@@ -27,11 +27,11 @@
   message: Secret
   severity: Low
   key:
-    regex: .*(se[ck]ret[sz]?)[\-_\.]?(key|hash)?$
+    regex: .*(se[ck]ret[sz]?)([\-_\.]?(key|hash|token|id|auth|word|base))*$
     ignorecase: True
   value:
-    minlen: 1
-  similar: 0.4
+    minlen: 4
+  similar: 0.41
 
 
 - id: webhook
