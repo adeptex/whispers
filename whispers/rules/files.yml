@@ -29,6 +29,8 @@
       Favorites\\.plist|configuration\\.user\\.xpl|\
       mongoid\\.ya?ml|salesforce\\.js|\
       ventrilo(-|_)srv.ini|muttrc|trc|ovpn|dayone|tugboat|esmtprc|ftpconfig|\
-      backup|back|bck|~1)$"
+      backup|back|bck|~1|\
+      (runtime|prod(\\.secret)?|releases)\\.exs\
+      )$"
     ignorecase: True
     isFile: True

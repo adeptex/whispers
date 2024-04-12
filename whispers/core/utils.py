@@ -9,7 +9,7 @@ from jellyfish import jaro_winkler_similarity
 from luhn import verify as luhn_verify
 from yaml import safe_load, safe_load_all
 
-from whispers.core.constants import DEFAULT_PATH, REGEX_ENVVAR, REGEX_IAC, REGEX_PATH, REGEX_URI
+from whispers.core.constants import DEFAULT_PATH, REGEX_ENVVAR, REGEX_IAC, REGEX_PATH, REGEX_SEMVER, REGEX_URI
 from whispers.models.pair import KeyValuePair
 
 
@@ -224,6 +224,14 @@ def is_luhn(data: str) -> bool:
     return luhn_verify(str(data))
 
 
+def is_semver(data: str) -> bool:
+    """Checks if given data resembles a SemVer-like format"""
+    if not is_ascii(data):
+        return False
+
+    return bool(REGEX_SEMVER.match(data))
+
+
 def is_similar(key: str, value: str, similarity: float) -> bool:
     """
     Checks similarity between key and value.
@@ -258,7 +266,7 @@ def find_line_number(pair: KeyValuePair) -> int:
                 if not findpath:
                     return foundline
 
-    except Exception:  # pragma: no cover
+    except Exception:
         global_exception_handler(pair.file, "find_line_number()")
 
     return 0

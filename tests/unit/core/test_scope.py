@@ -15,7 +15,8 @@ from whispers.core.scope import load_scope
     ],
 )
 def test_load_scope(src, expected):
-    args = parse_args([src])
+    argv = ["-F", "None", src]
+    args = parse_args(argv)
     config = load_config(args)
     scope = load_scope(args, config)
     assert len(list(scope)) == expected
