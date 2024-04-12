@@ -105,6 +105,7 @@ def test_similar_strings(str1, str2, expected):
         ("apikeys.yml", "GITHUBKEY", "YXNkZmZmZmZm_HARDcoded", 19),
         ("pip.conf", "username", "hardcoded1", 7),
         ("java.properties", "sonar.jdbc.password", "hardcoded02", 10),
+        ("404", "password", "hardcoded", 0),
     ],
 )
 def test_find_line_number_single(src, key, value, expected):

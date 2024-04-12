@@ -266,7 +266,7 @@ def find_line_number(pair: KeyValuePair) -> int:
                 if not findpath:
                     return foundline
 
-    except Exception:  # pragma: no cover
+    except Exception:
         global_exception_handler(pair.file, "find_line_number()")
 
     return 0
