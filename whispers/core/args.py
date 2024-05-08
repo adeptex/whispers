@@ -100,7 +100,7 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
 def show_splash(func, **kwargs):
     @wraps(func)
     def splash(*args, **kwargs):
-        print(__whispers__)
+        print(__whispers__.encode("utf-8"))
         print(__version__.rjust(64), end="\n\n")
         return func(*args, **kwargs)
 
