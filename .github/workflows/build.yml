@@ -23,11 +23,11 @@ jobs:
           - os: "ubuntu-20.04"
             python: 3.6
           - os: "ubuntu-latest"
-            python: 3.11.1
+            python: 3.12.3
           - os: "windows-latest"
-            python: 3.11.1
+            python: 3.12.3
           - os: "macos-latest"
-            python: 3.11.1
+            python: 3.12.3
 
     runs-on: ${{ matrix.env-version.os }}
 
