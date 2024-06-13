@@ -4,7 +4,7 @@
 [![](https://github.com/adeptex/whispers/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/adeptex/whispers/actions/workflows/build.yml)
 [![](https://github.com/adeptex/whispers/blob/master/coverage.svg)](https://github.com/adeptex/whispers/blob/master/coverage.svg)
 [![](https://img.shields.io/pypi/dm/whispers)](https://snyk.io/advisor/python/whispers)
-![](https://img.shields.io/badge/python-3.6+-blue)
+![](https://img.shields.io/badge/python-3.8+-blue)
 ![](https://img.shields.io/badge/system-linux%20|%20osx%20|%20windows-blue)
 
 > "My little birds are everywhere, even in the North, they whisper to me the strangest stories." - _Varys_

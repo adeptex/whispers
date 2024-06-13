@@ -12,6 +12,9 @@
     * Passwords
     * Creditcards
 
+* Drop end-of-life Python support
+    * Versions 3.6 and 3.7 are no longer supported. Oldest supported version is Python 3.8.
+
 * Dependency tracking improvements
     * New [`requirements-dev.txt`](https://github.com/adeptex/whispers/blob/master/requirements-dev.txt) file allows Dependabot updates for dev dependencies
     * Modified [`setup.py`](https://github.com/adeptex/whispers/blob/master/setup.py) to read from `requirements.txt` and `requirements-dev.txt`
