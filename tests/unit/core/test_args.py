@@ -33,9 +33,12 @@ def test_argument_parser():
         (["-s", "a,b,c", "src"], "severity", ["a", "b", "c"], does_not_raise()),
         (["-f", "*.json", "src"], "files", ["*.json"], does_not_raise()),
         (["-F", ".*\\.(yml|json)", "src"], "xfiles", compile(r".*\.(yml|json)"), does_not_raise()),
+        (["-a", "src"], "ast", True, does_not_raise()),
+        (["src"], "ast", False, does_not_raise()),
         (["--info"], "info", True, pytest.raises(SystemExit)),
         (["--debug"], "debug", True, pytest.raises(SystemExit)),
         (["--init"], "init", True, pytest.raises(SystemExit)),
+        (["--dump"], "dump", True, pytest.raises(SystemExit)),
     ],
 )
 def test_parse_args(arguments, key, expected, exception):

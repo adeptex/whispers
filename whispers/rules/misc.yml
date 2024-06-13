@@ -16,7 +16,7 @@
   message: Credit Card
   severity: Low
   value:
-    regex: ^[0-9]{14,}$
+    regex: ^(?!(.)\1{13,18})[0-9]{14,19}$
     ignorecase: False
     isLuhn: True
 

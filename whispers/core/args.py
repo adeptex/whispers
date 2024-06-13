@@ -6,6 +6,7 @@ from sys import argv, exit, stdout
 from whispers.__version__ import __version__, __whispers__
 from whispers.core.constants import DEFAULT_PATH
 from whispers.core.utils import default_rules, load_regex
+from whispers.plugins.semgrep import AST
 
 
 def argument_parser() -> ArgumentParser:
@@ -14,14 +15,24 @@ def argument_parser() -> ArgumentParser:
     args_parser.add_argument("--info", action="store_true", help="show extended help and exit")
     args_parser.add_argument("--version", action="version", version=__version__, help="show version and exit")
     args_parser.add_argument("--init", default=False, action="store_true", help="make config and exit")
+    args_parser.add_argument("--dump", action="store_true", help="dump AST and exit")
+    args_parser.add_argument("-a", "--ast", action="store_true", help="enable AST analysis")
     args_parser.add_argument("-c", "--config", default=None, help="config filename")
     args_parser.add_argument("-o", "--output", default=None, help="output filename")
     args_parser.add_argument("-l", "--log", default=None, help="log filename")
     args_parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_const",
+        const=logging.INFO,
+        default=None,
+        help="show info log",
+    )
+    args_parser.add_argument(
         "--debug",
         action="store_const",
         const=logging.DEBUG,
-        default=logging.WARNING,
+        default=None,
         help="show debug log",
     )
     args_parser.add_argument("-e", "--exitcode", default=0, type=int, help="exit code on success")
@@ -58,12 +69,17 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
     else:
         args.src = args.src[0]
 
+    if args.dump:
+        print(AST.dump(args.src))
+        exit()
+
     if args.log:
         args.log = logging.FileHandler(args.log, mode="w")
     else:
         args.log = logging.StreamHandler()
 
-    logging.basicConfig(format="[%(levelname)s] %(message)s", level=args.debug, handlers=[args.log])
+    log_level = args.debug or args.verbose or logging.WARNING
+    logging.basicConfig(format="[%(levelname)s] %(message)s", level=log_level, handlers=[args.log])
 
     if args.output:
         args.output = open(args.output, "w")

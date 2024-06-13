@@ -9,12 +9,6 @@ from whispers.models.rule import Rule
 
 def load_rules(args: Namespace, config: AppConfig) -> List[dict]:
     """Loads applicable rules based on args and config"""
-    include_rule_ids = args.rules or config.include.rules
-    exclude_rule_ids = args.xrules or config.exclude.rules
-    include_groups = args.groups or config.include.groups
-    exclude_groups = args.xgroups or config.exclude.groups
-    include_severity = args.severity or config.include.severity
-    exclude_severity = args.xseverity or config.exclude.severity
     applicable_rules = []
 
     # Load from default rules based on rules/severity config
@@ -23,28 +17,28 @@ def load_rules(args: Namespace, config: AppConfig) -> List[dict]:
         rule_group = rule.get("group", None)
         rule_severity = rule.get("severity", None)
 
-        if rule_id in exclude_rule_ids:
+        if rule_id in config.exclude.rules:
             continue  # Rule excluded
 
-        if rule_id not in include_rule_ids:
+        if rule_id not in config.include.rules:
             continue  # Rule not included
 
-        if rule_group in exclude_groups:
+        if rule_group in config.exclude.groups:
             continue  # Group excluded
 
-        if rule_group not in include_groups:
+        if rule_group not in config.include.groups:
             continue  # Group not included
 
-        if rule_severity in exclude_severity:
+        if rule_severity in config.exclude.severity:
             continue  # Severity excluded
 
-        if rule_severity not in include_severity:
+        if rule_severity not in config.include.severity:
             continue  # Severity not included
 
         applicable_rules.append(Rule(rule))
 
     # Load inline rules from config file (if any)
-    for rule in include_rule_ids:
+    for rule in config.include.rules:
         if isinstance(rule, str):
             continue  # Not an inline rule
 

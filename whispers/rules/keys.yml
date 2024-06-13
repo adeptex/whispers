@@ -20,7 +20,7 @@
   severity: High
   value:
     regex: "^(?!.*\\s)(\
-      akab|aio|amzn\\.mws\\.|\
+      akab|aio(?!http)|amzn\\.mws\\.|\
       (0|1)/[\\d]{16}:|CLOJARS|CFPAT|dp\\.(pt|ct|scim|st)\\.|dt0c01\\.|\
       EAACEdEose0cBA|[\\w\\d]+:APA91b|FLWSECK-|fio-u-|\
       eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOi|\
@@ -55,7 +55,7 @@
     regex: .*aws.*
     ignorecase: False
   value:
-    regex: ^(?!.*(.)\1{11})[0-9]{12}$
+    regex: ^(?!(.)\1{11})[0-9]{12}$
     ignorecase: False
 
 

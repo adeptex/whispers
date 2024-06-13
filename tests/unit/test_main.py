@@ -10,8 +10,19 @@ def test_main():
         main()
 
 
-def test_run():
-    argv = ["-F", "None", fixture_path()]
+@pytest.mark.parametrize(
+    ("ast", "expected"),
+    [
+        ("--ast", 421),
+        ("", 313),
+    ],
+)
+def test_run(ast, expected):
+    argv = ["-F", "None"]
+    if ast:
+        argv.append(ast)
+
+    argv.append(fixture_path())
     args = parse_args(argv)
     secrets = list(run(args))
-    assert len(secrets) == 325
+    assert len(secrets) == expected

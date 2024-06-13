@@ -74,7 +74,6 @@ def test_detect_secrets_by_key(src, expected):
         ("cloudformation.json.template", DEFAULT_SEVERITY, 0),
         ("cloudformation.yml", "High", 1),
         # ("connection.config", "High", 1),
-        ("cors.py", "Low", 1),
         ("creditcards.yml", "Low", 3),
         ("custom.json", DEFAULT_SEVERITY, 0),
         ("custom.xml", DEFAULT_SEVERITY, 0),
@@ -100,11 +99,8 @@ def test_detect_secrets_by_key(src, expected):
         ("java.properties", "High,Medium", 3),
         ("jdbc.xml", "High", 3),
         ("jenkins.xml", "High,Medium", 2),
-        ("language.html", "Info", 3),
-        ("language.py", "High", 11),
-        ("language.py2", DEFAULT_SEVERITY, 0),
-        ("language.sh", "High,Medium", 15),
         ("nginx.conf", DEFAULT_SEVERITY, 4),
+        ("page.html", "Info", 3),
         ("passwords.json", "High", 5),
         ("passwords.xml", "High", 5),
         ("passwords.yml", "High", 5),
@@ -121,6 +117,7 @@ def test_detect_secrets_by_key(src, expected):
         ("privatekeys.yml", "High", 6),
         ("putty.ppk", DEFAULT_SEVERITY, 1),
         ("ruleslist.yml", "High", 3),
+        ("script.sh", "High,Medium", 15),
         ("settings.cfg", "High", 1),
         ("settings.conf", "High", 1),
         ("settings.env", "High", 1),
@@ -136,7 +133,7 @@ def test_detect_secrets_by_key(src, expected):
     ],
 )
 def test_detect_secrets_by_value(src, severity, expected):
-    args = parse_args(["--severity", severity, fixture_path(src)])
+    args = parse_args(["--ast", "--severity", severity, fixture_path(src)])
     config = load_config(args)
     rules = load_rules(args, config)
     pairs = make_pairs(config, FIXTURE_PATH.joinpath(src))
@@ -188,7 +185,7 @@ def test_detect_secrets_by_filename(expected):
 @pytest.mark.parametrize(
     ("src", "count", "rule_id"),
     [
-        ("language.html", 3, "comment"),
+        ("page.html", 3, "comment"),
         ("passwords.json", 5, "password"),
     ],
 )

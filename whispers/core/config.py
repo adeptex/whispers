@@ -37,6 +37,15 @@ def load_config(args: Namespace) -> dict:
 
     try:
         config = AppConfig(load_yaml_from_file(configfile))
+        config.ast = args.ast or config.ast
+        config.include.rules = args.rules or config.include.rules
+        config.exclude.rules = args.xrules or config.exclude.rules
+        config.include.groups = args.groups or config.include.groups
+        config.exclude.groups = args.xgroups or config.exclude.groups
+        config.include.severity = args.severity or config.include.severity
+        config.exclude.severity = args.xseverity or config.exclude.severity
+        config.include.files = args.files or config.include.files
+        config.exclude.files = args.xfiles or config.exclude.files
 
     except Exception:
         raise RuntimeError(f"{configfile.as_posix()} is invalid")
