@@ -28,7 +28,7 @@
 With the release of Whispers 2.3, it is now possible to accurately apply Whispers' secret detection techniques for structured text to static code. Before this release, Whispers only supported structured text formats, such as JSON or XML. [Semgrep](https://semgrep.dev) is an open source SAST tool, which has a built-in feature for generating Abstract Structure Trees (ASTs) for [many common programming languages](https://semgrep.dev/docs/supported-languages). Generating an AST for static code yields an accurate structured text representation, which can be checked for secrets with Whispers' rules and plugins. As such, generating ASTs requires an additional "format conversion" step, which naturally affects runtime speed. When AST is enabled it will take longer to scan the same scope if any source code files are present. The increased amount of runtime time would be however long it takes to run the following command on all static code files in scope:
 
 ```sh
-semgrep scan --experimental --metrics=off --quiet --dump-ast --json --lang $LANG $SRCFILE
+semgrep scan --metrics=off --quiet --dump-ast --json --lang $LANG $SRCFILE
 ```
 
 Consider the following benchmarks:
@@ -62,7 +62,7 @@ whispers --ast target/dir/or/file  # enable AST in CLI
 
 Before Whispers 2.3, only Python AST scanning was natively supported by `astroid`, and integrated via [`plugins/python.py`](https://github.com/adeptex/whispers/blob/8f17f77e2199c55458ff125e3fb477a2a9349593/whispers/plugins/python.py). With the release of Whispers 2.3, this functionality is superseded by `semgrep`, and integrated via [`plugins/semgrep.py`](https://github.com/adeptex/whispers/blob/master/whispers/plugins/semgrep.py). As a base line, the new `semgrep` plugin detects the same findings as the `astroid` plugin, but supports more programming languages.
 
-Unfortunately `semgrep` has telemetry enabled by default, but can be turned off via [`--metrics=off`](https://github.com/adeptex/whispers/blob/master/whispers/plugins/semgrep.py#L55). In any case, `semgrep` will not execute unless explicitly enabled via args or config.
+Unfortunately `semgrep` has telemetry enabled by default, but can be turned off via [`--metrics=off`](https://github.com/adeptex/whispers/blob/master/whispers/plugins/semgrep.py#L57). In any case, `semgrep` will not execute unless explicitly enabled via args or config.
 
 
 # Changelog

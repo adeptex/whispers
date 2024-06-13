@@ -54,7 +54,6 @@ class AST:
         argv = [
             "semgrep",
             "scan",
-            "--experimental",
             "--metrics=off",
             "--quiet",
             "--dump-ast",
