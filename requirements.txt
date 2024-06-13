@@ -9,6 +9,7 @@ luhn==0.2.0
 lxml==5.2.1
 pyyaml==6.0.1
 semgrep==1.68.0
+semgrep==0.81.0; python_version <= '3.6'
 six==1.16.0
 soupsieve==2.3.2.post1; python_version <= '3.6'
 typing-extensions==4.1.1; python_version <= '3.6'
