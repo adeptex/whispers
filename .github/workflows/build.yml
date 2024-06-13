@@ -23,11 +23,11 @@ jobs:
           - os: "ubuntu-20.04"
             python: 3.6
           - os: "ubuntu-latest"
-            python: 3.11.1
+            python: 3.12.3
           - os: "windows-latest"
-            python: 3.11.1
+            python: 3.12.3
           - os: "macos-latest"
-            python: 3.11.1
+            python: 3.12.3
 
     runs-on: ${{ matrix.env-version.os }}
 
@@ -61,7 +61,8 @@ jobs:
         if: matrix.env-version.os == 'windows-latest'
         run: |
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml;whispers' --add-data 'whispers/rules/*.yml;whispers/rules' --name whispers.exe whispers/main.py
-          dist/whispers.exe tests/fixtures
+          dist/whispers.exe --init
+          dist/whispers.exe --ast -F None tests/fixtures
 
       - name: compile .bin
         if: matrix.env-version.os != 'windows-latest'
@@ -69,4 +70,4 @@ jobs:
           pyinstaller --clean --noconfirm --strip --noupx --console --onefile --add-data 'whispers/config.yml:whispers' --add-data 'whispers/rules/*.yml:whispers/rules' --name whispers.bin whispers/main.py
           dist/whispers.bin --help
           dist/whispers.bin --init
-          dist/whispers.bin tests/fixtures
+          dist/whispers.bin --ast -F None tests/fixtures
