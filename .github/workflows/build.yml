@@ -21,7 +21,7 @@ jobs:
       matrix:
         env-version: 
           - os: "ubuntu-20.04"
-            python: 3.6
+            python: 3.8.18
           - os: "ubuntu-latest"
             python: 3.12.3
           - os: "windows-latest"
