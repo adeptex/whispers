@@ -1,14 +1,11 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
-RUN apt update \
-    && apt install -y make python3-lxml python3-yaml \
-    && apt clean
+WORKDIR /opt/whispers
 
-WORKDIR /src
+ADD . .
 
-COPY dist/*.tar.gz .
+RUN pip3 install -e .
 
-RUN pip3 install *.tar.gz \
-    && rm -rf *.tar.gz
+RUN whispers --help
 
 ENTRYPOINT [ "whispers" ]

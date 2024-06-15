@@ -5,27 +5,27 @@ install-dev:
 	pip3 install -r requirements.txt -e ".[dev]"
 
 flake8-lint:
-	flake8 whispers/ tests/
+	flake8 whispers/ tests/unit/ setup.py
 
 isort-lint:
-	isort --check-only whispers/ tests/
+	isort --check-only whispers/ tests/unit/ setup.py
 
 black-lint:
-	black --check whispers/ tests/
+	black --check whispers/ tests/unit/ setup.py
 
 lint: isort-lint black-lint flake8-lint
 
 format:
-	autoflake --in-place --recursive --remove-all-unused-imports whispers/ tests/
-	autopep8 --in-place --recursive --aggressive --aggressive whispers/ tests/
-	isort whispers/ tests/
-	black whispers/ tests/
+	autoflake --in-place --recursive --remove-all-unused-imports whispers/ tests/unit/ setup.py
+	autopep8 --in-place --recursive --aggressive --aggressive whispers/ tests/unit/ setup.py
+	isort whispers/ tests/unit/ setup.py
+	black whispers/ tests/unit/ setup.py
 
 unit:
-	pytest --show-capture=all -v tests/
+	pytest --show-capture=all -vv tests/unit/
 
 coverage:
-	coverage run --source=whispers/ --branch -m pytest tests/ --junitxml=build/test.xml -v
+	coverage run --source=whispers/ --branch -m pytest tests/unit/ --junitxml=build/test.xml -vv
 	coverage xml -i -o build/coverage.xml
 	coverage report
 	coverage-badge -f -o coverage.svg
@@ -33,10 +33,8 @@ coverage:
 test: 
 	make lint coverage
 
-build-image:
-	python3 -m build
-	docker build -t=whispers --rm=true . 
-	# docker rmi -f $$(docker images --filter "dangling=true" -q --no-trunc)
+image:
+	docker build -t=whispers .
 
 freeze:
 	CUSTOM_COMPILE_COMMAND="make freeze" \
@@ -66,4 +64,4 @@ publish:
 test-pip:
 	python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps whispers
 
-.PHONY: install install-dev isort-lint black-lint flake8-lint format lint unit coverage test publish build-image
+.PHONY: install install-dev isort-lint black-lint flake8-lint format lint unit coverage test publish image

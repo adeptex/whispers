@@ -1,6 +1,9 @@
 .git
 .gitignore
 .dockerignore
+.github
+
+whispers.png
 
 # Created by https://www.gitignore.io/api/linux,macos,python,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=linux,macos,python,visualstudiocode
@@ -61,7 +64,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-# dist/
+dist/
 downloads/
 eggs/
 .eggs/
@@ -76,8 +79,8 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
-dev
+dev/
+tests/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -98,6 +101,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+coverage.svg
 *.cover
 .hypothesis/
 .pytest_cache/

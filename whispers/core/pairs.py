@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing import Iterator, Optional
 
-from whispers.core.constants import REGEX_PRIVKEY_FILE
+from whispers.core.constants import REGEX_AST_FILE, REGEX_PRIVKEY_FILE
 from whispers.core.utils import global_exception_handler, is_static, strip_string
 from whispers.models.appconfig import AppConfig
 from whispers.models.pair import KeyValuePair
@@ -19,13 +19,12 @@ from whispers.plugins.npmrc import Npmrc
 from whispers.plugins.pip import Pip
 from whispers.plugins.plaintext import Plaintext
 from whispers.plugins.pypirc import Pypirc
-from whispers.plugins.python import Python
 from whispers.plugins.shell import Shell
 from whispers.plugins.xml import Xml
 from whispers.plugins.yml import Yml
 
 
-def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
+def make_pairs(config: AppConfig, file: Path) -> Optional[Iterator[KeyValuePair]]:
     """Generates KeyValuePair objects by parsing given file"""
     try:
         if not file.exists():
@@ -44,7 +43,7 @@ def make_pairs(config: dict, file: Path) -> Optional[Iterator[KeyValuePair]]:
         yield tag_file(file, pair)
 
     # Second, attempt to parse the file with a plugin
-    plugin = load_plugin(file)
+    plugin = load_plugin(file, config.ast)
 
     logging.debug(f"make_pairs '{plugin}' for '{file}'")
 
@@ -100,9 +99,10 @@ def filter_static(pair: KeyValuePair) -> Optional[KeyValuePair]:
     return pair  # Static value
 
 
-def load_plugin(file: Path) -> Optional[object]:
+def load_plugin(file: Path, ast: bool = False) -> Optional[object]:
     """
-    Loads the correct plugin for given file.
+    Loads the correct plugin for a given file.
+    Optional `ast` param enables/disables Semgrep.
     Returns None if no plugin found.
     """
     if file.suffix in [".dist", ".template"]:
@@ -155,13 +155,15 @@ def load_plugin(file: Path) -> Optional[object]:
     elif filetype.startswith("htm"):
         return Html
 
-    elif filetype in ["py", "py3", "py35", "py36", "py37", "py38", "py39"]:
-        return Python
-
     elif filetype == "exs":
         return Elixir
 
     elif REGEX_PRIVKEY_FILE.match(filetype):
         return Plaintext
+
+    elif ast and REGEX_AST_FILE.match(filetype):
+        from whispers.plugins.semgrep import Semgrep
+
+        return Semgrep
 
     return None

@@ -1,1 +1,2 @@
 recursive-include whispers *.yml
+include requirements.txt requirements-dev.txt

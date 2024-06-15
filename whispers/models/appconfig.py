@@ -52,7 +52,9 @@ class AppConfig:
 
     include: Include = field(default_factory=Include)
     exclude: Exclude = field(default_factory=Exclude)
+    ast: bool = True
 
     def __init__(self, config: Dict = {}) -> None:
         self.include = Include(**config.get("include", {}))
         self.exclude = Exclude(**config.get("exclude", {}))
+        self.ast = config.get("ast", False)

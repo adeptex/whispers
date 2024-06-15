@@ -9,6 +9,7 @@ from whispers.models.appconfig import AppConfig
 
 def test_appconfig():
     config = AppConfig({})
+    assert config.ast is False
     assert config.include.files == ["**/*"]
     assert config.include.rules == list_rule_prop("id", default_rules())
     assert config.include.severity == DEFAULT_SEVERITY
@@ -17,6 +18,19 @@ def test_appconfig():
     assert config.exclude.values is None
     assert config.exclude.rules == []
     assert config.exclude.severity == []
+
+
+@pytest.mark.parametrize(
+    ("config", "expected"),
+    [
+        ({"ast": True}, True),
+        ({"ast": False}, False),
+        ({}, False),
+    ],
+)
+def test_appconfig_ast(config, expected):
+    config = AppConfig(config)
+    assert config.ast is expected
 
 
 @pytest.mark.parametrize(

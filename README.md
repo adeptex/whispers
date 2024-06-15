@@ -4,12 +4,12 @@
 [![](https://github.com/adeptex/whispers/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/adeptex/whispers/actions/workflows/build.yml)
 [![](https://github.com/adeptex/whispers/blob/master/coverage.svg)](https://github.com/adeptex/whispers/blob/master/coverage.svg)
 [![](https://img.shields.io/pypi/dm/whispers)](https://snyk.io/advisor/python/whispers)
-![](https://img.shields.io/badge/python-3.6+-blue)
+![](https://img.shields.io/badge/python-3.8+-blue)
 ![](https://img.shields.io/badge/system-linux%20|%20osx%20|%20windows-blue)
 
 > "My little birds are everywhere, even in the North, they whisper to me the strangest stories." - _Varys_
 
-Whispers is a **static structured text** analysis tool designed for parsing various common software config formats in search of hardcoded secrets. Whispers can be used as a [standalone executable](https://github.com/adeptex/whispers#download), or as a [Python library](https://github.com/adeptex/whispers#install), which is meant to facilitate its integration into automated processes and pipelines.
+Whispers is an information security analysis tool designed for identifying <u>*hardcoded secrets in structured text and static code*</u> ([CWE-798](https://cwe.mitre.org/data/definitions/798.html)). Whispers can be used as a [standalone binary](https://github.com/adeptex/whispers#download), or as a [Python module](https://github.com/adeptex/whispers#install), which is meant to facilitate its usage individually and as part of automated processes and pipelines at scale.
 
 * :clipboard: [Release notes](https://github.com/adeptex/whispers/blob/master/RELEASE_NOTES.md)
 * :gear: [Request a feature](https://github.com/adeptex/whispers/issues/new?assignees=&labels=&template=feature_request.md&title=)
@@ -32,7 +32,8 @@ pip3 install whispers
 
 ## Supported formats
 
-* :clipboard: Complete coverage for JSON, YAML, XML, and [many other formats](https://github.com/adeptex/whispers/blob/master/tests/fixtures).
+* :clipboard: **Structured text** coverage for JSON, YAML, XML, and [many other formats](https://github.com/adeptex/whispers/blob/master/tests/fixtures)
+* :clipboard: **Static code** coverage for Python, PHP, Java/Scala/Kotlin, JavaScript/TypeScript, Go, and [many other languages](https://semgrep.dev/docs/supported-languages)
 * :hammer_and_wrench: [Contribute](https://github.com/adeptex/whispers/issues/new/choose) by submitting format samples!
 
 
@@ -46,8 +47,8 @@ pip3 install whispers
 * Authentication tokens
 * Webhooks
 * Sensitive files
-* Python functions
 * [See all rules](https://github.com/adeptex/whispers/blob/master/whispers/rules)
+* [See all fixtures](https://github.com/adeptex/whispers/blob/master/tests/fixtures)
 
 
 ## Usage
@@ -67,8 +68,11 @@ whispers --version
 ```
 
 ```bash
-# Simplest usage
+# Check structured text
 whispers dir/or/file
+
+# Check structured text and static code
+whispers -a dir/or/file
 
 # Write JSON results to a file instead of the screen
 whispers dir/or/file -o /tmp/secrets.json
@@ -141,13 +145,18 @@ for secret in whispers.secrets(args):
 
 ## Docker
 
-```bash
-docker build -t=whispers .
+```sh
+make build-image
 
+# Test
+docker run -v $(pwd)/tests/fixtures:/src whispers -F None /src
+docker run -v $(pwd)/tests/fixtures:/src whispers --ast -F None /src
+
+# Test with custom config
 docker run \
   --volume $(pwd)/tests/fixtures:/src \
   --volume $(pwd)/tests/configs/integration.yml:/config.yml \
-  whispers --config /config.yml .
+  whispers -c /config.yml /src
 ```
 
 
@@ -194,6 +203,8 @@ See [whispers/models/appconfig.py](https://github.com/adeptex/whispers/blob/mast
 
 
 ```yaml
+ast: false
+
 include:
   files:
     - "**/*.yml"  # glob

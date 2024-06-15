@@ -19,7 +19,7 @@ from whispers.plugins.npmrc import Npmrc
 from whispers.plugins.pip import Pip
 from whispers.plugins.plaintext import Plaintext
 from whispers.plugins.pypirc import Pypirc
-from whispers.plugins.python import Python
+from whispers.plugins.semgrep import Semgrep
 from whispers.plugins.shell import Shell
 from whispers.plugins.xml import Xml
 from whispers.plugins.yml import Yml
@@ -99,42 +99,42 @@ def test_filter_static(key, value, expected):
 
 
 @pytest.mark.parametrize(
-    ("filename", "expected"),
+    ("filename", "ast", "expected"),
     [
-        ("", None),
-        ("File.404", None),
-        (".aws/credentials", Config),
-        (".dockercfg", Dockercfg),
-        (".htpasswd", Htpasswd),
-        (".npmrc", Npmrc),
-        (".pypirc", Pypirc),
-        ("apikeys.json", Json),
-        ("apikeys.xml", Xml),
-        ("apikeys.yml", Yml),
-        ("beans.xml.dist", Xml),
-        ("beans.xml.template", Xml),
-        ("beans.xml", Xml),
-        ("cloudformation.yml", Yml),
-        ("connection.config", Config),
-        ("cors.py", Python),
-        ("Dockerfile", Dockerfile),
-        ("integration.conf", Config),
-        ("invalid.json", Json),
-        ("invalid.yml", Yml),
-        ("invalid.ini", Config),
-        ("java.properties", Jproperties),
-        ("language.html", Html),
-        ("language.py", Python),
-        ("language.sh", Shell),
-        ("passwords.yml", Yml),
-        ("pip.conf", Pip),
-        ("plaintext.txt", Plaintext),
-        ("settings01.ini", Config),
-        ("settings02.ini", Config),
-        ("settings.cfg", Config),
-        ("settings.env", Config),
+        ("", False, None),
+        ("File.404", False, None),
+        (".aws/credentials", False, Config),
+        (".dockercfg", False, Dockercfg),
+        (".htpasswd", False, Htpasswd),
+        (".npmrc", False, Npmrc),
+        (".pypirc", False, Pypirc),
+        ("apikeys.json", False, Json),
+        ("apikeys.xml", False, Xml),
+        ("apikeys.yml", False, Yml),
+        ("beans.xml.dist", False, Xml),
+        ("beans.xml.template", False, Xml),
+        ("beans.xml", False, Xml),
+        ("cloudformation.yml", False, Yml),
+        ("connection.config", False, Config),
+        ("Dockerfile", False, Dockerfile),
+        ("integration.conf", False, Config),
+        ("invalid.json", False, Json),
+        ("invalid.yml", False, Yml),
+        ("invalid.ini", False, Config),
+        ("java.properties", False, Jproperties),
+        ("language/fixture.py", True, Semgrep),
+        ("language/fixture.py", False, None),
+        ("language/fixture.sh", False, Shell),
+        ("page.html", False, Html),
+        ("passwords.yml", False, Yml),
+        ("pip.conf", False, Pip),
+        ("plaintext.txt", False, Plaintext),
+        ("settings01.ini", False, Config),
+        ("settings02.ini", False, Config),
+        ("settings.cfg", False, Config),
+        ("settings.env", False, Config),
     ],
 )
-def test_load_plugin(filename, expected):
-    plugin = load_plugin(FIXTURE_PATH.joinpath(filename))
+def test_load_plugin(filename, ast, expected):
+    plugin = load_plugin(FIXTURE_PATH.joinpath(filename), ast=ast)
     assert plugin == expected

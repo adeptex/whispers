@@ -1,12 +1,12 @@
 use Mix.Config
 
-config :pxblog, Pxblog.Endpoint,
-  secret_key_base: "HardCodedaGFyZGNvZGVkVG9rZW4xMjM0Cg+/aGFyZGNvZGVkVG9rZW4xMjM0Cg"
+config :app, app.Endpoint,
+  secret_key_base: "aGFyZGNvZGVkVG9rZW4xMjM0Cg+/aGFyZGNvZGVkVG9rZW4xMjM0Cghardcoded01"
 
 # Configure your database
-config :pxblog, Pxblog.Repo,
+config :app, app.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "pxblog",
-  password: "h4rdc0d3dp@$$w0rd",
-  database: "pxblog_prod",
+  username: "admin",
+  password: "hardcoded02",
+  database: "dbname",
   pool_size: 20

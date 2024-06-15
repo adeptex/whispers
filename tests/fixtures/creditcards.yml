@@ -3,6 +3,7 @@ compliant:
   number2: 1234567890
   number3: 111111111111111
   number4: 534618613411236
+  creditcard: 0000000000000000
   timestamp_js: 1576692842733
   timestamp_py: 1576692842.733
 
