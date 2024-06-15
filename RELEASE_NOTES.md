@@ -1,7 +1,7 @@
 # Whispers 2.3.0 release notes
 
-* 💫 <u>**New Feature: Static Code Analysis**</u> is now supported!
-    * Complements classic Whispers' structured text analysis with [Semgrep](https://semgrep.dev)'s AST generator for [common programming languages](https://semgrep.dev/docs/supported-languages) like Python, PHP, Java/Scala/Kotlin, JavaScript/TypeScript, Go, etc etc.
+* **New Feature:** 💫 <u>Static Code Analysis</u> 💫 is now supported!
+    * The present release complements classic Whispers' structured text analysis with [Semgrep](https://semgrep.dev)'s AST generator for [common programming languages](https://semgrep.dev/docs/supported-languages) like Python, PHP, Java/Scala/Kotlin, JavaScript/TypeScript, Go, etc etc.
     * New argument `--ast` for enabling this feature via the CLI (it is disabled by default)
     * New setting `ast: true` for enabling this feature via a custom config file (set to `ast: false` by default)
     * Replaced [`astroid`](https://github.com/adeptex/whispers/blob/8f17f77e2199c55458ff125e3fb477a2a9349593/whispers/plugins/python.py) Python AST generator with [`semgrep`](https://github.com/adeptex/whispers/blob/master/whispers/plugins/semgrep.py)
@@ -14,6 +14,7 @@
 
 * Drop end-of-life Python support
     * Versions 3.6 and 3.7 are no longer supported. Oldest supported version is Python 3.8.
+    * Last release that supports Python 3.6 and 3.7 is [Whispers 2.2.1](https://github.com/adeptex/whispers/releases/tag/2.2.1)
 
 * Dependency tracking improvements
     * New [`requirements-dev.txt`](https://github.com/adeptex/whispers/blob/master/requirements-dev.txt) file allows Dependabot updates for dev dependencies
@@ -67,6 +68,8 @@ Before Whispers 2.3, only Python AST scanning was natively supported by `astroid
 
 Unfortunately `semgrep` has telemetry enabled by default, but can be turned off via [`--metrics=off`](https://github.com/adeptex/whispers/blob/master/whispers/plugins/semgrep.py#L57). In any case, `semgrep` will not execute unless explicitly enabled via args or config.
 
+⚠️ **NOTE:** At the time of writing, `semgrep` [does not support Windows OS natively](https://github.com/semgrep/semgrep/issues/1330), and can only be installed through WSL. As such, compiled Whispers PE32+ executable comes without Static Code Analysis support. Installing Whispers on Windows via WSL with `pip3 install whispers` *does* have Static Code Analysis support.
+
 
 # Changelog
 
@@ -75,4 +78,4 @@ Unfortunately `semgrep` has telemetry enabled by default, but can be turned off 
 |2021-12-07|2.0.0|https://github.com/adeptex/whispers/releases/tag/2.0.0|
 |2022-07-29|2.1.0|https://github.com/adeptex/whispers/releases/tag/2.1.0|
 |2023-10-23|2.2.0|https://github.com/adeptex/whispers/releases/tag/2.2.0|
-|2024-06-13|2.3.0|https://github.com/adeptex/whispers/releases/tag/2.3.0|
+|2024-06-15|2.3.0|https://github.com/adeptex/whispers/releases/tag/2.3.0|
