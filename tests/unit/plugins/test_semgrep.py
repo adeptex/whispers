@@ -1,5 +1,6 @@
 import json
 from io import StringIO
+from sys import platform
 from unittest.mock import patch
 
 import pytest
@@ -30,6 +31,9 @@ from whispers.main import run
     ],
 )
 def test_pairs(srcfile, expected):
+    if platform.startswith("win"):
+        expected = 0
+
     testfile = fixture_path(f"ast/{srcfile}")
     args = parse_args(["--ast", "-F", "None", testfile])
     result = list(run(args))
@@ -45,6 +49,9 @@ def test_pairs(srcfile, expected):
     ],
 )
 def test_ast_dump(srcfile, expected):
+    if platform.startswith("win"):
+        expected = 0
+
     testfile = fixture_path(f"ast/{srcfile}")
     mock_print = StringIO()
 

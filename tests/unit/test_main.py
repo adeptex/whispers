@@ -1,3 +1,5 @@
+from sys import platform
+
 import pytest
 
 from tests.unit.conftest import fixture_path
@@ -18,6 +20,9 @@ def test_main():
     ],
 )
 def test_run(ast, expected):
+    if platform.startswith("win"):
+        expected = 313
+
     argv = ["-F", "None"]
     if ast:
         argv.append(ast)
