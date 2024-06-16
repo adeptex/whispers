@@ -78,4 +78,4 @@ Unfortunately `semgrep` has telemetry enabled by default, but can be turned off 
 |2021-12-07|2.0.0|https://github.com/adeptex/whispers/releases/tag/2.0.0|
 |2022-07-29|2.1.0|https://github.com/adeptex/whispers/releases/tag/2.1.0|
 |2023-10-23|2.2.0|https://github.com/adeptex/whispers/releases/tag/2.2.0|
-|2024-06-15|2.3.0|https://github.com/adeptex/whispers/releases/tag/2.3.0|
+|2024-06-16|2.3.0|https://github.com/adeptex/whispers/releases/tag/2.3.0|
