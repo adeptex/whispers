@@ -3,7 +3,7 @@ crossplane==0.5.8
 jellyfish==1.0.4
 jproperties==2.1.1
 luhn==0.2.0
-lxml==5.2.1
+lxml==5.2.2
 pyyaml==6.0.1
 semgrep==1.68.0; sys_platform != 'win32'
 six==1.16.0
