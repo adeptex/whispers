@@ -58,13 +58,13 @@ jobs:
       matrix:
         env-version:
           - os: ubuntu-latest
-            python: 3.11.1
+            python: 3.12.3
             binary: whispers.elf
           - os: macos-latest
-            python: 3.11.1
+            python: 3.12.3
             binary: whispers.mac
           - os: windows-latest
-            python: 3.11.1
+            python: 3.12.3
             binary: whispers.exe
 
     runs-on: ${{ matrix.env-version.os }}
