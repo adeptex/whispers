@@ -1,7 +1,7 @@
 autoflake~=2.3
 autopep8~=2.3
 black~=24.4
-build~=1.0
+build~=1.2
 coverage~=7.5
 coverage-badge~=1.0
 flake8~=7.1
