@@ -5,6 +5,6 @@ jproperties==2.1.1
 luhn==0.2.0
 lxml==5.2.2
 pyyaml==6.0.1
-semgrep==1.76.0; sys_platform != 'win32'
+semgrep==1.77.0; sys_platform != 'win32'
 six==1.16.0
 wrapt==1.16.0
