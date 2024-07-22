@@ -1,7 +1,7 @@
 beautifulsoup4==4.12.3
 crossplane==0.5.8
 jellyfish==1.0.4
-jproperties==2.1.1
+jproperties==2.1.2
 luhn==0.2.0
 lxml==5.2.2
 pyyaml==6.0.1
