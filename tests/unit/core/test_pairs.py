@@ -105,6 +105,7 @@ def test_filter_static(key, value, expected):
         ("File.404", False, None),
         (".aws/credentials", False, Config),
         (".dockercfg", False, Dockercfg),
+        (".env", False, Shell),
         (".htpasswd", False, Htpasswd),
         (".npmrc", False, Npmrc),
         (".pypirc", False, Pypirc),
@@ -132,7 +133,7 @@ def test_filter_static(key, value, expected):
         ("settings01.ini", False, Config),
         ("settings02.ini", False, Config),
         ("settings.cfg", False, Config),
-        ("settings.env", False, Config),
+        ("settings.env", False, Shell),
     ],
 )
 def test_load_plugin(filename, ast, expected):

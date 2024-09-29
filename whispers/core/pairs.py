@@ -105,10 +105,12 @@ def load_plugin(file: Path, ast: bool = False) -> Optional[object]:
     Optional `ast` param enables/disables Semgrep.
     Returns None if no plugin found.
     """
-    if file.suffix in [".dist", ".template"]:
-        filetype = file.stem.split(".")[-1]
+    file_name = file.name.lower()
+
+    if file.suffix.lower() in [".dist", ".template"]:
+        filetype = file.stem.split(".")[-1].lower()
     else:
-        filetype = file.name.split(".")[-1]
+        filetype = file_name.split(".")[-1]
 
     if filetype in ["yaml", "yml"]:
         return Yml
@@ -125,22 +127,22 @@ def load_plugin(file: Path, ast: bool = False) -> Optional[object]:
     elif filetype.startswith("pypirc"):
         return Pypirc
 
-    elif file.name == "pip.conf":
+    elif file_name == "pip.conf":
         return Pip
 
-    elif file.name == "build.gradle":
+    elif file_name == "build.gradle":
         return Gradle
 
-    elif filetype in ["conf", "cfg", "cnf", "config", "ini", "env", "credentials", "s3cfg"]:
+    elif filetype in ["conf", "cfg", "cnf", "config", "ini", "credentials", "s3cfg"]:
         return Config
 
     elif filetype == "properties":
         return Jproperties
 
-    elif filetype.startswith(("sh", "bash", "zsh", "env")):
+    elif filetype.startswith(("sh", "bash", "zsh", "env")) or file_name == "environment":
         return Shell
 
-    elif "dockerfile" in file.name.lower():
+    elif "dockerfile" in file_name:
         return Dockerfile
 
     elif filetype == "dockercfg":
