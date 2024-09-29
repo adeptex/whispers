@@ -7,6 +7,7 @@
 06_variable_password: "{{ THIS_IS_A_VERY_LONG_A_PLACEHOLDER_FOR_PASSWORD }}"
 07_variable_password: "{password}"
 08_variable_password: "{ password }"
+09_variable_password: 'This is not a password'
 
 # Noncompliant
 01_static_password: hardcoded0

@@ -9,6 +9,7 @@
     <o6_variable_password>{{ THIS_IS_A_VERY_LONG_A_PLACEHOLDER_FOR_PASSWORD }}</o6_variable_password>
     <o7_variable_password>{password}</o7_variable_password>
     <o8_variable_password>{ password }</o8_variable_password>
+    <o9_variable_password>This is not a password</o9_variable_password>
   </compliant>
   <noncompliant>
     <o1_static_password>hardcoded0</o1_static_password>
