@@ -159,7 +159,7 @@ class AST:
         return AST.name(tree)
 
     @staticmethod
-    def defstmt(ast: List) -> Tuple[str, str | List[str]]:
+    def defstmt(ast: List) -> Tuple[str, Any]:
         name = ast[0].get(AST.NAME, {})
         key = AST.name(name)
 
