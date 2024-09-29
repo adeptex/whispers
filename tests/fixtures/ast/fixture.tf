@@ -12,6 +12,11 @@ variable "TWO_API_TOKEN" {
 
 variable "PASSWORDS" {
     type    = list(string)
+    default = []
+}
+
+variable "PASSWORDS" {
+    type    = list(string)
     default = ["", password]
 }
 

@@ -179,9 +179,7 @@ class AST:
             value = AST.call_args(some[AST.CALL][1])[1]
 
         elif AST.CONTAINER in some:
-            if some[AST.CONTAINER][0] == AST.TUPLE:
-                values = list(map(lambda item: AST.literal(item), some[AST.CONTAINER][1]))
-                return key, values
+            value = list(map(lambda item: AST.literal(item), some[AST.CONTAINER][1]))
 
         else:
             value = AST.literal(some)
