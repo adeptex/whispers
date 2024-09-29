@@ -134,7 +134,7 @@ def test_detect_secrets_by_key(src, expected):
     ],
 )
 def test_detect_secrets_by_value(src, severity, expected):
-    args = parse_args(["--ast", "--severity", severity, fixture_path(src)])
+    args = parse_args(["--severity", severity, fixture_path(src)])
     config = load_config(args)
     rules = load_rules(args, config)
     pairs = make_pairs(config, FIXTURE_PATH.joinpath(src))

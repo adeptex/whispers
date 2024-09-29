@@ -21,6 +21,7 @@ def compliant():
     config['db_password'] = ''
     secrets = get_secrets(config["secret_key"])
     login(password="")
+    login(access_token=get_secret_value("ENV_CLIENT_SECRET"))
     data = {"login": login, "password": new_password, "previousPassword": password}
     worker_class = "aiohttp.worker.GunicornWebWorker"
     if 1 == 1:
