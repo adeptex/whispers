@@ -26,6 +26,7 @@ from whispers.main import run
         ("fixture.py", 10),
         ("fixture.rb", 9),
         ("fixture.scala", 8),
+        ("fixture.tf", 4),
         ("fixture.ts", 11),
         ("fixture.vue", 11),
     ],

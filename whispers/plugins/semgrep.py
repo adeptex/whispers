@@ -24,6 +24,7 @@ class AST:
     DOTACCESS = "DotAccess"
     EN = "EN"
     EQ = "Eq"
+    F = "F"
     FIELDDEFCOLON = "FieldDefColon"
     FN = "FN"
     ID = "Id"
@@ -34,6 +35,7 @@ class AST:
     NOTEQ = "NotEq"
     OP = "Op"
     OR = "Or"
+    RECORD = "Record"
     SOME = "some"
     STRING = "String"
     TUPLE = "Tuple"
@@ -135,6 +137,14 @@ class AST:
 
             key = AST.literal(call_arg_1)
 
+            if AST.RECORD in call_arg_2:
+                for record in call_arg_2[AST.RECORD]:
+                    statement = record.get(AST.F, {}).get(AST.DEFSTMT, [{}, {}])
+                    record_key, record_value = AST.defstmt(statement)
+
+                    if record_key == "default" and record_value:
+                        return key, record_value  # Terraform default variable value
+
             if AST.CONDITIONAL in call_arg_2:
                 value = AST.literal(call_arg_2[AST.CONDITIONAL][-1])
 
@@ -149,7 +159,7 @@ class AST:
         return AST.name(tree)
 
     @staticmethod
-    def defstmt(ast: List) -> Tuple[str, str]:
+    def defstmt(ast: List) -> Tuple[str, str | List[str]]:
         name = ast[0].get(AST.NAME, {})
         key = AST.name(name)
 
@@ -161,12 +171,17 @@ class AST:
             if AST.DOTACCESS in some[AST.CALL][0]:
                 key = AST.dotaccess(some[AST.CALL])
 
-            elif AST.IDSPECIAL in some[AST.CALL][0]:
+            elif AST.IDSPECIAL in some[AST.CALL][0] and some[AST.CALL][1]:
                 value = AST.literal(some[AST.CALL][1][-1].get(AST.ARG, {}))
                 return key, value
 
             key = AST.name(some[AST.CALL][0])
             value = AST.call_args(some[AST.CALL][1])[1]
+
+        elif AST.CONTAINER in some:
+            if some[AST.CONTAINER][0] == AST.TUPLE:
+                values = list(map(lambda item: AST.literal(item), some[AST.CONTAINER][1]))
+                return key, values
 
         else:
             value = AST.literal(some)
@@ -243,7 +258,7 @@ class Semgrep:
                     key, value = AST.defstmt(ast_values)
                     yield KeyValuePair(key, value)
 
-                elif ast_key == AST.CONTAINER and AST.TUPLE in ast_values:
+                elif ast_key == AST.CONTAINER and AST.TUPLE in ast_values and len(ast_values[1]) > 1:
                     key = AST.literal(ast_values[1][0])
                     value = AST.literal(ast_values[1][1])
                     yield KeyValuePair(key, value)
@@ -251,7 +266,11 @@ class Semgrep:
 
                 elif ast_key == AST.CALL:
                     key, value = AST.call(ast_values)
-                    yield KeyValuePair(key, value)
+
+                    if isinstance(value, list):
+                        yield from map(lambda v: KeyValuePair(key, v), value)
+                    else:
+                        yield KeyValuePair(key, value)
 
                     if AST.call_op(ast_values) in [AST.EQ, AST.NOTEQ]:
                         key, value = AST.call_args(ast_values[1])
