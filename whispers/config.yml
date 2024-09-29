@@ -7,7 +7,7 @@ include:
 exclude:
   files:
     - .*(__pycache__|\.eggs|build|dev|\.vscode|\.git)
-    - .*(locale|spec|test|mock|dummy|fixture)s?
+    - .*(locale|lang(uage)?|spec|test|mock(ing)?|synthetic|dummy|fixture|example|e2e)s?
     - .*(integration|node_modules)
     - .*(package(-lock)?|npm-shrinkwrap)\.json
 
@@ -18,4 +18,4 @@ exclude:
     - ^(true|false|yes|no|on|off|(en|dis)able|1|0)$
     - ^((cn?trl|alt|shift|del|ins|esc|tab|f[\d]+) ?[\+_\-\\/] ?)+[\w]+$
     - .*_(user|password|token|key|placeholder|name)$
-    - ^(aws_)?(access_key_id|secret_access_key|session_token)$
+    - ^(aws_)?(access_key_id|secret_access_key|session_token|secretsmanager)$
