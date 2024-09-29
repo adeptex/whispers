@@ -41,6 +41,7 @@
     regex: "(token$|bearer)"
     ignorecase: True
   value:
+    regex: "^(?!.*\\s).*"
     minlen: 16
     ignorecase: True
     isUri: False
@@ -55,7 +56,7 @@
     regex: .*aws.*
     ignorecase: False
   value:
-    regex: ^(?!(.)\1{11})[0-9]{12}$
+    regex: "^(?!.*\\s)(?!(.)\\1{11})[0-9]{12}$"
     ignorecase: False
 
 
@@ -65,7 +66,7 @@
   message: AWS Access Key ID
   severity: Critical
   value:
-    regex: ^(?=.*[A-Z])(?=.*[0-9])A(AGA|CCA|GPA|IDA|IPA|KIA|NPA|NVA|PKA|ROA|SCA|SIA|3T[A-Z0-9])[A-Z0-9]{16}$
+    regex: "^(?!.*\\s)(?=.*[A-Z])(?=.*[0-9])A(AGA|CCA|GPA|IDA|IPA|KIA|NPA|NVA|PKA|ROA|SCA|SIA|3T[A-Z0-9])[A-Z0-9]{16}$"
     ignorecase: False
 
 
@@ -75,10 +76,10 @@
   message: AWS Secret Access Key
   severity: Critical
   key:
-    regex: ^(?!.*name)
+    regex: ^(?!.*(name|ref))
     ignorecase: True
   value:
-    regex: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9\+\/]{40}$
+    regex: "^(?!.*\\s)(?!.*(aws|kms))(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9\\+\\/]{40}$"
     ignorecase: False
 
 
@@ -91,7 +92,7 @@
       regex: .*aws.*
       ignorecase: True
   value:
-    regex: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9\+\/]{270,450}$
+    regex: "^(?!.*\\s)^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9\\+\\/]{270,450}$"
     ignorecase: False
     isBase64: True  # base64-encoded
     isAscii: False
