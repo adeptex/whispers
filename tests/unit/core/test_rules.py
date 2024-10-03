@@ -36,4 +36,4 @@ def test_load_rules_severity():
     args = parse_args(["-s", "Critical,High,Low", "-S", "Low", "tests/fixtures"])
     config = load_config(args)
     rules = load_rules(args, config)
-    assert len(rules) == 10
+    assert len(rules) == 11

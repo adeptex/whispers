@@ -2,7 +2,7 @@
   group: keys
   description: Values resembling known API key formats
   message: API key
-  severity: Medium
+  severity: High
   key:
     regex: "^(?!.*\\s)[\\w\\d\\$\\.\\-_]+(key|token)$"
     ignorecase: True
@@ -17,7 +17,7 @@
   group: keys
   description: Known API key formats
   message: API key
-  severity: High
+  severity: Critical
   value:
     regex: "^(?!.*\\s)(\
       akab|aio(?!http)|amzn\\.mws\\.|\
