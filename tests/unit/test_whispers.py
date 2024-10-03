@@ -10,7 +10,7 @@ from tests.unit.conftest import config_path, fixture_path
         (f"-c {config_path('integration.yml')} {fixture_path()}", 5),
         (f"-r apikey-known {fixture_path('apikeys-known.yml')}", 56),
         (f"-F None --rules file-known {fixture_path('files')}", 3),
-        (f"-s Critical {fixture_path('aws.yml')}", 3),
+        (f"-s Critical {fixture_path('aws.yml')}", 2),
     ],
 )
 def test_whispers(args, expected):
