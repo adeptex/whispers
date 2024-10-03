@@ -38,7 +38,7 @@
   group: misc
   description: Various known webhook formats
   message: Webhook
-  severity: Low
+  severity: Medium
   value:
     regex: "https?://(\
       hooks\\.slack\\.com/services/[\\w\\d]{9}/[\\w\\d]{9}/[\\w\\d]+|\
