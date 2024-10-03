@@ -106,6 +106,7 @@ def test_filter_static(key, value, expected):
         (".aws/credentials", False, Config),
         (".dockercfg", False, Dockercfg),
         (".env", False, Shell),
+        (".gitlab-ci.yml", False, Yml),
         (".htpasswd", False, Htpasswd),
         (".npmrc", False, Npmrc),
         (".pypirc", False, Pypirc),

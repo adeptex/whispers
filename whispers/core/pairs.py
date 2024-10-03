@@ -107,6 +107,8 @@ def load_plugin(file: Path, ast: bool = False) -> Optional[object]:
     """
     file_name = file.name.lower()
 
+    logging.debug(f"load_plugin: ast:{ast} file:{file}")
+
     if file.suffix.lower() in [".dist", ".template"]:
         filetype = file.stem.split(".")[-1].lower()
     else:

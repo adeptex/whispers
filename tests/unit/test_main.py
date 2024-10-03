@@ -15,13 +15,13 @@ def test_main():
 @pytest.mark.parametrize(
     ("ast", "expected"),
     [
-        ("--ast", 430),
-        ("", 318),
+        ("--ast", 434),
+        ("", 322),
     ],
 )
 def test_run(ast, expected):
     if platform.startswith("win"):
-        expected = 318
+        expected = 322
 
     argv = ["-F", "None"]
     if ast:

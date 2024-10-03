@@ -49,6 +49,7 @@ def test_detect_secrets_by_key(src, expected):
         (".aws/credentials", "Critical", 3),
         (".dockercfg", "High", 1),
         (".env", "Medium", 4),
+        (".gitlab-ci.yml", DEFAULT_SEVERITY, 4),
         (".htpasswd", "Medium", 2),
         (".npmrc", "High", 5),
         (".pypirc", "High", 1),

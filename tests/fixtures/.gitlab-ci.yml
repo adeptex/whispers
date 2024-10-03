@@ -1,0 +1,16 @@
+variables:
+  USERNAME: admin
+  PASSWORD: HardcodedAdminPassword01
+  APIKEY: 23d968ff-10b9-4e6f-a33a-hardcoded02
+
+compliant:
+  stage: test
+  script:
+    - curl https://$USERNAME:$PASSWORD@git.hosting-name.com
+    - curl https://git.hosting-name.com/?APIKEY=$APIKEY
+
+noncompliant:
+  stage: test
+  script:
+    - curl https://admin:HardcodedAdminPassword03@git.hosting-name.com
+    - curl https://git.hosting-name.com/?APIKEY=23d968ff-10b9-4e6f-a33a-hardcoded04
