@@ -6,9 +6,8 @@ include:
 
 exclude:
   files:
-    - .*(__pycache__|\.eggs|build|dev|\.vscode|\.git)
+    - .*(__pycache__|\.eggs|build/|node_modules/|vendor/)
     - .*(locale|lang(uage)?|spec|test|mock(ing)?|synthetic|dummy|fixture|example|e2e)s?
-    - .*(integration|node_modules)
     - .*(package(-lock)?|npm-shrinkwrap)\.json
 
   keys:
