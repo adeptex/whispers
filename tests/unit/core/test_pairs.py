@@ -127,6 +127,7 @@ def test_filter_static(key, value, expected):
         ("language/fixture.py", True, Semgrep),
         ("language/fixture.py", False, None),
         ("language/fixture.sh", False, Shell),
+        ("nginx.conf", False, Config),
         ("page.html", False, Html),
         ("passwords.yml", False, Yml),
         ("pip.conf", False, Pip),

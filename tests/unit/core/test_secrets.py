@@ -101,7 +101,7 @@ def test_detect_secrets_by_key(src, expected):
         ("java.properties", "High,Medium", 3),
         ("jdbc.xml", "High", 3),
         ("jenkins.xml", "High,Medium", 2),
-        ("nginx.conf", DEFAULT_SEVERITY, 4),
+        ("nginx.conf", "High,Medium", 3),
         ("page.html", "Info", 3),
         ("passwords.json", "High", 5),
         ("passwords.xml", "High", 5),
