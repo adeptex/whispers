@@ -1,74 +1,99 @@
-# Whispers 2.3.0 release notes
+# Whispers 2.4.0 release notes
 
-* **New Feature:** 💫 <u>Static Code Analysis</u> 💫 is now supported!
-    * The present release complements classic Whispers' structured text analysis with [Semgrep](https://semgrep.dev)'s AST generator for [common programming languages](https://semgrep.dev/docs/supported-languages) like Python, PHP, Java/Scala/Kotlin, JavaScript/TypeScript, Go, etc etc.
-    * New argument `--ast` for enabling this feature via the CLI (it is disabled by default)
-    * New setting `ast: true` for enabling this feature via a custom config file (set to `ast: false` by default)
-    * Replaced [`astroid`](https://github.com/adeptex/whispers/blob/8f17f77e2199c55458ff125e3fb477a2a9349593/whispers/plugins/python.py) Python AST generator with [`semgrep`](https://github.com/adeptex/whispers/blob/master/whispers/plugins/semgrep.py)
-
-* [Detection rule](https://github.com/adeptex/whispers/blob/master/whispers/rules) improvements
-    * Known API keys
-    * AWS account ID
-    * Passwords
-    * Creditcards
-
-* Drop end-of-life Python support
-    * Versions 3.6 and 3.7 are no longer supported. Oldest supported version is Python 3.8.
-    * Last release that supports Python 3.6 and 3.7 is [Whispers 2.2.1](https://github.com/adeptex/whispers/releases/tag/2.2.1)
-
-* Dependency tracking improvements
-    * New [`requirements-dev.txt`](https://github.com/adeptex/whispers/blob/master/requirements-dev.txt) file allows Dependabot updates for dev dependencies
-    * Modified [`setup.py`](https://github.com/adeptex/whispers/blob/master/setup.py) to read from `requirements.txt` and `requirements-dev.txt`
-    * Updated build CI to use Python 3.12.3
-
-* Debugging and troubleshooting
-    * Modified [`config.yml`](https://github.com/adeptex/whispers/blob/master/whispers/config.yml) to exclude known false positives
-    * Fixed [`Dockerfile`](https://github.com/adeptex/whispers/blob/master/Dockerfile) to work with `docker build -t whispers .` or the same `make image`
-    * New arg `--dump` for generating an AST of a file: `whispers --dump src/example.ts`
+* 💫 **Remove Semgrep telemetry** 💫
+* Lazy-load parsers
+* Severity levels reassignment
+* Detection rule improvements
+    * URI credentials
+    * AWS Account ID
+* Generalize default config
 
 
-## 💫 New Feature: Static Code Analysis 💫
+## 💫 Remove Semgrep telemetry 💫
 
-With the release of Whispers 2.3, it is now possible to accurately apply Whispers' secret detection techniques for structured text to static code. Before this release, Whispers only supported structured text formats, such as JSON or XML. [Semgrep](https://semgrep.dev) is an open source SAST tool, which has a built-in feature for generating Abstract Structure Trees (ASTs) for [many common programming languages](https://semgrep.dev/docs/supported-languages). Generating an AST for static code yields an accurate structured text representation, which can be checked for secrets with Whispers' rules and plugins. As such, generating ASTs requires an additional "format conversion" step, which naturally affects runtime speed. When AST is enabled it will take longer to scan the same scope if any source code files are present. The increased amount of runtime time would be however long it takes to run the following command on all static code files in scope:
+It's a better world now that corporations build telemetry into every single piece of software... **not really** 😒... It was shoking to see telemetry packages installed as part of Whispers. But how did this happen? 
 
-```sh
-semgrep scan --metrics=off --quiet --dump-ast --json --lang $LANG $SRCFILE
+As it turns out, Semgrep includes A LOT of code to support exfiltrating metadata and usage information from your machine. This Whispers release is largely dedicated to stripping out all unnecessary spyware garbage "required" by Semgrep. Apart from privacy, a nice side effect of this is that now Semgrep runs a lot faster when parsing ASTs! Win-win. 
+
+The following are 24 (out of 32.. wtf??) "required" Semgrep dependencies that are now excluded:
+
+```
+certifi==2024.8.30
+charset-normalizer==3.3.2
+Deprecated==1.2.14
+googleapis-common-protos==1.65.0
+idna==3.10
+importlib_metadata==7.1.0
+markdown-it-py==3.0.0
+mdurl==0.1.2
+opentelemetry-api==1.25.0
+opentelemetry-exporter-otlp-proto-common==1.25.0
+opentelemetry-exporter-otlp-proto-http==1.25.0
+opentelemetry-instrumentation==0.46b0
+opentelemetry-instrumentation-requests==0.46b0
+opentelemetry-proto==1.25.0
+opentelemetry-sdk==1.25.0
+opentelemetry-semantic-conventions==0.46b0
+opentelemetry-util-http==0.46b0
+protobuf==4.25.5
+Pygments==2.18.0
+requests==2.32.3
+rich==13.9.1
+setuptools==75.1.0
+urllib3==2.2.3
+zipp==3.20.2
 ```
 
-Consider the following benchmarks:
+The confirmation of this great success can be seen in every `pip3 install whispers` log in the form of these amazing error messages:
 
-```sh
-time whispers -F " " tests/fixtures
-# 313 detected secrets
-# 0,51s user 0,03s system 99% cpu 0,540 total
-# 0,60s user 0,04s system 99% cpu 0,642 total
-
-time whispers -a -F " " tests/fixtures
-# 421 detected secrets
-# 2,20s user 0,40s system 100% cpu 2,589 total
-# 2,32s user 0,46s system 100% cpu 2,772 total
 ```
-
-AST conversion is **disabled by default** - `semgrep` will **not** execute at all unless explicitly enabled. Custom config files that are missing `ast: false` or `ast: true` will default to `false`.
-
-```yaml
-ast: true  # enable AST in config.yml
-```
-
-```sh
-whispers --ast target/dir/or/file  # enable AST in CLI
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+semgrep 1.85.0 requires attrs>=21.3, which is not installed.
+semgrep 1.85.0 requires boltons~=21.0, which is not installed.
+semgrep 1.85.0 requires click-option-group~=0.5, which is not installed.
+semgrep 1.85.0 requires colorama~=0.4.0, which is not installed.
+semgrep 1.85.0 requires defusedxml~=0.7.1, which is not installed.
+semgrep 1.85.0 requires exceptiongroup~=1.2.0, which is not installed.
+semgrep 1.85.0 requires glom~=22.1, which is not installed.
+semgrep 1.85.0 requires opentelemetry-api~=1.25.0, which is not installed.
+semgrep 1.85.0 requires opentelemetry-exporter-otlp-proto-http~=1.25.0, which is not installed.
+semgrep 1.85.0 requires opentelemetry-instrumentation-requests~=0.46b0, which is not installed.
+semgrep 1.85.0 requires opentelemetry-sdk~=1.25.0, which is not installed.
+semgrep 1.85.0 requires peewee~=3.14, which is not installed.
+semgrep 1.85.0 requires ruamel.yaml<0.18,>=0.16.0, which is not installed.
+semgrep 1.85.0 requires tomli~=2.0.1, which is not installed.
+semgrep 1.85.0 requires wcmatch~=8.3, which is not installed.
 ```
 
 
 ## ❌ Breaking changes ❌
 
-### ❌ Replaced `astroid` with `semgrep` ❌
+### ❌ Severity levels reassignment ❌
 
-Before Whispers 2.3, only Python AST scanning was natively supported by `astroid`, and integrated via [`plugins/python.py`](https://github.com/adeptex/whispers/blob/8f17f77e2199c55458ff125e3fb477a2a9349593/whispers/plugins/python.py). With the release of Whispers 2.3, this functionality is superseded by `semgrep`, and integrated via [`plugins/semgrep.py`](https://github.com/adeptex/whispers/blob/master/whispers/plugins/semgrep.py). As a base line, the new `semgrep` plugin detects the same findings as the `astroid` plugin, but supports more programming languages.
+Adjusted rule severity levels to add structure. New severity levels are the following:
 
-Unfortunately `semgrep` has telemetry enabled by default, but can be turned off via [`--metrics=off`](https://github.com/adeptex/whispers/blob/master/whispers/plugins/semgrep.py#L57). In any case, `semgrep` will not execute unless explicitly enabled via args or config.
-
-⚠️ **NOTE:** At the time of writing, `semgrep` [does not support Windows OS natively](https://github.com/semgrep/semgrep/issues/1330), and can only be installed through WSL. As such, compiled Whispers PE32+ executable comes without Static Code Analysis support. Installing Whispers on Windows via WSL with `pip3 install whispers` *does* have Static Code Analysis support.
+| Group                | Rule ID              | Severity Before | Severity Now |
+|----------------------|----------------------|-----------------|--------------|
+| keys                 | aws-secret           | Critical        | Critical     |
+| keys                 | aws-token            | Critical        | Critical     |
+| keys                 | privatekey           | High            | Critical     |
+| keys                 | apikey-known         | High            | Critical     |
+| keys                 | apikey               | Medium          | High         |
+| keys                 | aws-id               | Critical        | Medium       |
+| keys                 | aws-account          | Low             | Low          |
+| keys                 | apikey-maybe         | Low             | Low          |
+| passwords            | password             | High            | High         |
+| passwords            | uri                  | High            | High         |
+| infra                | dockercfg            | High            | High         |
+| infra                | npmrc                | High            | High         |
+| infra                | pip                  | High            | High         |
+| infra                | pypirc               | High            | High         |
+| infra                | htpasswd             | Medium          | Medium       |
+| misc                 | webhook              | Low             | Medium       |
+| misc                 | creditcard           | Low             | Low          |
+| misc                 | secret               | Low             | Low          |
+| misc                 | comment              | Info            | Info         |
+| files                | file-known           | Low             | Low          |
 
 
 # Changelog
@@ -79,3 +104,4 @@ Unfortunately `semgrep` has telemetry enabled by default, but can be turned off 
 |2022-07-29|2.1.0|https://github.com/adeptex/whispers/releases/tag/2.1.0|
 |2023-10-23|2.2.0|https://github.com/adeptex/whispers/releases/tag/2.2.0|
 |2024-06-16|2.3.0|https://github.com/adeptex/whispers/releases/tag/2.3.0|
+|2024-10-05|2.4.0|https://github.com/adeptex/whispers/releases/tag/2.4.0|
