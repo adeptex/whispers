@@ -5,8 +5,6 @@ from sys import argv, exit, stdout
 
 from whispers.__version__ import __version__, __whispers__
 from whispers.core.constants import DEFAULT_PATH
-from whispers.core.utils import default_rules, load_regex
-from whispers.plugins.semgrep import AST
 
 
 def argument_parser() -> ArgumentParser:
@@ -70,6 +68,8 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
         args.src = args.src[0]
 
     if args.dump:
+        from whispers.plugins.semgrep import AST
+
         print(AST.dump(args.src))
         exit()
 
@@ -90,6 +90,8 @@ def parse_args(arguments: list = argv[1:]) -> Namespace:
         args.files = args.files.split(",")
 
     if args.xfiles:
+        from whispers.core.utils import load_regex
+
         args.xfiles = load_regex(args.xfiles)
 
     if args.rules:
@@ -128,6 +130,8 @@ def show_config():
 
 
 def show_info():
+    from whispers.core.utils import default_rules
+
     argument_parser().print_help()
     rules_table = []
     col_width = 20
