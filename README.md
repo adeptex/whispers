@@ -258,8 +258,8 @@ Simple filtering based on rules and severity can also be done with CLI arguments
 | keys                 | apikey-known         | Critical        |
 | keys                 | apikey               | High            |
 | keys                 | aws-id               | Medium          |
-| keys                 | apikey-maybe         | Low             |
 | keys                 | aws-account          | Low             |
+| keys                 | apikey-maybe         | Low             |
 | passwords            | password             | High            |
 | passwords            | uri                  | High            |
 | infra                | dockercfg            | High            |
