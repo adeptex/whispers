@@ -252,28 +252,26 @@ Simple filtering based on rules and severity can also be done with CLI arguments
 
 | Group                | Rule ID              | Severity        |
 |----------------------|----------------------|-----------------|
-| files                | file-known           | Low             |
+| keys                 | aws-secret           | Critical        |
+| keys                 | aws-token            | Critical        |
+| keys                 | privatekey           | Critical        |
+| keys                 | apikey-known         | Critical        |
+| keys                 | apikey               | High            |
+| keys                 | aws-id               | Medium          |
+| keys                 | apikey-maybe         | Low             |
+| keys                 | aws-account          | Low             |
+| passwords            | password             | High            |
+| passwords            | uri                  | High            |
 | infra                | dockercfg            | High            |
-| infra                | htpasswd             | Medium          |
 | infra                | npmrc                | High            |
 | infra                | pip                  | High            |
 | infra                | pypirc               | High            |
-| keys                 | apikey               | Medium          |
-| keys                 | apikey-known         | High            |
-| keys                 | apikey-maybe         | Low             |
-| keys                 | aws-id               | Critical        |
-| keys                 | aws-secret           | Critical        |
-| keys                 | aws-token            | Critical        |
-| keys                 | privatekey           | High            |
-| misc                 | comment              | Info            |
+| infra                | htpasswd             | Medium          |
+| misc                 | webhook              | Medium          |
 | misc                 | creditcard           | Low             |
 | misc                 | secret               | Low             |
-| misc                 | webhook              | Low             |
-| passwords            | password             | High            |
-| passwords            | uri                  | High            |
-| python               | cors                 | Low             |
-| python               | system               | Low             |
-
+| misc                 | comment              | Info            |
+| files                | file-known           | Low             |
 
 ### Custom rules
 
