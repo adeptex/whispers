@@ -11,4 +11,4 @@ semgrep==1.85.0; sys_platform != 'win32'
 six==1.16.0
 soupsieve==2.6
 typing_extensions==4.12.2
-wrapt==1.16.0
+wrapt==1.17.1
