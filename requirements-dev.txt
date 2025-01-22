@@ -10,4 +10,4 @@ pytest~=8.3
 pytest-mock~=3.14
 pip-tools~=7.4
 wheel~=0.44
-twine~=5.1
+twine~=6.1
