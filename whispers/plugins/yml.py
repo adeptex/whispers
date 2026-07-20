@@ -31,19 +31,22 @@ class Yml(StructuredDocument):
         - Remove text between <% %> and {% %}
         - Remove comments that start with #
         """
-        regex_unquoted = re.compile(r".+(\[)?\{\{.*\}\}(\])?")
         document = ""
 
         for line in filepath.open("r").readlines():
             if line.startswith("---"):
                 continue
 
-            if regex_unquoted.match(line):
+            # Quote unquoted mustache placeholders such as {{ value }}. A plain
+            # containment check replaces the previous `.+(\[)?\{\{.*\}\}(\])?`
+            # regex, which backtracked quadratically on long lines carrying many
+            # `{{` with no matching `}}` (hanging for minutes/hours on some files).
+            if "{{" in line and "}}" in line:
                 line = line.replace("{{", "'{{").replace("}}", "}}'")
 
             document += line
 
-        document = re.sub(r"[<{]%.*?%[}>]", "", document, flags=re.MULTILINE | re.DOTALL)
+        document = self._strip_template_blocks(document)
         document = re.sub(r"^#.*$", "", document)
 
         # Load converted YAML
@@ -54,3 +57,46 @@ class Yml(StructuredDocument):
 
         except ParserError:
             global_exception_handler(filepath.as_posix(), document)
+
+    @staticmethod
+    def _strip_template_blocks(document: str) -> str:
+        """Remove {%...%} and <%...%> template blocks in a single linear pass.
+
+        Behaviour-equivalent to re.sub(r"[<{]%.*?%[}>]", "", document, DOTALL):
+        each opener ({% or <%) is removed up to its nearest closing %} or %>.
+        The regex form backtracks quadratically on documents with many unbalanced
+        template markers (e.g. Jekyll/Liquid pages), which could hang whispers for
+        hours; this scan is linear.
+        """
+        out = []
+        i = 0
+        n = len(document)
+
+        while i < n:
+            char = document[i]
+
+            if char in "<{" and i + 1 < n and document[i + 1] == "%":
+                cursor = i + 2
+                close = -1
+
+                while True:
+                    percent = document.find("%", cursor)
+                    if percent == -1:
+                        break
+                    if percent + 1 < n and document[percent + 1] in "}>":
+                        close = percent
+                        break
+                    cursor = percent + 1
+
+                if close == -1:
+                    # No closing marker remains anywhere: nothing left to strip.
+                    out.append(document[i:])
+                    break
+
+                i = close + 2
+                continue
+
+            out.append(char)
+            i += 1
+
+        return "".join(out)
